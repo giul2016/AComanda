@@ -106,26 +106,28 @@ public class MainActivity extends Activity {
 		// searchView.setQueryHint("Digite o Número da Mesa");
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getComponentName()));
-		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
-			@Override
-			public boolean onQueryTextChange(String arg0) {
+		if (currentFragmentTag.equals(MainFragment.TAG)) {
+			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
-				GridView mesas = (GridView) fragment.getView().findViewById(
-						R.id.list);
-				MesaAdapter v = (MesaAdapter) mesas.getAdapter();
-				//v.getFilter().filter(arg0);
+				@Override
+				public boolean onQueryTextChange(String arg0) {
 
-				return false;
-			}
+					GridView mesas = (GridView) fragment.getView()
+							.findViewById(R.id.list);
+					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
+					v.getFilter().filter(arg0);
 
-			@Override
-			public boolean onQueryTextSubmit(String arg0) {
-				// TODO Auto-generated method stub
-				return true;
-			}
-		});
+					return false;
+				}
 
+				@Override
+				public boolean onQueryTextSubmit(String arg0) {
+					// TODO Auto-generated method stub
+					return true;
+				}
+			});
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
