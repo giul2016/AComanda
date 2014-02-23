@@ -9,11 +9,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 
-import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.model.ConfiguracoesModel;
 
 public class Utils {
 
@@ -56,36 +53,28 @@ public class Utils {
 	}
 
 	public static String getUrlServico(Context context) {
-//		String model = Build.MODEL;
-//		Log.d(TAG, "model=" + model);
 		String product = Build.PRODUCT;
-//		Log.d(TAG, "product=" + product);
 		boolean isEmulator = false;
 		if (product != null) {
 			isEmulator = product.equals("sdk") || product.contains("_sdk")
 					|| product.contains("sdk_");
 		}
 		if (!isEmulator) {
-			LayoutInflater inflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View vi = inflater.inflate(R.layout.configurations, null);
-
-			EditText urlServico = (EditText) vi
-					.findViewById(R.id.edtUrlServico);
-			EditText portaServico = (EditText) vi
-					.findViewById(R.id.edtPortaServico);
-
-			return MontarUrl(urlServico, portaServico);
+			return MontarUrl(context);
 		}
 		return "http://10.0.2.2:81";
 	}
 
-	private static String MontarUrl(EditText urlServico, EditText portaServico) {
+	private static String MontarUrl(Context context) {
+		
+		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);;
+		ConfiguracoesModel configModel = configuracoes.getData();		
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://");
-		sb.append(urlServico.getText());
+		sb.append(configModel.getUrlServico());
 		sb.append(":");
-		sb.append(portaServico.getText());
+		sb.append(configModel.getPortaServico().toString());
 		return sb.toString();
 	}
 }

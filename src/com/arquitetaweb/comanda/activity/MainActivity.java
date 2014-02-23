@@ -7,6 +7,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +36,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private SearchView searchView;
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
@@ -94,40 +96,58 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private void clearSearch() {
+		if ((Build.VERSION.SDK_INT >= 11)
+				&& (currentFragmentTag.equals(MainFragment.TAG))) {
+			searchView.setQuery("", false);
+			searchView.setIconified(true);
+		}
+	}
+
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {		
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 
-		// SearchView
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-				.getActionView();
-		// searchView.setQueryHint("Digite o Número da Mesa");
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
+		if ((Build.VERSION.SDK_INT >= 11)
+				&& (currentFragmentTag.equals(MainFragment.TAG))) {
+			// SearchView
+			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-		if (currentFragmentTag.equals(MainFragment.TAG)) {
+			searchView = (SearchView) menu.findItem(R.id.action_search)
+					.getActionView();
+			// searchView.setQueryHint("Digite o Número da Mesa");
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
 				public boolean onQueryTextChange(String arg0) {
-
 					GridView mesas = (GridView) fragment.getView()
 							.findViewById(R.id.list);
 					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
-					v.getFilter().filter(arg0);
+					if (v != null) {
+						v.getFilter().filter(arg0);
+					}
 
-					return false;
+					return true;
 				}
 
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
-					// TODO Auto-generated method stub
+					// Clear the text in search bar but (don't trigger a new
+					// search!)
+					// searchView.setQuery("3", false);
+					// searchView.setIconified(false);
+					// searchView.setIconified(true);
+					//new AlertaToast().show(fragment.getActivity(), arg0);
 					return true;
 				}
+
 			});
 		}
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -142,6 +162,7 @@ public class MainActivity extends Activity {
 		menu.findItem(R.id.action_refresh_mapa).setVisible(!drawerOpen);
 		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
 
+		clearSearch();
 		kb.hide(this);
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -169,6 +190,7 @@ public class MainActivity extends Activity {
 
 			GetMesas getMesas = new GetMesas(fragment);
 			getMesas.carregarDadosJson();
+			clearSearch();
 
 			return true;
 		case R.id.action_search:

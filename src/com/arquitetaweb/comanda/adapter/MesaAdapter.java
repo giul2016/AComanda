@@ -63,9 +63,6 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
 
-		// HashMap<String, String> itens = new HashMap<String, String>();
-		// itens = dataOriginal.get(position);
-
 		MesaModel itens = new MesaModel();
 		itens = data.get(position);
 
@@ -119,7 +116,8 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 				} else {
 					for (int i = 0; i < dataOriginal.size(); i++) {
 						MesaModel mesaObject = dataOriginal.get(i);
-						if (mesaObject.numeroMesa.contains(prefix.toString())) {
+						// pesquisa pelo numero da mesa
+						if (mesaObject.numeroMesa.startsWith(prefix.toString())) {
 							FilteredByNumero.add(mesaObject);
 						}
 					}
