@@ -23,6 +23,7 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
 import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetMesas;
 import com.arquitetaweb.comanda.fragment.MainFragment;
 import com.arquitetaweb.comanda.fragment.SettingsFragment;
@@ -109,16 +110,19 @@ public class MainActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextChange(String arg0) {
-				 
-				 GridView mesas = (GridView) fragment.getView().findViewById(R.id.list);
-				 mesas.getf
+
+				GridView mesas = (GridView) fragment.getView().findViewById(
+						R.id.list);
+				MesaAdapter v = (MesaAdapter) mesas.getAdapter();
+				v.getFilter().filter(arg0);
+
 				return false;
 			}
 
 			@Override
 			public boolean onQueryTextSubmit(String arg0) {
 				// TODO Auto-generated method stub
-				return false;
+				return true;
 			}
 		});
 

@@ -17,19 +17,7 @@
         android:textColor="#191970"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/codigo_externo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/idItem"
-        android:gravity="right"
-        android:text="@string/codigo_externo"
-        android:textColor="#191970"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:visibility="invisible" />   
 
     <TextView
         android:id="@+id/situacao"
@@ -48,7 +36,6 @@
         android:id="@+id/numero_mesa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/codigo_externo"
         android:layout_centerHorizontal="true"
         android:text="@string/numero_mesa"
         android:textColor="#FF0000"

@@ -1,5 +1,6 @@
 package com.arquitetaweb.comanda.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -33,11 +34,16 @@ public class DetailsActivity extends FragmentActivity {
 
 		setContentView(R.layout.details);
 
+		// get the action bar
+		ActionBar actionBar = getActionBar();
+		// Enabling Back navigation on Action Bar icon
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
 		final String idString = getIntent().getExtras().get("id").toString();
 
 		final TextView id = (TextView) findViewById(R.id.teste);
 		id.setText(idString);
-		
+
 		final Button btnLivre = (Button) findViewById(R.id.btnLivre);
 		btnLivre.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -53,8 +59,8 @@ public class DetailsActivity extends FragmentActivity {
 			public void onClick(View v) {
 				Toast.makeText(getApplicationContext(), "Ocupada",
 						Toast.LENGTH_SHORT).show();
-				
-				new AtualizarMesa(v.getContext()).execute("2" , idString);
+
+				new AtualizarMesa(v.getContext()).execute("2", idString);
 			}
 		});
 
@@ -69,25 +75,24 @@ public class DetailsActivity extends FragmentActivity {
 
 	}
 
-	
-		private class AtualizarMesa extends AsyncTask<String, Void, Void> {
-			private Context myCtx;
-			@Override
-			protected Void doInBackground(String... params) {
-				final JSONParser jParser = new JSONParser();
-				jParser.atualizaMesa(params[0], params[1], (Activity)myCtx);
-						
-			    setResult(Activity.RESULT_OK);		        
-			    finish();		    
-				return null;
-			}
-			
-			public AtualizarMesa(Context ctx){
-		        // Now set context
-		        this.myCtx = ctx;
-		    }
+	private class AtualizarMesa extends AsyncTask<String, Void, Void> {
+		private Context myCtx;
+
+		@Override
+		protected Void doInBackground(String... params) {
+			final JSONParser jParser = new JSONParser();
+			jParser.atualizaMesa(params[0], params[1], (Activity) myCtx);
+
+			setResult(Activity.RESULT_OK);
+			finish();
+			return null;
 		}
-	
+
+		public AtualizarMesa(Context ctx) {
+			// Now set context
+			this.myCtx = ctx;
+		}
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -101,6 +106,6 @@ public class DetailsActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		onBackPressed();
 		return true;
-	}	
-		
+	}
+
 }

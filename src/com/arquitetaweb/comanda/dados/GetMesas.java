@@ -36,7 +36,6 @@ public class GetMesas {
 	// JSON Keys
 	public static final String KEY_ID = "Id";
 	public static final String KEY_NUMEROMESA = "NumeroMesa";
-	public static final String KEY_CODIGOEXTERNO = "CodigoExterno";
 	public static final String KEY_SITUACAO = "Situacao";	
 	GridView mesas;
 	public static MesaAdapter adapter;
@@ -75,7 +74,6 @@ public class GetMesas {
 	
 									map.put(KEY_ID, c.getString(KEY_ID));
 									map.put(KEY_NUMEROMESA, c.getString(KEY_NUMEROMESA));
-									map.put(KEY_CODIGOEXTERNO, c.getString(KEY_CODIGOEXTERNO));
 									map.put(KEY_SITUACAO, c.getString(KEY_SITUACAO));
 	
 									mesasLista.add(map);
@@ -87,7 +85,7 @@ public class GetMesas {
 							mesas = (GridView) fragment.getView().findViewById(R.id.list);
 							adapter = new MesaAdapter((Activity) context, mesasLista);						
 							mesas.setAdapter(adapter);												
-	
+							
 							// Click event for single list row
 							mesas.setOnItemClickListener(new OnItemClickListener() {
 								@Override
