@@ -6,7 +6,7 @@
 
     <GridView
         android:id="@+id/list"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:columnWidth="74dp"

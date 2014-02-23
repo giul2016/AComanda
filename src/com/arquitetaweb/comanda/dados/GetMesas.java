@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,26 +28,28 @@ public class GetMesas {
 
 	protected Context context;
 	protected Fragment fragment;
+	protected View view;
 	String json = null;
 
 	GridView mesas;
 	public static MesaAdapter adapter;
-	Handler handler;
+
 	ProgressDialog progressDialog;
 
 	public GetMesas(Fragment fragment) {
-		this.context = fragment.getActivity();
 		this.fragment = fragment;
+		this.context = fragment.getActivity();
+		this.view = fragment.getView();
 	}
 
-	public void carregarDadosJson() {
+	public void carregarDadosJson(final Boolean showMsgRefresh) {
 
-		handler = new Handler();
-
-		progressDialog = new ProgressDialog(context);
-		progressDialog.setCancelable(false);
-		progressDialog.setMessage("atualizando mapa das mesas...");
-		progressDialog.show();
+		if (showMsgRefresh) {
+			progressDialog = new ProgressDialog(context);
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage("atualizando mapa das mesas...");
+			progressDialog.show();
+		}
 
 		Thread thread = new Thread() {
 			public void run() {
@@ -60,12 +61,12 @@ public class GetMesas {
 
 					((Activity) context).runOnUiThread(new Runnable() {
 						public void run() {
-							List<MesaModel> mesasLista = new ArrayList<MesaModel>();						
+							List<MesaModel> mesasLista = new ArrayList<MesaModel>();
 							Gson gson = new Gson();
-							mesasLista = gson.fromJson(json, new MesaModel().getType());
+							mesasLista = gson.fromJson(json,
+									new MesaModel().getType());
 
-							mesas = (GridView) fragment.getView().findViewById(
-									R.id.list);
+							mesas = (GridView) view.findViewById(R.id.list);
 							adapter = new MesaAdapter((Activity) context,
 									mesasLista);
 							mesas.setAdapter(adapter);
@@ -94,14 +95,16 @@ public class GetMesas {
 									fragment.startActivityForResult(intent, 100);
 								}
 							});
-							progressDialog.dismiss();
+							if (showMsgRefresh)
+								progressDialog.dismiss();
 						}
 					});
 
 				} else {
 					((Activity) context).runOnUiThread(new Runnable() {
 						public void run() {
-							progressDialog.dismiss();
+							if (showMsgRefresh)
+								progressDialog.dismiss();
 							new Alerta().show(context, "",
 									"Não Foi Localizado o Servidor!"
 											+ "\nCausas:" + "\nConexão OK?"

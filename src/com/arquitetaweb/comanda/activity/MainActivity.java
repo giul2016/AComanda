@@ -7,6 +7,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -44,6 +45,11 @@ public class MainActivity extends Activity {
 	private Fragment fragment = null;
 	private String currentFragmentTag = null;
 	private KeyboardAction kb = new KeyboardAction();
+
+	// Refresh menu item
+	private MenuItem refreshMenuItem;
+
+	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,10 @@ public class MainActivity extends Activity {
 
 		if (savedInstanceState == null) {
 			selectItem(0);
+		} else {
+			selectItem(0);
+			// currentFragmentTag = savedInstanceState
+			// .getString(STATE_FRAGMENT_TAG);
 		}
 	}
 
@@ -105,7 +115,7 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {		
+	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 
@@ -118,8 +128,8 @@ public class MainActivity extends Activity {
 					.getActionView();
 			// searchView.setQueryHint("Digite o Número da Mesa");
 			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getComponentName()));
-
+					.getSearchableInfo(getComponentName()));		
+			
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
@@ -141,7 +151,7 @@ public class MainActivity extends Activity {
 					// searchView.setQuery("3", false);
 					// searchView.setIconified(false);
 					// searchView.setIconified(true);
-					//new AlertaToast().show(fragment.getActivity(), arg0);
+					// new AlertaToast().show(fragment.getActivity(), arg0);
 					return true;
 				}
 
@@ -188,10 +198,10 @@ public class MainActivity extends Activity {
 			// Toast.LENGTH_LONG).show();
 			// }
 
-			GetMesas getMesas = new GetMesas(fragment);
-			getMesas.carregarDadosJson();
+			refreshMenuItem = item;
+			// load the data from server
+			new SyncData().execute();			
 			clearSearch();
-
 			return true;
 		case R.id.action_search:
 			// openSearch();
@@ -261,4 +271,36 @@ public class MainActivity extends Activity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(STATE_FRAGMENT_TAG, currentFragmentTag);
+
+		super.onSaveInstanceState(outState);
+	}
+
+	/**
+	 * Async task to load the data from server
+	 * **/
+	private class SyncData extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			refreshMenuItem.setActionView(R.layout.action_progressbar);
+			refreshMenuItem.expandActionView();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			GetMesas getMesas = new GetMesas(fragment);
+			getMesas.carregarDadosJson(false);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			refreshMenuItem.collapseActionView();
+			// remove the progress bar view
+			refreshMenuItem.setActionView(null);
+		}
+	};
 }
