@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 				GridView mesas = (GridView) fragment.getView().findViewById(
 						R.id.list);
 				MesaAdapter v = (MesaAdapter) mesas.getAdapter();
-				v.getFilter().filter(arg0);
+				//v.getFilter().filter(arg0);
 
 				return false;
 			}

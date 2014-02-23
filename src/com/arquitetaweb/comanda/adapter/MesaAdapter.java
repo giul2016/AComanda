@@ -19,34 +19,42 @@ import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetMesas;
+import com.arquitetaweb.comanda.model.MesaModel;
 
 public class MesaAdapter extends BaseAdapter implements Filterable {
-
-	private Activity activity;
-	private ArrayList<HashMap<String, String>> dataOriginal;
-	private ArrayList<HashMap<String, String>> dataFiltered;
+	protected Activity activity;
+	private List<MesaModel> dataOriginal;
+	private List<MesaModel> dataFiltered;
 	private static LayoutInflater inflater = null;
 
-	public MesaAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
-		activity = a;
-		dataOriginal = d;
-		dataFiltered = d;
+	public MesaAdapter(Activity activity, List<MesaModel> listaMesa) {
+		this.activity = activity;
+		dataOriginal = listaMesa;		
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	@Override
 	public int getCount() {
 		return dataOriginal.size();
 	}
 
+	@Override
 	public Object getItem(int position) {
 		return position;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
+	@Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+	
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null) {
@@ -58,13 +66,16 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
 
-		HashMap<String, String> itens = new HashMap<String, String>();
+		// HashMap<String, String> itens = new HashMap<String, String>();
+		// itens = dataOriginal.get(position);
+
+		MesaModel itens = new MesaModel();
 		itens = dataOriginal.get(position);
 
 		// Setting all values in listview
-		idItem.setText(itens.get(GetMesas.KEY_ID));
-		numero_mesa.setText(itens.get(GetMesas.KEY_NUMEROMESA));
-		situacao.setText(itens.get(GetMesas.KEY_SITUACAO));
+		idItem.setText(itens.id);
+		numero_mesa.setText(itens.numeroMesa);
+		situacao.setText(itens.situacao);
 
 		numero_mesa.setTextColor(Color.BLACK);
 
@@ -101,8 +112,8 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 				FilterResults results = new FilterResults();
 
 				if (prefix != null && prefix.toString().length() > 0) {
-					ArrayList<HashMap<String, String>> founded = new ArrayList<HashMap<String, String>>();
-					for (HashMap<String, String> item : dataOriginal) {
+					List<MesaModel> founded = new ArrayList<MesaModel>();
+					for (MesaModel item : dataOriginal) {
 						if (item.toString().contains(prefix)) {
 							founded.add(item);
 						}
@@ -122,11 +133,13 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 			protected void publishResults(CharSequence constraint,
 					FilterResults results) {
 				dataOriginal.clear();
-				//data.addAll((Collection<? extends HashMap<String, String>>) results.values);
-				
-				for (HashMap<String, String> item : (List<HashMap<String, String>>)results.values) {
-	                 dataOriginal.add(item);
-	           }
+				// data.addAll((Collection<? extends HashMap<String, String>>)
+				// results.values);
+
+				// for (HashMap<String, String> item : (List<HashMap<String,
+				// String>>)results.values) {
+				// dataOriginal.add(item);
+				// }
 				notifyDataSetChanged();
 			}
 		};

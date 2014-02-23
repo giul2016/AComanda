@@ -22,22 +22,22 @@ import android.util.Log;
 public class JSONParser {
 
 	static InputStream is = null;
-    static JSONArray jarray = null;
-    static String json = "";
+	static JSONArray jarray = null;
+	static String json = "";
 
-    public JSONParser() {
-    }
+	public JSONParser() {
+	}
 
-    public void atualizaMesa(String codigo, String mesa, Activity activity) {
+	public void atualizaMesa(String codigo, String mesa, Activity activity) {
 		HttpClient client = new DefaultHttpClient();
-		HttpPut put = new HttpPut(Utils.getUrlServico(activity) + "/Api/AtualizarMesa?id="+mesa+"&situacao=" + codigo);
+		HttpPut put = new HttpPut(Utils.getUrlServico(activity)
+				+ "/Api/AtualizarMesa?id=" + mesa + "&situacao=" + codigo);
 
 		try {
 			HttpResponse response = client.execute(put);
 			StatusLine statusLine = response.getStatusLine();
 			int statusCode = statusLine.getStatusCode();
-			if (statusCode == 200)
-			{
+			if (statusCode == 200) {
 				Log.i("Sucess!", "Sucesso");
 			}
 		} catch (ClientProtocolException e1) {
@@ -45,39 +45,46 @@ public class JSONParser {
 		} catch (IOException e1) {
 			Log.e("Error....", e1.getMessage());
 		}
-    }
-    
-    public JSONArray getJSONFromUrl(String url) {
-    	HttpClient client = new DefaultHttpClient();		
-        StringBuilder builder = new StringBuilder();        
-        HttpGet httpGet = new HttpGet(url);
-        try {
-            HttpResponse response = client.execute(httpGet);
-            StatusLine statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) {
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-            } else {
-                Log.e("Error....", "Failed to download file");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	}
 
-        try {
-            jarray = new JSONArray( builder.toString());
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
+	public String getJSONFromUrlString(String url) {
+		HttpClient client = new DefaultHttpClient();
+		StringBuilder builder = new StringBuilder();
+		HttpGet httpGet = new HttpGet(url);
+		try {
+			HttpResponse response = client.execute(httpGet);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("Error....", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-          return jarray;
-    }
+		return builder.toString();
+	}
+
+	public JSONArray getJSONFromUrl(String url) {
+		String builder = new String();		
+		try {
+			builder = getJSONFromUrlString(url);
+			jarray = new JSONArray(builder);
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+
+		return jarray;
+	}
 }
