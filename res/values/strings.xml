@@ -28,4 +28,5 @@
     <string name="msgSalvoSucesso">Salvo com sucesso.</string>
     <string name="msgSucesso">Sucesso.</string>
     <string name="msgErro">Erro.</string>
+    <string name="twoDots">:</string>
 </resources>

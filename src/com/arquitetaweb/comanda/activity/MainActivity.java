@@ -1,5 +1,7 @@
 package com.arquitetaweb.comanda.activity;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -49,7 +51,9 @@ public class MainActivity extends Activity {
 	// Refresh menu item
 	private MenuItem refreshMenuItem;
 
+	private static final String STATE_URI = "state:uri";
 	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
+	private Uri currentUri = MainFragment.MESAS_URI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +101,12 @@ public class MainActivity extends Activity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		if (savedInstanceState == null) {
-			selectItem(0);
-		} else {
-			selectItem(0);
-			// currentFragmentTag = savedInstanceState
-			// .getString(STATE_FRAGMENT_TAG);
+		if (savedInstanceState != null) {
+			currentUri = Uri.parse(savedInstanceState.getString(STATE_URI));
+			currentFragmentTag = savedInstanceState
+					.getString(STATE_FRAGMENT_TAG);
 		}
+		selectItem(currentUri);
 	}
 
 	private void clearSearch() {
@@ -128,8 +131,8 @@ public class MainActivity extends Activity {
 					.getActionView();
 			// searchView.setQueryHint("Digite o Número da Mesa");
 			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getComponentName()));		
-			
+					.getSearchableInfo(getComponentName()));
+
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
@@ -200,7 +203,7 @@ public class MainActivity extends Activity {
 
 			refreshMenuItem = item;
 			// load the data from server
-			new SyncData().execute();			
+			new SyncData().execute();
 			clearSearch();
 			return true;
 		case R.id.action_search:
@@ -217,14 +220,13 @@ public class MainActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			selectItem(position);
+			Uri uri = Uri.parse(getResources().getStringArray(
+					R.array.actions_link)[position]);
+			selectItem(uri);			
 		}
 	}
 
-	private void selectItem(int position) {
-		final Uri uri = Uri.parse(getResources().getStringArray(
-				R.array.actions_link)[position]);
-
+	private void selectItem(Uri uri) {
 		if (SettingsFragment.SETTINGS_URI.equals(uri)) {
 			currentFragmentTag = SettingsFragment.TAG;
 			fragment = new SettingsFragment();
@@ -242,9 +244,13 @@ public class MainActivity extends Activity {
 				.replace(R.id.content_frame, fragment).commit();
 
 		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position, true);
+		String[] mActionLinks = getResources().getStringArray(R.array.actions_link);
+		Integer position = Arrays.asList(mActionLinks).indexOf(uri.toString());
 		setTitle(mActionTitles[position]);
+		mDrawerList.setItemChecked(position, true);				
 		mDrawerLayout.closeDrawer(mDrawerList);
+
+		currentUri = uri;
 	}
 
 	@Override
@@ -274,8 +280,8 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(STATE_URI, currentUri.toString());
 		outState.putString(STATE_FRAGMENT_TAG, currentFragmentTag);
-
 		super.onSaveInstanceState(outState);
 	}
 

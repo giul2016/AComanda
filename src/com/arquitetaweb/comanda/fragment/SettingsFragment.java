@@ -82,9 +82,5 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 			new AlertaToast().show(this.getActivity(),
 					"Erro as Salvar:\n" + e.getMessage());
 		}
-	}
-	//
-	// public interface OnSettingsChangedListener {
-	// void onSettingChanged(int prefId, int value);
-	// }
+	}	
 }
