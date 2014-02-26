@@ -43,7 +43,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return data.get(position).id;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		itens = data.get(position);
 
 		// Setting all values in listview
-		idItem.setText(itens.id);
+		idItem.setText(itens.id.toString());
 		numero_mesa.setText(itens.numeroMesa);
 		situacao.setText(itens.situacao);
 

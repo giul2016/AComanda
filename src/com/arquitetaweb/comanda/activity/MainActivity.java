@@ -20,13 +20,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.SearchView.OnQueryTextListener;
 
 import com.arquitetaweb.comanda.R;
@@ -135,7 +133,7 @@ public class MainActivity extends Activity {
 			// searchView.setQueryHint("Digite o Número da Mesa");
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
-			
+
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
@@ -152,40 +150,22 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
-					
-					GridView mGridView = (GridView) fragment.getView()
-					.findViewById(R.id.list);
-
-					final int size = mGridView.getChildCount();
-					for(int i = 0; i < size; i++) {
-					  ViewGroup gridChild = (ViewGroup) mGridView.getChildAt(i);
-					  int childSize = gridChild.getChildCount();
-					  for(int k = 0; k < childSize; k++) {
-					    if( gridChild.getChildAt(k) instanceof TextView ) {
-					      gridChild.getChildAt(k).setVisibility(View.GONE);
-					    }
-					  }
-					}
-					
-					GridView mesas = (GridView) fragment.getView()
+					GridView mesaGrid = (GridView) fragment.getView()
 							.findViewById(R.id.list);
-					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
-					
-					TextView idItem = (TextView) v.getItem(0);
-					
-					String t = (String) idItem.getText();
-					
-//					Intent intent = new Intent(view.getContext(),
-//							DetailsActivity.class);
-//					intent.putExtras(bun);
-//					fragment.startActivityForResult(intent, 100);
-					
-					// Clear the text in search bar but (don't trigger a new
-					// search!)
-					// searchView.setQuery("3", false);
-					// searchView.setIconified(false);
-					// searchView.setIconified(true);
-					// new AlertaToast().show(fragment.getActivity(), arg0);
+					MesaAdapter mesaAdapter = (MesaAdapter) mesaGrid
+							.getAdapter();
+					if (mesaAdapter.getCount() > 0) {
+						Long idItem = mesaAdapter.getItemId(0);
+
+						Bundle bun = new Bundle();
+						bun.putString("id", idItem.toString());
+						Intent intent = new Intent(fragment.getView()
+								.getContext(), DetailsActivity.class);
+						intent.putExtras(bun);
+						fragment.startActivityForResult(intent, 100);
+					} else {
+						new AlertaToast().show(fragment.getActivity(), "Nenhuma mesa localizada pelo critério: " + arg0 + "\nVerifique sua consulta.");
+					}
 					return true;
 				}
 
@@ -253,7 +233,7 @@ public class MainActivity extends Activity {
 				long id) {
 			Uri uri = Uri.parse(getResources().getStringArray(
 					R.array.actions_link)[position]);
-			selectItem(uri);			
+			selectItem(uri);
 		}
 	}
 
@@ -275,10 +255,11 @@ public class MainActivity extends Activity {
 				.replace(R.id.content_frame, fragment).commit();
 
 		// update selected item and title, then close the drawer
-		String[] mActionLinks = getResources().getStringArray(R.array.actions_link);
+		String[] mActionLinks = getResources().getStringArray(
+				R.array.actions_link);
 		Integer position = Arrays.asList(mActionLinks).indexOf(uri.toString());
 		setTitle(mActionTitles[position]);
-		mDrawerList.setItemChecked(position, true);				
+		mDrawerList.setItemChecked(position, true);
 		mDrawerLayout.closeDrawer(mDrawerList);
 
 		currentUri = uri;
