@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,11 +20,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.SearchView.OnQueryTextListener;
 
 import com.arquitetaweb.comanda.R;
@@ -132,7 +135,7 @@ public class MainActivity extends Activity {
 			// searchView.setQueryHint("Digite o Número da Mesa");
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
-
+			
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
@@ -149,6 +152,34 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
+					
+					GridView mGridView = (GridView) fragment.getView()
+					.findViewById(R.id.list);
+
+					final int size = mGridView.getChildCount();
+					for(int i = 0; i < size; i++) {
+					  ViewGroup gridChild = (ViewGroup) mGridView.getChildAt(i);
+					  int childSize = gridChild.getChildCount();
+					  for(int k = 0; k < childSize; k++) {
+					    if( gridChild.getChildAt(k) instanceof TextView ) {
+					      gridChild.getChildAt(k).setVisibility(View.GONE);
+					    }
+					  }
+					}
+					
+					GridView mesas = (GridView) fragment.getView()
+							.findViewById(R.id.list);
+					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
+					
+					TextView idItem = (TextView) v.getItem(0);
+					
+					String t = (String) idItem.getText();
+					
+//					Intent intent = new Intent(view.getContext(),
+//							DetailsActivity.class);
+//					intent.putExtras(bun);
+//					fragment.startActivityForResult(intent, 100);
+					
 					// Clear the text in search bar but (don't trigger a new
 					// search!)
 					// searchView.setQuery("3", false);
