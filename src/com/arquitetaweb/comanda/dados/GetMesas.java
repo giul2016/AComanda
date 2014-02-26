@@ -29,7 +29,6 @@ public class GetMesas {
 	protected Context context;
 	protected Fragment fragment;
 	protected View view;
-	String json = null;
 
 	GridView mesas;
 	public static MesaAdapter adapter;
@@ -42,78 +41,88 @@ public class GetMesas {
 		this.view = fragment.getView();
 	}
 
-	public void carregarDadosJson(final Boolean showMsgRefresh) {
-
-		if (showMsgRefresh) {
+	public void carregarMesas() {
+		try {
 			progressDialog = new ProgressDialog(context);
 			progressDialog.setCancelable(false);
 			progressDialog.setMessage("atualizando mapa das mesas...");
 			progressDialog.show();
-		}
 
-		Thread thread = new Thread() {
-			public void run() {
-				if (Utils.isConnected(context)) {
-					String url = Utils.getUrlServico(context)
-							+ "/Api/SituacaoMesas";
-					JSONParser jParser = new JSONParser();
-					json = jParser.getJSONFromUrlString(url);
-
-					((Activity) context).runOnUiThread(new Runnable() {
-						public void run() {
-							List<MesaModel> mesasLista = new ArrayList<MesaModel>();
-							Gson gson = new Gson();
-							mesasLista = gson.fromJson(json,
-									new MesaModel().getType());
-
-							mesas = (GridView) view.findViewById(R.id.list);
-							adapter = new MesaAdapter((Activity) context,
-									mesasLista);
-							mesas.setAdapter(adapter);
-
-							// Click event for single list row
-							mesas.setOnItemClickListener(new OnItemClickListener() {
-								@Override
-								public void onItemClick(AdapterView<?> parent,
-										View view, int position, long id) {
-
-									TextView idItem = (TextView) view
-											.findViewById(R.id.idItem);
-
-									Bundle bun = new Bundle();
-									bun.putString("id",
-											(String) idItem.getText());
-
-									abrirDetalhes(view, bun);
-								}
-
-								private void abrirDetalhes(View view, Bundle bun) {
-									Intent intent = new Intent(view
-											.getContext(),
-											DetailsActivity.class);
-									intent.putExtras(bun);
-									fragment.startActivityForResult(intent, 100);
-								}
-							});
-							if (showMsgRefresh)
-								progressDialog.dismiss();
+			Thread thread = new Thread() {
+				public void run() {
+					try {
+						if (Utils.isConnected(context)) {
+							getMesas();
+						} else {
+							errorConnectServer();
 						}
-					});
-
-				} else {
-					((Activity) context).runOnUiThread(new Runnable() {
-						public void run() {
-							if (showMsgRefresh)
-								progressDialog.dismiss();
-							new Alerta().show(context, "",
-									"Não Foi Localizado o Servidor!"
-											+ "\nCausas:" + "\nConexão OK?"
-											+ "\nServidor correto?");
-						}
-					});
+					} finally {
+						progressDialog.dismiss();
+					}
 				}
+			};
+			thread.start();
+		} catch (Exception e) {
+			progressDialog.dismiss();
+		}
+	}
+
+	public void reload() {
+		if (Utils.isConnected(context)) {
+			getMesas();
+		} else {
+			errorConnectServer();
+		}
+	}
+
+	private void getMesas() {
+		String urlApi = Utils.getUrlServico(context) + "/Api/SituacaoMesas";
+		JSONParser jParser = new JSONParser();
+		final String jsonMesas = jParser.getJSONFromApi(urlApi);
+		((Activity) context).runOnUiThread(new Runnable() {
+			public void run() {					
+				List<MesaModel> mesasLista = new ArrayList<MesaModel>();
+				Gson gson = new Gson();
+				mesasLista = gson.fromJson(jsonMesas, new MesaModel().getType()); // converte pra ArrayList de mesas
+
+				mesas = (GridView) view.findViewById(R.id.list);
+				adapter = new MesaAdapter((Activity) context, mesasLista);
+				mesas.setAdapter(adapter);
+
+				// Click event for single list row
+				mesas.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+
+						TextView idItem = (TextView) view
+								.findViewById(R.id.idItem);
+
+						Bundle bun = new Bundle();
+						bun.putString("id", (String) idItem.getText());
+						abrirDetalhes(view, bun);
+					}
+
+					private void abrirDetalhes(View view, Bundle bun) {
+						Intent intent = new Intent(view.getContext(),
+								DetailsActivity.class);
+						intent.putExtras(bun);
+						fragment.startActivityForResult(intent, 100);
+					}
+				});
 			}
-		};
-		thread.start();
+		});
+	}
+
+	private void errorConnectServer() {
+		// progressDialog.dismiss();
+		((Activity) context).runOnUiThread(new Runnable() {
+			public void run() {
+				new Alerta()
+						.show(context, "", "Não Foi Localizado o Servidor!"
+								+ "\nCausas:" + "\nConexão OK?"
+								+ "\nServidor correto?");
+			}
+		});
 	}
 }

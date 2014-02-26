@@ -38,14 +38,14 @@ public class MainFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		getMesas = new GetMesas(this);
-		getMesas.carregarDadosJson(true);
+		getMesas.carregarMesas();
 		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (Activity.RESULT_OK == resultCode) {
-			getMesas.carregarDadosJson(true);
+			getMesas.carregarMesas();
 		}
 	}
 }

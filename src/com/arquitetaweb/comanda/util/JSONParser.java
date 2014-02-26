@@ -11,43 +11,16 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
 
-import android.app.Activity;
 import android.util.Log;
 
 public class JSONParser {
 
-	static InputStream is = null;
-	static JSONArray jarray = null;
-	static String json = "";
-
 	public JSONParser() {
-	}
+	}	
 
-	public void atualizaMesa(String codigo, String mesa, Activity activity) {
-		HttpClient client = new DefaultHttpClient();
-		HttpPut put = new HttpPut(Utils.getUrlServico(activity)
-				+ "/Api/AtualizarMesa?id=" + mesa + "&situacao=" + codigo);
-
-		try {
-			HttpResponse response = client.execute(put);
-			StatusLine statusLine = response.getStatusLine();
-			int statusCode = statusLine.getStatusCode();
-			if (statusCode == 200) {
-				Log.i("Sucess!", "Sucesso");
-			}
-		} catch (ClientProtocolException e1) {
-			Log.e("Error....", e1.getMessage());
-		} catch (IOException e1) {
-			Log.e("Error....", e1.getMessage());
-		}
-	}
-
-	public String getJSONFromUrlString(String url) {
+	public String getJSONFromApi(String url) {
 		HttpClient client = new DefaultHttpClient();
 		StringBuilder builder = new StringBuilder();
 		HttpGet httpGet = new HttpGet(url);
@@ -74,17 +47,5 @@ public class JSONParser {
 		}
 
 		return builder.toString();
-	}
-
-	public JSONArray getJSONFromUrl(String url) {
-		String builder = new String();		
-		try {
-			builder = getJSONFromUrlString(url);
-			jarray = new JSONArray(builder);
-		} catch (JSONException e) {
-			Log.e("JSON Parser", "Error parsing data " + e.toString());
-		}
-
-		return jarray;
 	}
 }

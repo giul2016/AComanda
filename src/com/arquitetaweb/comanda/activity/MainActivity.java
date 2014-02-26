@@ -292,7 +292,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			GetMesas getMesas = new GetMesas(fragment);
-			getMesas.carregarDadosJson(false);
+			getMesas.reload();
 			return null;
 		}
 

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.util.JSONParser;
+import com.arquitetaweb.comanda.dados.PutMesa;
 
 public class DetailsActivity extends FragmentActivity {
 
@@ -76,21 +76,21 @@ public class DetailsActivity extends FragmentActivity {
 	}
 
 	private class AtualizarMesa extends AsyncTask<String, Void, Void> {
-		private Context myCtx;
+		private Context context;
 
 		@Override
 		protected Void doInBackground(String... params) {
-			final JSONParser jParser = new JSONParser();
-			jParser.atualizaMesa(params[0], params[1], (Activity) myCtx);
+			PutMesa putMesa = new PutMesa();
+			putMesa.atualizaMesa(params[0], params[1], (Activity) context);
 
 			setResult(Activity.RESULT_OK);
 			finish();
 			return null;
 		}
 
-		public AtualizarMesa(Context ctx) {
+		public AtualizarMesa(Context context) {
 			// Now set context
-			this.myCtx = ctx;
+			this.context = context;
 		}
 	}
 
