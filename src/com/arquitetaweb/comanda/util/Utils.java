@@ -8,7 +8,6 @@ import java.net.URLConnection;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 
 import com.arquitetaweb.comanda.model.ConfiguracoesModel;
 
@@ -20,7 +19,7 @@ public class Utils {
 		final NetworkInfo networkInfo = connectivityManager
 				.getActiveNetworkInfo();
 
-		boolean ativo = networkInfo != null && networkInfo.isConnected();
+		boolean ativo = (networkInfo != null && networkInfo.isConnected());
 		if (ativo)
 			return isServerActive(context);
 		return false;
@@ -53,23 +52,25 @@ public class Utils {
 	}
 
 	public static String getUrlServico(Context context) {
-		String product = Build.PRODUCT;
-		boolean isEmulator = false;
-		if (product != null) {
-			isEmulator = product.equals("sdk") || product.contains("_sdk")
-					|| product.contains("sdk_");
-		}
-		if (!isEmulator) {
-			return MontarUrl(context);
-		}
-		return "http://10.0.2.2:81";
+		return MontarUrl(context);
 	}
 
+//	private static boolean isEmulator() {
+//		String product = Build.PRODUCT;
+//		boolean isEmulator = false;
+//		if (product != null) {
+//			isEmulator = product.equals("sdk") || product.contains("_sdk")
+//					|| product.contains("sdk_");
+//		}
+//		return isEmulator;
+//	}
+
 	private static String MontarUrl(Context context) {
-		
-		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);;
-		ConfiguracoesModel configModel = configuracoes.getData();		
-		
+
+		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);
+		;
+		ConfiguracoesModel configModel = configuracoes.getData();
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://");
 		sb.append(configModel.getUrlServico());

@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,36 +62,31 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); // numero
 		TextView situacao = (TextView) vi.findViewById(R.id.situacao); // situacao
 
-		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
+		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);		
+		
+		MesaModel item = new MesaModel();
+		item = data.get(position);
 
-		MesaModel itens = new MesaModel();
-		itens = data.get(position);
-
-		// Setting all values in listview
-		idItem.setText(itens.id.toString());
-		numero_mesa.setText(itens.numeroMesa);
-		situacao.setText(itens.situacao);
-
+		// Setting all values in gridview
+		idItem.setText(item.id.toString());
+		numero_mesa.setText(item.numeroMesa);
+		situacao.setText(item.situacao);
+		
 		numero_mesa.setTextColor(Color.BLACK);
-
 		String _situacao = situacao.getText().toString();
 		if (_situacao.equals("1")) {
-			layout.setBackgroundColor(Color.GREEN);
+			layout.setBackgroundResource(R.drawable.item_round_green);
 			situacao.setTextColor(Color.parseColor("#008000"));
-			// situacao_mesa.setImageResource(R.drawable.ic_link_github);
 		} else if (_situacao.equals("2")) {
-			layout.setBackgroundColor(Color.RED);
+			layout.setBackgroundResource(R.drawable.item_round_red);
 			situacao.setTextColor(Color.parseColor("#FF0000"));
 			numero_mesa.setTextColor(Color.WHITE);
-			// situacao_mesa.setImageResource(R.drawable.ic_link_evernote);
 		} else if (_situacao.equals("7")) {
-			layout.setBackgroundColor(Color.YELLOW);
+			layout.setBackgroundResource(R.drawable.item_round_blue);
 			situacao.setTextColor(Color.parseColor("#000080"));
-			// situacao_mesa.setImageResource(R.drawable.ic_link_stackoverflow);
 		} else {
 			layout.setBackgroundColor(Color.CYAN);
 			situacao.setTextColor(Color.parseColor("#000080"));
-			// situacao_mesa.setImageResource(R.drawable.ic_link_lastfm);
 		}
 
 		return vi;
