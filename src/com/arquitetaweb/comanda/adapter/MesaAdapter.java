@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,17 +74,17 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		numero_mesa.setTextColor(Color.BLACK);
 		String _situacao = situacao.getText().toString();
 		if (_situacao.equals("1")) {
-			layout.setBackgroundResource(R.drawable.item_round_green);
+			layout.setBackgroundResource(R.drawable.bg_item_round_green);
 			situacao.setTextColor(Color.parseColor("#008000"));
 		} else if (_situacao.equals("2")) {
-			layout.setBackgroundResource(R.drawable.item_round_red);
+			layout.setBackgroundResource(R.drawable.bg_item_round_red);
 			situacao.setTextColor(Color.parseColor("#FF0000"));
 			numero_mesa.setTextColor(Color.WHITE);
 		} else if (_situacao.equals("7")) {
-			layout.setBackgroundResource(R.drawable.item_round_blue);
+			layout.setBackgroundResource(R.drawable.bg_item_round_blue);
 			situacao.setTextColor(Color.parseColor("#000080"));
 		} else {
-			layout.setBackgroundColor(Color.CYAN);
+			layout.setBackgroundResource(R.drawable.bg_item_round_cyan);
 			situacao.setTextColor(Color.parseColor("#000080"));
 		}
 

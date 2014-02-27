@@ -67,8 +67,7 @@ public class Utils {
 
 	private static String MontarUrl(Context context) {
 
-		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);
-		;
+		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);		
 		ConfiguracoesModel configModel = configuracoes.getData();
 
 		StringBuilder sb = new StringBuilder();
