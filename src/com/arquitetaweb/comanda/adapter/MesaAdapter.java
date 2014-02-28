@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,8 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); // numero
 		TextView situacao = (TextView) vi.findViewById(R.id.situacao); // situacao
 
-		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);		
+		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);	
+		GradientDrawable bgShape = (GradientDrawable)layout.getBackground();
 		
 		MesaModel item = new MesaModel();
 		item = data.get(position);
@@ -74,18 +76,14 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		numero_mesa.setTextColor(Color.BLACK);
 		String _situacao = situacao.getText().toString();
 		if (_situacao.equals("1")) {
-			layout.setBackgroundResource(R.drawable.bg_mesa_round_green);
-			situacao.setTextColor(Color.parseColor("#008000"));
+			bgShape.setColor(Color.parseColor("#43CD80")); // green
 		} else if (_situacao.equals("2")) {
-			layout.setBackgroundResource(R.drawable.bg_mesa_round_red);
-			situacao.setTextColor(Color.parseColor("#FF0000"));
-			numero_mesa.setTextColor(Color.WHITE);
+			bgShape.setColor(Color.parseColor("#FF4040"));			
+			numero_mesa.setTextColor(Color.WHITE);					
 		} else if (_situacao.equals("7")) {
-			layout.setBackgroundResource(R.drawable.bg_mesa_round);
-			situacao.setTextColor(Color.parseColor("#000080"));
+			bgShape.setColor(Color.parseColor("#C5C1AA"));			
 		} else {
-			layout.setBackgroundResource(R.drawable.bg_mesa_round);
-			situacao.setTextColor(Color.parseColor("#000080"));
+			bgShape.setColor(Color.parseColor("#FF69B4"));
 		}
 
 		return vi;
