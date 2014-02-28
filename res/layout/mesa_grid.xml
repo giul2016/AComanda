@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mesa"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:background="@drawable/bg_mesa_round"
+    android:layout_width="50dip"
+    android:layout_height="50dip"
     android:layout_centerHorizontal="true"
     android:gravity="start" 
     android:orientation="horizontal"

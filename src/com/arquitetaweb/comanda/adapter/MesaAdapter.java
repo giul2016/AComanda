@@ -74,17 +74,17 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		numero_mesa.setTextColor(Color.BLACK);
 		String _situacao = situacao.getText().toString();
 		if (_situacao.equals("1")) {
-			layout.setBackgroundResource(R.drawable.bg_item_round_green);
+			layout.setBackgroundResource(R.drawable.bg_mesa_round_green);
 			situacao.setTextColor(Color.parseColor("#008000"));
 		} else if (_situacao.equals("2")) {
-			layout.setBackgroundResource(R.drawable.bg_item_round_red);
+			layout.setBackgroundResource(R.drawable.bg_mesa_round_red);
 			situacao.setTextColor(Color.parseColor("#FF0000"));
 			numero_mesa.setTextColor(Color.WHITE);
 		} else if (_situacao.equals("7")) {
-			layout.setBackgroundResource(R.drawable.bg_item_round_blue);
+			layout.setBackgroundResource(R.drawable.bg_mesa_round);
 			situacao.setTextColor(Color.parseColor("#000080"));
 		} else {
-			layout.setBackgroundResource(R.drawable.bg_item_round_cyan);
+			layout.setBackgroundResource(R.drawable.bg_mesa_round);
 			situacao.setTextColor(Color.parseColor("#000080"));
 		}
 
