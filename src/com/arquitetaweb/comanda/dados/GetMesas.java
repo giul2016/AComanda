@@ -8,12 +8,10 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailsActivity;
@@ -80,7 +78,7 @@ public class GetMesas {
 		JSONParser jParser = new JSONParser();
 		final String jsonMesas = jParser.getJSONFromApi(urlApi);
 		((Activity) context).runOnUiThread(new Runnable() {
-			public void run() {					
+			public void run() {
 				List<MesaModel> mesasLista = new ArrayList<MesaModel>();
 				Gson gson = new Gson();
 				mesasLista = gson.fromJson(jsonMesas, new MesaModel().getType()); // converte pra ArrayList de mesas
@@ -95,18 +93,14 @@ public class GetMesas {
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 
-						TextView idItem = (TextView) view
-								.findViewById(R.id.idItem);
-						
 						abrirDetalhes(view, position);
 					}
 
-					private void abrirDetalhes(View view, Integer position) {
+					private void abrirDetalhes(View view, Integer idMesa) {
 						Intent intent = new Intent(view.getContext(),
 								DetailsActivity.class);
-						//intent.putExtra("id", bun);				
-						// tentar passar o objeto para outra activity
-						MesaModel mesaObj = adapter.getItem(position);	
+ 
+						MesaModel mesaObj = adapter.getItem(idMesa);
 						String mesaGson = new Gson().toJson(mesaObj);
 						intent.putExtra("mesa", mesaGson);
 						fragment.startActivityForResult(intent, 100);

@@ -83,7 +83,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		} else if (_situacao.equals("7")) {
 			bgShape.setColor(Color.parseColor("#C5C1AA"));
 		} else {
-			bgShape.setColor(Color.parseColor("#FF69B4"));
+			bgShape.setColor(Color.parseColor("#EEFF44"));
 		}
 
 		return vi;
@@ -91,7 +91,6 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 	@Override
 	public Filter getFilter() {
-		// TODO Auto-generated method stub
 		return new Filter() {
 
 			@Override

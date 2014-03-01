@@ -31,32 +31,39 @@ public class DetailsActivity extends FragmentActivity {
 		ActionBar actionBar = getActionBar();
 		// Enabling Back navigation on Action Bar icon
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
+
 		Gson gson = new Gson();
-		MesaModel mesa = gson.fromJson(getIntent().getStringExtra("mesa"), MesaModel.class); // converte pra ArrayList de mesas
-		final String idString = mesa.id.toString();
-		
-		final TextView id = (TextView) findViewById(R.id.teste);
-		id.setText(idString);
+		MesaModel mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
+				MesaModel.class); // converte pra ArrayList de mesas
+		final String idMesa = mesa.id.toString();
+
+		TextView txtIdMesa = (TextView) findViewById(R.id.idMesa);
+		txtIdMesa.setText("Id Mesa: " + idMesa);
+
+		TextView txtNumeroMesa = (TextView) findViewById(R.id.idNumeroMesa);
+		txtNumeroMesa.setText("Número Mesa: " + mesa.numeroMesa);
+
+		TextView txtSituacaoMesa = (TextView) findViewById(R.id.idSituacao);
+		txtSituacaoMesa.setText("Situação Mesa: " + mesa.situacao);
 
 		final Button btnLivre = (Button) findViewById(R.id.btnLivre);
 		btnLivre.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				atualizarMesa(idString, "1");	
+				atualizarMesa(idMesa, "1");
 			}
 		});
 
 		final Button btnOcupada = (Button) findViewById(R.id.btnCcupada);
 		btnOcupada.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				atualizarMesa(idString, "2");
+				atualizarMesa(idMesa, "2");
 			}
 		});
 
 		final Button btnOciosa = (Button) findViewById(R.id.btnOciosa);
 		btnOciosa.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {				
-				atualizarMesa(idString, "7");
+			public void onClick(View v) {
+				atualizarMesa(idMesa, "7");
 			}
 		});
 	}
@@ -66,7 +73,7 @@ public class DetailsActivity extends FragmentActivity {
 		putMesa.atualizaMesa(idMesa, situacao);
 		return null;
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
