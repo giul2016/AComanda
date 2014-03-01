@@ -97,18 +97,16 @@ public class GetMesas {
 
 						TextView idItem = (TextView) view
 								.findViewById(R.id.idItem);
-
-						Bundle bun = new Bundle();
-						bun.putString("id", (String) idItem.getText());
-						abrirDetalhes(view, bun);
+						
+						abrirDetalhes(view, position);
 					}
 
-					private void abrirDetalhes(View view, Bundle bun) {
+					private void abrirDetalhes(View view, Integer position) {
 						Intent intent = new Intent(view.getContext(),
 								DetailsActivity.class);
-						intent.putExtra("id", bun);				
+						//intent.putExtra("id", bun);				
 						// tentar passar o objeto para outra activity
-						MesaModel mesaObj = adapter.getItem(1);	a
+						MesaModel mesaObj = adapter.getItem(position);	
 						String mesaGson = new Gson().toJson(mesaObj);
 						intent.putExtra("mesa", mesaGson);
 						fragment.startActivityForResult(intent, 100);
