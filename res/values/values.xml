@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>    
-    <dimen name="dimension_margin_grid_itens">12dip</dimen>
+	<dimen name="dimension_margin_grid_itens">12dip</dimen>    
+    <dimen name="dimension_margin_top_bottom_grid_itens">2dip</dimen>
 </resources>

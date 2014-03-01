@@ -10,31 +10,83 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.arquitetaweb.comanda.util.Utils;
+import com.arquitetaweb.comum.messages.Alerta;
 
 public class PutMesa {
-	
-	public PutMesa() {		
+
+	protected Activity activity;
+
+	public PutMesa(Activity activity) {
+		this.activity = activity;
 	}
 
-	public void atualizaMesa(String codigo, String mesa, Activity activity) {
-		HttpClient client = new DefaultHttpClient();
-		HttpPut put = new HttpPut(Utils.getUrlServico(activity)
-				+ "/Api/AtualizarMesa?id=" + mesa + "&situacao=" + codigo);
+	public void atualizaMesa(String mesa, String situacao) {
+		new AtualizaMesa().execute(mesa, situacao);
+	}
 
-		try {
-			HttpResponse response = client.execute(put);
-			StatusLine statusLine = response.getStatusLine();
-			int statusCode = statusLine.getStatusCode();
-			if (statusCode == 200) {
-				Log.i("Sucess!", "Sucesso");
+	private void errorConnectServer() {
+		// progressDialog.dismiss();
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				new Alerta().show(activity, "",
+						"Não Foi Localizado o Servidor!");
 			}
-		} catch (ClientProtocolException e1) {
-			Log.e("Error....", e1.getMessage());
-		} catch (IOException e1) {
-			Log.e("Error....", e1.getMessage());
+		});
+	}
+
+	private class AtualizaMesa extends AsyncTask<String, Void, Boolean> {
+		protected ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage("enviando dados...");
+			progressDialog.show();
 		}
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			if (Utils.isConnected(activity)) {
+				try {
+					HttpClient client = new DefaultHttpClient();
+					HttpPut put = new HttpPut(Utils.getUrlServico(activity)
+							+ "/Api/AtualizarMesa?id=" + params[0]
+							+ "&situacao=" + params[1]);
+
+					HttpResponse response = client.execute(put);
+					StatusLine statusLine = response.getStatusLine();
+					int statusCode = statusLine.getStatusCode();
+					if (statusCode == 200) {
+						Log.i("Sucess!", "Sucesso");
+					}
+				} catch (ClientProtocolException e1) {
+					Log.e("ClientProtocolException....", e1.getMessage());
+				} catch (IOException e1) {
+					Log.e("IOException....", e1.getMessage());
+				}
+			} else {
+				errorConnectServer();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {			
+			super.onPostExecute(result);
+			progressDialog.dismiss();
+			if (result) {
+				activity.setResult(Activity.RESULT_OK);
+				activity.finish();				
+			}			
+		}
+
 	}
 }

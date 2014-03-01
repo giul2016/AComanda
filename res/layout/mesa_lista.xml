@@ -2,20 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" >   
 
     <GridView
         android:id="@+id/list"
-        android:layout_marginTop="2dip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dimension_margin_top_bottom_grid_itens"
         android:layout_marginLeft="@dimen/dimension_margin_grid_itens"
         android:layout_marginRight="@dimen/dimension_margin_grid_itens"
+        android:layout_marginTop="@dimen/dimension_margin_top_bottom_grid_itens"
+        android:columnWidth="60dp"
+        android:gravity="center"
         android:horizontalSpacing="@dimen/dimension_margin_grid_itens"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:columnWidth="60dp"       
-        android:gravity="center"        
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="8dp" />
+        android:verticalSpacing="8dip" />
 
 </LinearLayout>

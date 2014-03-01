@@ -56,15 +56,15 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null) {
-			vi = inflater.inflate(R.layout.mesa_grid, null);
+			vi = inflater.inflate(R.layout.mesa_info, null);
 		}
 		TextView idItem = (TextView) vi.findViewById(R.id.idItem); // id
 		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); // numero
 		TextView situacao = (TextView) vi.findViewById(R.id.situacao); // situacao
 
-		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);	
-		GradientDrawable bgShape = (GradientDrawable)layout.getBackground();
-		
+		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
+		GradientDrawable bgShape = (GradientDrawable) layout.getBackground();
+
 		MesaModel item = new MesaModel();
 		item = data.get(position);
 
@@ -72,16 +72,16 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		idItem.setText(item.id.toString());
 		numero_mesa.setText(item.numeroMesa);
 		situacao.setText(item.situacao);
-		
+
 		numero_mesa.setTextColor(Color.BLACK);
 		String _situacao = situacao.getText().toString();
 		if (_situacao.equals("1")) {
 			bgShape.setColor(Color.parseColor("#43CD80")); // green
 		} else if (_situacao.equals("2")) {
-			bgShape.setColor(Color.parseColor("#FF4040"));			
-			numero_mesa.setTextColor(Color.WHITE);					
+			bgShape.setColor(Color.parseColor("#FF4040"));
+			numero_mesa.setTextColor(Color.WHITE);
 		} else if (_situacao.equals("7")) {
-			bgShape.setColor(Color.parseColor("#C5C1AA"));			
+			bgShape.setColor(Color.parseColor("#C5C1AA"));
 		} else {
 			bgShape.setColor(Color.parseColor("#FF69B4"));
 		}
@@ -99,10 +99,10 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 				FilterResults results = new FilterResults();
 				List<MesaModel> FilteredByNumero = new ArrayList<MesaModel>();
 
-				if(dataOriginal == null){
+				if (dataOriginal == null) {
 					dataOriginal = new ArrayList<MesaModel>(data);
-                }
-				
+				}
+
 				if (prefix == null || prefix.length() == 0) {
 					results.count = dataOriginal.size();
 					results.values = dataOriginal;
@@ -128,12 +128,11 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 			@Override
 			protected void publishResults(CharSequence constraint,
 					FilterResults results) {
-	
-				//dataOriginal = (List<MesaModel>) results.values;
+
+				// dataOriginal = (List<MesaModel>) results.values;
 				data = (List<MesaModel>) results.values;
 				notifyDataSetChanged();
 			}
 		};
 	}
-
 }

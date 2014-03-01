@@ -164,7 +164,9 @@ public class MainActivity extends Activity {
 						intent.putExtras(bun);
 						fragment.startActivityForResult(intent, 100);
 					} else {
-						new AlertaToast().show(fragment.getActivity(), "Nenhuma mesa localizada pelo critério: " + arg0 + "\nVerifique sua consulta.");
+						new AlertaToast().show(fragment.getActivity(),
+								"Nenhuma mesa localizada pelo critério: "
+										+ arg0 + "\nVerifique sua consulta.");
 					}
 					return true;
 				}
