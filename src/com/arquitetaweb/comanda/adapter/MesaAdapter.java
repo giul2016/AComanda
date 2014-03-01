@@ -38,8 +38,8 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return position;
+	public MesaModel getItem(int position) {
+		return data.get(position);
 	}
 
 	@Override
