@@ -1,0 +1,22 @@
+Grupo Itens
+	- Aperitivos
+	- Bebidas
+		- Cerveja Brahma 600
+		- Cerveja Skol 600
+		- Coca Cola
+			- Limao
+			- Limao c/ Gelo
+	- Porcoes
+	- Couvert
+	- Massas
+	- Rodizios
+	- Molhos	
+	- Peixes
+	- Pratos
+	- Observacoes
+		- Sem Salada
+		- Sem Sal
+		- Menos Feijão
+	- Complementos
+		- Limao
+		- Limao c/ Gelo
