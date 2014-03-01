@@ -1,7 +1,6 @@
 package com.arquitetaweb.comanda.activity;
 
 import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,8 +18,6 @@ public class DetailsActivity extends FragmentActivity {
 	private static final String AUTHORITY = "details";
 	public static final Uri URI = new Uri.Builder().scheme(SCHEME)
 			.authority(AUTHORITY).build();
-
-	ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

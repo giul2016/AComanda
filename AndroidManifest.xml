@@ -20,7 +20,7 @@
             android:label="@string/app_name" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.arquitetaweb.comanda.activity.SearchResultsActivity" />
+                android:value="com.arquitetaweb.comanda.activity.SearchDummiesActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
 
         <!-- Search results activity -->
         <activity
-            android:name="com.arquitetaweb.comanda.activity.SearchResultsActivity"
+            android:name="com.arquitetaweb.comanda.activity.SearchDummiesActivity"
             android:parentActivityName="com.arquitetaweb.comanda.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

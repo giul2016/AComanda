@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -30,7 +31,6 @@ public class PutMesa {
 	}
 
 	private void errorConnectServer() {
-		// progressDialog.dismiss();
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
 				new Alerta().show(activity, "",
@@ -45,7 +45,7 @@ public class PutMesa {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = new ProgressDialog(activity);
+			progressDialog = new ProgressDialog(activity, AlertDialog.THEME_HOLO_DARK);
 			progressDialog.setCancelable(false);
 			progressDialog.setMessage("enviando dados...");
 			progressDialog.show();
