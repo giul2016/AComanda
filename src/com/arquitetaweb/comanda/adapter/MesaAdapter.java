@@ -70,7 +70,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 		// Setting all values in gridview
 		idItem.setText(item.id.toString());
-		numero_mesa.setText(item.numeroMesa);
+		numero_mesa.setText(item.numero_mesa);
 		situacao.setText(item.situacao);
 
 		numero_mesa.setTextColor(Color.BLACK);
@@ -109,7 +109,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 					for (int i = 0; i < dataOriginal.size(); i++) {
 						MesaModel mesaObject = dataOriginal.get(i);
 						// pesquisa pelo numero da mesa
-						if (mesaObject.numeroMesa.startsWith(prefix.toString())) {
+						if (mesaObject.numero_mesa.startsWith(prefix.toString())) {
 							FilteredByNumero.add(mesaObject);
 						}
 					}

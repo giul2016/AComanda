@@ -46,7 +46,7 @@ public class DetailsActivity extends FragmentActivity {
 		txtIdMesa.setText("Id Mesa: " + idMesa);
 
 		TextView txtNumeroMesa = (TextView) findViewById(R.id.idNumeroMesa);
-		txtNumeroMesa.setText("Número Mesa: " + mesa.numeroMesa);
+		txtNumeroMesa.setText("Número Mesa: " + mesa.numero_mesa);
 
 		TextView txtSituacaoMesa = (TextView) findViewById(R.id.idSituacao);
 		txtSituacaoMesa.setText("Situação Mesa: " + mesa.situacao);

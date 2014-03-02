@@ -56,14 +56,14 @@
             android:layout_height="wrap_content"
             android:baselineAligned="true" >
 
-            <EditText
-                android:id="@+id/edtUrlServico"
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteUrlServico"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:ems="10"
-                android:inputType="text|textUri"                
-                android:text="@string/txtUrlServico" />
+                android:text="@string/txtUrlServico" >
+            </AutoCompleteTextView>
 
             <TextView
                 android:id="@+id/lblSeparator"

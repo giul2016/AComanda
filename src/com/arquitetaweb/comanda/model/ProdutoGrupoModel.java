@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-public class MesaModel {
+public class ProdutoGrupoModel {
 	@SerializedName("Id")
 	public Long id;
 	
-	@SerializedName("NumeroMesa")
-    public String numero_mesa;
+	@SerializedName("Codigo")
+    public String codigo;
 	
-	@SerializedName("Situacao")
-    public String situacao;
+	@SerializedName("Descricao")
+    public String descricao;
 
 	public Type getType() {
-		return new TypeToken<ArrayList<MesaModel>>(){}.getType();
+		return new TypeToken<ArrayList<ProdutoGrupoModel>>(){}.getType();
 	}
 }
