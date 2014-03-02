@@ -14,8 +14,8 @@ public class GarcomModel {
     public String nome;
 	
 	@SerializedName("Senha")
-    public String senha;
-
+    public String senha;	
+	
 	public Type getType() {
 		return new TypeToken<ArrayList<GarcomModel>>(){}.getType();
 	}
