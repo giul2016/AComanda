@@ -36,7 +36,7 @@ public class GetMesas {
 	public GetMesas(Fragment fragment) {
 		this.fragment = fragment;
 		this.context = fragment.getActivity();
-		this.view = fragment.getView();
+		this.view = fragment.getView();		
 	}
 
 	public void carregarMesas() {
@@ -55,13 +55,15 @@ public class GetMesas {
 							errorConnectServer();
 						}
 					} finally {
-						progressDialog.dismiss();
+						if (progressDialog != null)
+							progressDialog.dismiss();
 					}
 				}
 			};
 			thread.start();
 		} catch (Exception e) {
-			progressDialog.dismiss();
+			if (progressDialog != null)
+				progressDialog.dismiss();
 		}
 	}
 

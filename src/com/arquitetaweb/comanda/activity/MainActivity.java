@@ -34,8 +34,10 @@ import com.arquitetaweb.comanda.fragment.AboutFragment;
 import com.arquitetaweb.comanda.fragment.MainFragment;
 import com.arquitetaweb.comanda.fragment.SettingsFragment;
 import com.arquitetaweb.comanda.fragment.SincronizationFragment;
+import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.util.KeyboardAction;
 import com.arquitetaweb.comum.messages.AlertaToast;
+import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
 
@@ -113,6 +115,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void clearSearch() {
+		kb.hide(this);
 		if ((Build.VERSION.SDK_INT >= 11)
 				&& (currentFragmentTag.equals(MainFragment.TAG))) {
 			searchView.setQuery("", false);
@@ -157,13 +160,12 @@ public class MainActivity extends Activity {
 					MesaAdapter mesaAdapter = (MesaAdapter) mesaGrid
 							.getAdapter();
 					if (mesaAdapter.getCount() > 0) {
-						Long idItem = mesaAdapter.getItemId(0);
+						MesaModel mesaObj = mesaAdapter.getItem(0);
+						String mesaGson = new Gson().toJson(mesaObj);
 
-						Bundle bun = new Bundle();
-						bun.putString("id", idItem.toString());
 						Intent intent = new Intent(fragment.getView()
 								.getContext(), DetailsActivity.class);
-						intent.putExtras(bun);
+						intent.putExtra("mesa", mesaGson);
 						fragment.startActivityForResult(intent, 100);
 					} else {
 						new AlertaToast().show(fragment.getActivity(),
@@ -172,10 +174,8 @@ public class MainActivity extends Activity {
 					}
 					return true;
 				}
-
 			});
 		}
-
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -190,8 +190,7 @@ public class MainActivity extends Activity {
 		menu.findItem(R.id.action_refresh_mapa).setVisible(!drawerOpen);
 		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
 
-		clearSearch();
-		kb.hide(this);
+		clearSearch();		
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -202,27 +201,14 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action buttons
+		
 		switch (item.getItemId()) {
 		case R.id.action_refresh_mapa:
-			// // create intent to perform web search for this planet
-			// Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-			// intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-			// // catch event that there's no activity to handle intent
-			// if (intent.resolveActivity(getPackageManager()) != null) {
-			// startActivity(intent);
-			// } else {
-			// Toast.makeText(this, R.string.app_not_available,
-			// Toast.LENGTH_LONG).show();
-			// }
-
 			refreshMenuItem = item;
-			// load the data from server
 			new SyncData().execute();
 			clearSearch();
 			return true;
 		case R.id.action_search:
-			// openSearch();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -304,6 +290,8 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putString(STATE_URI, currentUri.toString());
 		outState.putString(STATE_FRAGMENT_TAG, currentFragmentTag);
+		
+		clearSearch();				
 		super.onSaveInstanceState(outState);
 	}
 
