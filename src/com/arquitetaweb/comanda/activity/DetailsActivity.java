@@ -15,7 +15,7 @@ import com.arquitetaweb.comanda.model.MesaModel;
 import com.google.gson.Gson;
 
 public class DetailsActivity extends FragmentActivity {
-
+ 
 	private static final String SCHEME = "settings";
 	private static final String AUTHORITY = "details";
 	public static final Uri URI = new Uri.Builder().scheme(SCHEME)
