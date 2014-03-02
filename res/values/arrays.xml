@@ -1,17 +1,20 @@
 <resources>
     <string-array name="actions_names">
         <item>@string/action_mesas</item>
-        <item>@string/action_settings</item>
+        <item>@string/action_synchronize</item>
+        <item>@string/action_settings</item>        
         <item>@string/action_about</item>
     </string-array>
     <string-array name="actions_titles">
-        <item>@string/action_mesas</item>
+        <item>@string/action_mesas</item>        
+        <item>@string/action_synchronize</item>
         <item>@string/action_settings</item>
         <item>@string/action_about</item>
     </string-array>
     <string-array name="actions_link">
         <item>category://mesas</item>
-        <item>category://settings</item>
-        <item>settings://about</item>
+        <item>settings://synchronize</item>
+        <item>settings://general</item>        
+        <item>category://about</item>
     </string-array>   
 </resources>

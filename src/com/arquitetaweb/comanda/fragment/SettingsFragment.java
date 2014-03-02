@@ -18,9 +18,9 @@ import com.arquitetaweb.comum.messages.SucessoToast;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 	public static final String TAG = SettingsFragment.class.getSimpleName();
-	private static final String SETTINGS_SCHEME = "category";
-	private static final String SETTINGS_AUTHORITY = "settings";
-	public static final Uri SETTINGS_URI = new Uri.Builder()
+	private static final String SETTINGS_SCHEME = "settings";
+	private static final String SETTINGS_AUTHORITY = "general";
+	public static final Uri GENERAL_SETTINGS_URI = new Uri.Builder()
 			.scheme(SETTINGS_SCHEME).authority(SETTINGS_AUTHORITY).build();
 
 	private View viewRoot;

@@ -30,8 +30,10 @@ import android.widget.SearchView.OnQueryTextListener;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetMesas;
+import com.arquitetaweb.comanda.fragment.AboutFragment;
 import com.arquitetaweb.comanda.fragment.MainFragment;
 import com.arquitetaweb.comanda.fragment.SettingsFragment;
+import com.arquitetaweb.comanda.fragment.SincronizationFragment;
 import com.arquitetaweb.comanda.util.KeyboardAction;
 import com.arquitetaweb.comum.messages.AlertaToast;
 
@@ -240,12 +242,18 @@ public class MainActivity extends Activity {
 	}
 
 	private void selectItem(Uri uri) {
-		if (SettingsFragment.SETTINGS_URI.equals(uri)) {
+		if (SettingsFragment.GENERAL_SETTINGS_URI.equals(uri)) {
 			currentFragmentTag = SettingsFragment.TAG;
 			fragment = new SettingsFragment();
 		} else if (MainFragment.MESAS_URI.equals(uri)) {
 			currentFragmentTag = MainFragment.TAG;
 			fragment = new MainFragment();
+		} else if (AboutFragment.ABOUT_URI.equals(uri)) {
+			currentFragmentTag = AboutFragment.TAG;
+			fragment = new AboutFragment();
+		} else if (SincronizationFragment.SINCRONIZATION_URI.equals(uri)) {
+			currentFragmentTag = SincronizationFragment.TAG;
+			fragment = new SincronizationFragment();
 		} else {
 			currentFragmentTag = MainFragment.TAG;
 			fragment = new MainFragment();
