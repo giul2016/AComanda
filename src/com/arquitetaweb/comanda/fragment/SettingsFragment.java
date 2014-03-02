@@ -56,7 +56,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 		portaServico = (EditText) viewRoot.findViewById(R.id.edtPortaServico);
 		configuracoes = new ReadSaveConfiguracoes(this.getActivity());
 
-		carregarDados();
+		initSettings();
 		initAutoComplete();
 		
 		Button btnSalvar = (Button) viewRoot.findViewById(R.id.btnSalvarConfig);
@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 		urlServico.setAdapter(adapter);
 	}
 
-	private void carregarDados() {
+	private void initSettings() {
 		configModel = configuracoes.getData();
 		urlServico.setText(configModel.getUrlServico());
 		portaServico.setText(configModel.getPortaServico().toString());

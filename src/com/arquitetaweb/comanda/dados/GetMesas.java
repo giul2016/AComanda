@@ -25,11 +25,10 @@ import com.google.gson.Gson;
 
 public class GetMesas {
 
-	protected Context context;
-	protected Fragment fragment;
-	protected View view;
-	protected ProgressDialog progressDialog;
-	
+	private Context context;
+	private Fragment fragment;
+	private View view;
+	private ProgressDialog progressDialog;	
 	private GridView mesas;	
 	private MesaAdapter adapter;	
 
@@ -45,7 +44,6 @@ public class GetMesas {
 	}
 
 	private class CarregaMesa extends AsyncTask<String, Void, Boolean> {
-		// protected ProgressDialog progressDialog;
 
 		@Override
 		protected void onPreExecute() {
@@ -58,45 +56,7 @@ public class GetMesas {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			if (Utils.isConnected(context)) {
-				String urlApi = Utils.getUrlServico(context)
-						+ "/Api/SituacaoMesas";
-				JSONParser jParser = new JSONParser();
-				final String jsonMesas = jParser.getJSONFromApi(urlApi);
-				((Activity) context).runOnUiThread(new Runnable() {
-					public void run() {
-						List<MesaModel> mesasLista = new ArrayList<MesaModel>();
-						Gson gson = new Gson();
-						mesasLista = gson.fromJson(jsonMesas,
-								new MesaModel().getType()); // converte pra
-															// ArrayList de
-															// mesas
-
-						mesas = (GridView) view.findViewById(R.id.list);
-						adapter = new MesaAdapter((Activity) context,
-								mesasLista);
-						mesas.setAdapter(adapter);
-
-						// Click event for single list row
-						mesas.setOnItemClickListener(new OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent,
-									View view, int position, long id) {
-
-								abrirDetalhes(view, position);
-							}
-
-							private void abrirDetalhes(View view, Integer idMesa) {
-								Intent intent = new Intent(view.getContext(),
-										DetailsActivity.class);
-
-								MesaModel mesaObj = adapter.getItem(idMesa);
-								String mesaGson = new Gson().toJson(mesaObj);
-								intent.putExtra("mesa", mesaGson);
-								fragment.startActivityForResult(intent, 100);
-							}
-						});
-					}
-				});
+				getMesas();
 			} else {
 				errorConnectServer();
 			}
