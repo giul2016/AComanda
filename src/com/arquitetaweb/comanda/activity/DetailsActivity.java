@@ -1,6 +1,7 @@
 package com.arquitetaweb.comanda.activity;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,11 +17,15 @@ import com.google.gson.Gson;
 
 public class DetailsActivity extends FragmentActivity {
  
+	private ProgressDialog progressDialog;	
+	
 	private static final String SCHEME = "settings";
 	private static final String AUTHORITY = "details";
+	
 	public static final Uri URI = new Uri.Builder().scheme(SCHEME)
 			.authority(AUTHORITY).build();
-
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,7 +74,8 @@ public class DetailsActivity extends FragmentActivity {
 	}
 
 	private Void atualizarMesa(String idMesa, String situacao) {
-		PutMesa putMesa = new PutMesa(DetailsActivity.this);
+		progressDialog = new ProgressDialog(this); 
+		PutMesa putMesa = new PutMesa(DetailsActivity.this,progressDialog);
 		putMesa.atualizaMesa(idMesa, situacao);
 		return null;
 	}
@@ -83,6 +89,15 @@ public class DetailsActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		onBackPressed();
 		return true;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
+		super.onDestroy();
 	}
 
 }

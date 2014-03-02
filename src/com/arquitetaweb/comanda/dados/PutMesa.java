@@ -10,7 +10,6 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,11 +18,13 @@ import com.arquitetaweb.comanda.util.Utils;
 import com.arquitetaweb.comum.messages.Alerta;
 
 public class PutMesa {
-
+	
+	protected ProgressDialog progressDialog;
 	protected Activity activity;
 
-	public PutMesa(Activity activity) {
+	public PutMesa(Activity activity, ProgressDialog progressDialog) {
 		this.activity = activity;
+		this.progressDialog = progressDialog;
 	}
 
 	public void atualizaMesa(String mesa, String situacao) {
@@ -40,12 +41,10 @@ public class PutMesa {
 	}
 
 	private class AtualizaMesa extends AsyncTask<String, Void, Boolean> {
-		protected ProgressDialog progressDialog;
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = new ProgressDialog(activity, AlertDialog.THEME_HOLO_DARK);
+
 			progressDialog.setCancelable(false);
 			progressDialog.setMessage("enviando dados...");
 			progressDialog.show();
@@ -79,13 +78,13 @@ public class PutMesa {
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result) {			
+		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 			progressDialog.dismiss();
 			if (result) {
 				activity.setResult(Activity.RESULT_OK);
-				activity.finish();				
-			}			
+				activity.finish();
+			}
 		}
 	}
 }

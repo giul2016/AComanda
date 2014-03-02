@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import com.arquitetaweb.comanda.R;
 
-public class SincronizationFragment extends Fragment implements View.OnClickListener {
-	public static final String TAG = SincronizationFragment.class.getSimpleName();
+public class SincronizationFragment extends Fragment implements
+		View.OnClickListener {
+	public static final String TAG = SincronizationFragment.class
+			.getSimpleName();
 	private static final String SETTINGS_SCHEME = "settings";
 	private static final String SETTINGS_AUTHORITY = "synchronize";
 	public static final Uri SINCRONIZATION_URI = new Uri.Builder()
@@ -32,11 +34,12 @@ public class SincronizationFragment extends Fragment implements View.OnClickList
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		viewRoot = inflater.inflate(R.layout.sincronization, container, false);
+
 		return viewRoot;
 	}
 
 	@Override
 	public void onClick(View v) {
-		
-	}	
+
+	}
 }

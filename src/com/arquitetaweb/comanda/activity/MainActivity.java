@@ -40,22 +40,23 @@ import com.arquitetaweb.comum.messages.AlertaToast;
 import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
-
+	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private SearchView searchView;
 
 	private CharSequence mDrawerTitle;
-	private CharSequence mTitle;
+	private CharSequence mTitle; 
 	private String[] mActionTitles;
-	private Fragment fragment = null;
-	private String currentFragmentTag = null;
+	
+	private SearchView searchView;
 	private KeyboardAction kb = new KeyboardAction();
-
+	
 	// Refresh menu item
 	private MenuItem refreshMenuItem;
-
+	
+	private Fragment fragment = null;
+	private String currentFragmentTag = null;
 	private static final String STATE_URI = "state:uri";
 	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
 	private Uri currentUri = MainFragment.MESAS_URI;
@@ -111,6 +112,7 @@ public class MainActivity extends Activity {
 			currentFragmentTag = savedInstanceState
 					.getString(STATE_FRAGMENT_TAG);
 		}
+		 
 		selectItem(currentUri);
 	}
 
@@ -318,5 +320,5 @@ public class MainActivity extends Activity {
 			// remove the progress bar view
 			refreshMenuItem.setActionView(null);
 		}
-	};
+	};		
 }

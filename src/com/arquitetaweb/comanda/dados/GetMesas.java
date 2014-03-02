@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,9 +28,10 @@ public class GetMesas {
 	protected Context context;
 	protected Fragment fragment;
 	protected View view;
-
-	GridView mesas;
-	public static MesaAdapter adapter;
+	protected ProgressDialog progressDialog;
+	
+	private GridView mesas;	
+	private MesaAdapter adapter;	
 
 	public GetMesas(Fragment fragment) {
 		this.fragment = fragment;
@@ -39,17 +39,17 @@ public class GetMesas {
 		this.view = fragment.getView();
 	}
 
-	public void carregarMesas() {
+	public void carregarMesas(ProgressDialog progressDialog) {
+		this.progressDialog = progressDialog;
 		new CarregaMesa().execute();
 	}
 
 	private class CarregaMesa extends AsyncTask<String, Void, Boolean> {
-		protected ProgressDialog progressDialog;
+		// protected ProgressDialog progressDialog;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = new ProgressDialog(context);
 			progressDialog.setCancelable(false);
 			progressDialog.setMessage("atualizando mapa das mesas...");
 			progressDialog.show();
@@ -106,13 +106,8 @@ public class GetMesas {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			progressDialog.dismiss();
+			
 			super.onPostExecute(result);
-		}
-
-		@Override
-		protected void onCancelled() {
-			// TODO Auto-generated method stub
-			super.onCancelled();
 		}
 	}
 
