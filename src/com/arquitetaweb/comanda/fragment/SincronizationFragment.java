@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,14 @@ import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetGarcom;
+import com.arquitetaweb.comanda.dados.GetGenericApi;
+import com.arquitetaweb.comanda.dados.GetProdutoGrupo;
 import com.arquitetaweb.comanda.model.GarcomModel;
+import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
+import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.helper.sqllite.GarcomHelper;
+import com.arquitetaweb.helper.sqllite.ProdutoGrupoHelper;
+import com.arquitetaweb.helper.sqllite.ProdutoHelper;
 
 public class SincronizationFragment extends Fragment implements
 		View.OnClickListener {
@@ -29,9 +34,9 @@ public class SincronizationFragment extends Fragment implements
 	private View viewRoot;
 	private TextView txt;
 
-//	// Database Helper
-//	GarcomHelper db;
-	
+	// // Database Helper
+	// GarcomHelper db;
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -56,40 +61,76 @@ public class SincronizationFragment extends Fragment implements
 
 	@Override
 	public void onClick(View v) {
+		SincronizarGarcom();
+		SincronizarProdutoGrupo();
+		SincronizarProduto(); // Generics
+		//
+		//
+		//
+		// Log.d("Garcom Count", " " + dbGarcom.getGarcomCount());
+		//
+		// List<GarcomModel> allToDos = dbGarcom.getAllGarcom();
+		// for (GarcomModel todo : allToDos) {
+		// Log.d("Garcom.. ", todo.id + " .. " + todo.nome + " .. " +
+		// todo.codigo);
+		// }
+		//
+		// // GarcomModel todo1 = new GarcomModel();
+		// // todo1.id = (long) 15;
+		// // todo1.nome = "sera quesaddsasaddsa vai att?";
+		// // db.updateGarcom(todo1);
+		//
+		// allToDos = dbGarcom.getAllGarcom();
+		// for (GarcomModel todo : allToDos) {
+		// Log.d("Garcom.. ", todo.id + " .. " + todo.nome + " .. " +
+		// todo.codigo);
+		// }
+		//
+		// dbGarcom.deleteGarcom(15);
+		//
+		// allToDos = dbGarcom.getAllGarcom();
+		// for (GarcomModel todo : allToDos) {
+		// Log.d("Garcom.. ", todo.id + " .. " + todo.nome + " .. " +
+		// todo.codigo);
+		// }
+		//
+		// // Don't forget to close database connection
+		// dbGarcom.closeDB();
+
+	}
+
+	private void SincronizarGarcom() {
 		GetGarcom garcom = new GetGarcom(this.getActivity());
-		List<GarcomModel> teste = garcom.carregarGarcom();
-		txt.setText(teste.get(0).nome);
-		
-		GarcomHelper db = new GarcomHelper(this.getActivity());		
-		
-		//db.createGarcom(teste);
-		
-		Log.d("Garcom Count", " " + db.getGarcomCount());
-								
-		List<GarcomModel> allToDos = db.getAllGarcom();
-		for (GarcomModel todo : allToDos) {
-			Log.d("Garcom.. ",  todo.id + " .. " + todo.nome + " .. " + todo.codigo);
-		}
-		
-//		GarcomModel todo1 = new GarcomModel();
-//		todo1.id = (long) 15;
-//		todo1.nome = "sera quesaddsasaddsa vai att?";
-//		db.updateGarcom(todo1);
-		
-		allToDos = db.getAllGarcom();
-		for (GarcomModel todo : allToDos) {
-			Log.d("Garcom.. ",  todo.id + " .. " + todo.nome + " .. " + todo.codigo);
-		}
-		
-		db.deleteGarcom(15);
-		
-		allToDos = db.getAllGarcom();
-		for (GarcomModel todo : allToDos) {
-			Log.d("Garcom.. ",  todo.id + " .. " + todo.nome + " .. " + todo.codigo);
-		}
+		List<GarcomModel> garcomLista = garcom.carregarGarcom();
+		txt.setText(garcomLista.get(0).nome);
 
-		// Don't forget to close database connection
-		db.closeDB();
+		GarcomHelper dbGarcom = new GarcomHelper(this.getActivity());
+		dbGarcom.createGarcom(garcomLista);
 
+		dbGarcom.closeDB();
+	}
+
+	private void SincronizarProdutoGrupo() {
+		GetProdutoGrupo produtoGrupo = new GetProdutoGrupo(this.getActivity());
+		List<ProdutoGrupoModel> produtoGrupoLista = produtoGrupo
+				.carregarProdutoGrupo();
+
+		ProdutoGrupoHelper dbProdutoGrupo = new ProdutoGrupoHelper(
+				this.getActivity());
+		dbProdutoGrupo.createProdutoGrupo(produtoGrupoLista);
+
+		dbProdutoGrupo.closeDB();
+	}
+
+	private void SincronizarProduto() {
+		GetGenericApi<ProdutoModel> produto = new GetGenericApi<ProdutoModel>(
+				this.getActivity());
+		List<ProdutoModel> produtoLista = produto
+				.LoadListApiFromUrl("GetProduto");
+
+		ProdutoHelper dbProduto = new ProdutoHelper(this.getActivity());
+		dbProduto.createProduto(produtoLista);
+
+		dbProduto.closeDB();
 	}
 }

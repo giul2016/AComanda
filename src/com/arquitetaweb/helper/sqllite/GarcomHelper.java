@@ -13,13 +13,14 @@ import com.arquitetaweb.comanda.model.GarcomModel;
 
 public class GarcomHelper extends DatabaseHelper {
 
-	// Table Names
-	private static final String TABLE_GARCOM = "garcom";
-
+	
 	// GARCOM Table - column names
 	private static final String KEY_GARCOM_CODIGO = "codigo";
 	private static final String KEY_GARCOM_NOME = "nome";
 
+	// Table Names
+	private static final String TABLE_GARCOM = "garcom";
+	
 	// Table Create Statements
 	// Todo table create statement
 	private static final String CREATE_TABLE_GARCOM = "CREATE TABLE "
