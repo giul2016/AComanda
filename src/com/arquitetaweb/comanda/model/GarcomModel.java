@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 public class GarcomModel {
+	@SerializedName("id")
+	public Long id;
+	
 	@SerializedName("Codigo")
 	public String codigo;
 	
@@ -14,7 +17,7 @@ public class GarcomModel {
     public String nome;
 	
 	@SerializedName("Senha")
-    public String senha;	
+    public String senha;
 	
 	public Type getType() {
 		return new TypeToken<ArrayList<GarcomModel>>(){}.getType();
