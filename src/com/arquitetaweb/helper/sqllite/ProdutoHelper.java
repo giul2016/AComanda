@@ -1,6 +1,7 @@
 package com.arquitetaweb.helper.sqllite;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -22,9 +23,13 @@ public class ProdutoHelper extends DatabaseHelper {
 
 	// Table Create Statements
 	private static final String CREATE_TABLE_PRODUTO = "CREATE TABLE "
-			+ TABLE_PRODUTO + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-			+ KEY_PRODUTO_CODIGO + " TEXT," + KEY_PRODUTO_DESCRICAO + " TEXT,"
-			+ KEY_CREATED_AT + " DATETIME" + ")";
+			+ " IF NOT EXISTS " + TABLE_PRODUTO + "(" + KEY_ID
+			+ " INTEGER PRIMARY KEY," + KEY_PRODUTO_CODIGO + " TEXT,"
+			+ KEY_PRODUTO_DESCRICAO + " TEXT," + KEY_CREATED_AT + " DATETIME"
+			+ ")";
+
+	private static final String DROP_TABLE_PRODUTO = "DROP TABLE IF EXISTS "
+			+ TABLE_PRODUTO;
 
 	public ProdutoHelper(Context context) {
 		super(context);
@@ -39,7 +44,7 @@ public class ProdutoHelper extends DatabaseHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		super.onUpgrade(db, oldVersion, newVersion);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUTO);
+		db.execSQL(DROP_TABLE_PRODUTO);
 	}
 
 	/*
@@ -86,5 +91,42 @@ public class ProdutoHelper extends DatabaseHelper {
 		}
 
 		return produtoLista;
+	}
+
+	public void sincronizar(List<ProdutoModel> produtos) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		db.execSQL(DROP_TABLE_PRODUTO);
+
+		db.execSQL(CREATE_TABLE_PRODUTO);
+
+		ContentValues values = new ContentValues();
+
+		// produtos.removeAll(Collections.singleton(null));
+		// produtos.toArray(new String[produtos.size()]);
+
+		// produtos.removeAll(Arrays.asList(new Object[] { null }));
+
+//		for (Iterator<ProdutoModel> itr = produtos.iterator(); itr.hasNext();) {
+//			if (itr.next() == null) {
+//				itr.remove();
+//			}
+//		}
+
+//		List s1=new ArrayList();
+//		s1.add(null);
+//
+//		produtos.removeAll(s1);		
+		
+		for (ProdutoModel produto : produtos) {
+			// values.put(KEY_ID, produto.id);
+			if (produto != null) {
+				values.put(KEY_PRODUTO_CODIGO, produto.codigo);
+				values.put(KEY_PRODUTO_DESCRICAO, produto.descricao);
+				values.put(KEY_CREATED_AT, getDateTime());
+
+				db.insert(TABLE_PRODUTO, null, values);
+			}
+		}
 	}
 }

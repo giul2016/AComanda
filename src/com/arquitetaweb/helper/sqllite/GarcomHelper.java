@@ -7,31 +7,32 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.arquitetaweb.comanda.model.GarcomModel;
 
 public class GarcomHelper extends DatabaseHelper {
 
-	
 	// GARCOM Table - column names
 	private static final String KEY_GARCOM_CODIGO = "codigo";
 	private static final String KEY_GARCOM_NOME = "nome";
 
 	// Table Names
 	private static final String TABLE_GARCOM = "garcom";
-	
+
 	// Table Create Statements
 	// Todo table create statement
 	private static final String CREATE_TABLE_GARCOM = "CREATE TABLE "
+			+ " IF NOT EXISTS "
 			+ TABLE_GARCOM + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_GARCOM_CODIGO + " TEXT," + KEY_GARCOM_NOME + " TEXT,"
 			+ KEY_CREATED_AT + " DATETIME" + ")";
 
+	private static final String DROP_TABLE_GARCOM = "DROP TABLE IF EXISTS " + TABLE_GARCOM;
+	
 	public GarcomHelper(Context context) {
 		super(context);
 	}
-	
+
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		super.onCreate(db);
@@ -41,8 +42,9 @@ public class GarcomHelper extends DatabaseHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		super.onUpgrade(db, oldVersion, newVersion);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GARCOM);
+		db.execSQL(DROP_TABLE_GARCOM);
 	}
+
 	// ------------------------ "Garcom" table methods ----------------//
 
 	/*
@@ -70,8 +72,6 @@ public class GarcomHelper extends DatabaseHelper {
 
 		String selectQuery = "SELECT  * FROM " + TABLE_GARCOM + " WHERE "
 				+ KEY_GARCOM_CODIGO + " = " + codigo;
-
-		Log.e(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -153,5 +153,24 @@ public class GarcomHelper extends DatabaseHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_GARCOM, KEY_ID + " = ?",
 				new String[] { String.valueOf(tado_id) });
+	}
+	
+	public void sincronizar(List<GarcomModel> garcomLista) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.execSQL(DROP_TABLE_GARCOM);
+		
+		db.execSQL(CREATE_TABLE_GARCOM);
+		
+		ContentValues values = new ContentValues();
+
+		for (GarcomModel garcom : garcomLista) {
+			values.put(KEY_ID, garcom.id);
+			values.put(KEY_GARCOM_CODIGO, garcom.codigo);
+			values.put(KEY_GARCOM_NOME, garcom.nome);
+			values.put(KEY_CREATED_AT, getDateTime());
+
+			db.insert(TABLE_GARCOM, null, values);
+		}
 	}
 }

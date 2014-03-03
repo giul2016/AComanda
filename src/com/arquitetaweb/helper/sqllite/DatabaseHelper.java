@@ -10,9 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-	// Logcat tag
-	protected static final String LOG = "DatabaseHelper";
-
 	// Database Version
 	protected static final int DATABASE_VERSION = 1;
 

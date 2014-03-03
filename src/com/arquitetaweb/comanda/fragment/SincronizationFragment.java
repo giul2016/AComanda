@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class SincronizationFragment extends Fragment implements
 		SincronizarGarcom();
 		SincronizarProdutoGrupo();
 		SincronizarProduto(); // Generics
+
 		//
 		//
 		//
@@ -102,12 +104,13 @@ public class SincronizationFragment extends Fragment implements
 	private void SincronizarGarcom() {
 		GetGarcom garcom = new GetGarcom(this.getActivity());
 		List<GarcomModel> garcomLista = garcom.carregarGarcom();
-		txt.setText(garcomLista.get(0).nome);
-
+		
+		Log.d("SincronizarGarcom", "Iniciando SincronizarGarcom....");
 		GarcomHelper dbGarcom = new GarcomHelper(this.getActivity());
-		dbGarcom.createGarcom(garcomLista);
+		dbGarcom.sincronizar(garcomLista);
 
 		dbGarcom.closeDB();
+		Log.d("SincronizarGarcom", "Finalizando SincronizarGarcom....");
 	}
 
 	private void SincronizarProdutoGrupo() {
@@ -115,11 +118,21 @@ public class SincronizationFragment extends Fragment implements
 		List<ProdutoGrupoModel> produtoGrupoLista = produtoGrupo
 				.carregarProdutoGrupo();
 
+		Log.d("SincronizarProdutoGrupo",
+				"Iniciando SincronizarProdutoGrupo....");
 		ProdutoGrupoHelper dbProdutoGrupo = new ProdutoGrupoHelper(
 				this.getActivity());
-		dbProdutoGrupo.createProdutoGrupo(produtoGrupoLista);
 
+		dbProdutoGrupo.sincronizar(produtoGrupoLista);
+
+//		List<ProdutoGrupoModel> allToDos = dbProdutoGrupo.getAllProdutoGrupo();
+//		for (ProdutoGrupoModel todo : allToDos) {
+//			Log.d("getAllProdutoGrupo", todo.codigo + " - "+ todo.descricao);
+//		}		
+		
 		dbProdutoGrupo.closeDB();
+		Log.d("SincronizarProdutoGrupo",
+				"Finalizando SincronizarProdutoGrupo....");
 	}
 
 	private void SincronizarProduto() {
@@ -127,10 +140,12 @@ public class SincronizationFragment extends Fragment implements
 				this.getActivity());
 		List<ProdutoModel> produtoLista = produto
 				.LoadListApiFromUrl("GetProduto");
-
+	
+		Log.d("SincronizarProduto", "Iniciando SincronizarProduto....");
 		ProdutoHelper dbProduto = new ProdutoHelper(this.getActivity());
-		dbProduto.createProduto(produtoLista);
+		dbProduto.sincronizar(produtoLista);
 
 		dbProduto.closeDB();
+		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");
 	}
 }

@@ -20,11 +20,14 @@ public class ProdutoGrupoHelper extends DatabaseHelper {
 	private static final String TABLE_PRODUTOGRUPO = "produto_grupo";
 	
 	// Table Create Statements
-	// Todo table create statement
 	private static final String CREATE_TABLE_PRODUTOGRUPO = "CREATE TABLE "
+			+ " IF NOT EXISTS "
 			+ TABLE_PRODUTOGRUPO + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
 			+ KEY_PRODUTOGRUPO_CODIGO + " TEXT," + KEY_PRODUTOGRUPO_DESCRICAO
 			+ " TEXT," + KEY_CREATED_AT + " DATETIME" + ")";
+	
+	// Table DROP Statements
+	private static final String DROP_TABLE_PRODUTOGRUPO = "DROP TABLE IF EXISTS " + TABLE_PRODUTOGRUPO;
 
 	public ProdutoGrupoHelper(Context context) {
 		super(context);
@@ -39,7 +42,7 @@ public class ProdutoGrupoHelper extends DatabaseHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		super.onUpgrade(db, oldVersion, newVersion);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUTOGRUPO);
+		db.execSQL(DROP_TABLE_PRODUTOGRUPO);
 	}
 
 	/*
@@ -47,7 +50,7 @@ public class ProdutoGrupoHelper extends DatabaseHelper {
 	 */
 	public void createProdutoGrupo(List<ProdutoGrupoModel> produtoGrupos) {
 		SQLiteDatabase db = this.getWritableDatabase();
-
+		
 		ContentValues values = new ContentValues();
 
 		for (ProdutoGrupoModel produtoGrupo : produtoGrupos) {
@@ -86,5 +89,24 @@ public class ProdutoGrupoHelper extends DatabaseHelper {
 		}
 
 		return produtoGrupoLista;
+	}
+	
+	public void sincronizar(List<ProdutoGrupoModel> produtoGrupos) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.execSQL(DROP_TABLE_PRODUTOGRUPO);
+		
+		db.execSQL(CREATE_TABLE_PRODUTOGRUPO);
+		
+		ContentValues values = new ContentValues();
+
+		for (ProdutoGrupoModel produtoGrupo : produtoGrupos) {
+			values.put(KEY_ID, produtoGrupo.id);
+			values.put(KEY_PRODUTOGRUPO_CODIGO, produtoGrupo.codigo);
+			values.put(KEY_PRODUTOGRUPO_DESCRICAO, produtoGrupo.descricao);
+			values.put(KEY_CREATED_AT, getDateTime());
+
+			db.insert(TABLE_PRODUTOGRUPO, null, values);
+		}
 	}
 }
