@@ -18,10 +18,9 @@ import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.GarcomModel;
 import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
-import com.arquitetaweb.helper.sqllite.GarcomHelper;
+import com.arquitetaweb.helper.sqllite.GarcomGenericHelper;
 import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
-import com.arquitetaweb.helper.sqllite.ProdutoGrupoHelper;
-import com.arquitetaweb.helper.sqllite.ProdutoHelper;
+import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
 import com.google.gson.reflect.TypeToken;
 
 public class SincronizationFragment extends Fragment implements
@@ -60,11 +59,9 @@ public class SincronizationFragment extends Fragment implements
 
 	@Override
 	public void onClick(View v) {
-		// SincronizarGarcom();
-		// SincronizarProdutoGrupo();
+		SincronizarGarcom();
+		//SincronizarProdutoGrupo();
 		//SincronizarProduto(); // Generics
-		
-		SincronizarGenericProduto(); // Generics
 	}
 
 	private void SincronizarGarcom() {
@@ -75,16 +72,10 @@ public class SincronizationFragment extends Fragment implements
 				}.getType());
 
 		Log.d("SincronizarGarcom", "Iniciando SincronizarGarcom....");
-		GarcomHelper dbGarcom = new GarcomHelper(this.getActivity(),
-				progressDialog);
+		progressDialog = new ProgressDialog(this.getActivity());
+		GarcomGenericHelper dbGarcom = new GarcomGenericHelper(
+				this.getActivity(), progressDialog);
 		dbGarcom.sincronizar(garcomLista);
-
-		// select
-		// List<GarcomModel> allToDos = dbGarcom.getAllGarcom();
-		// for (GarcomModel todo : allToDos) {
-		// Log.d("getAllGarcom", todo.id + " - " + todo.codigo + " - "
-		// + todo.nome);
-		// }
 
 		// Don't forget to close database connection
 		dbGarcom.closeDB();
@@ -92,26 +83,20 @@ public class SincronizationFragment extends Fragment implements
 	}
 
 	private void SincronizarProdutoGrupo() {
+
 		GetGenericApi<ProdutoGrupoModel> produto = new GetGenericApi<ProdutoGrupoModel>(
 				this.getActivity());
+
 		List<ProdutoGrupoModel> produtoLista = produto.LoadListApiFromUrl(
-				"GetProdutoGrupo",
-				new TypeToken<ArrayList<ProdutoGrupoModel>>() {
+				"GetProduto", new TypeToken<ArrayList<ProdutoGrupoModel>>() {
 				}.getType());
 
 		Log.d("SincronizarProdutoGrupo",
 				"Iniciando SincronizarProdutoGrupo....");
-		ProdutoGrupoHelper dbProdutoGrupo = new ProdutoGrupoHelper(
+		progressDialog = new ProgressDialog(this.getActivity());
+		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
 				this.getActivity(), progressDialog);
 		dbProdutoGrupo.sincronizar(produtoLista);
-
-		// select
-		// List<ProdutoGrupoModel> allToDos =
-		// dbProdutoGrupo.getAllProdutoGrupo();
-		// for (ProdutoGrupoModel todo : allToDos) {
-		// Log.d("getAllProdutoGrupo", todo.id + " - " + todo.codigo + " - "
-		// + todo.descricao);
-		// }
 
 		dbProdutoGrupo.closeDB();
 		Log.d("SincronizarProdutoGrupo",
@@ -121,43 +106,27 @@ public class SincronizationFragment extends Fragment implements
 	private void SincronizarProduto() {
 		GetGenericApi<ProdutoModel> produto = new GetGenericApi<ProdutoModel>(
 				this.getActivity());
-		List<ProdutoModel> produtoLista = produto.LoadListApiFromUrl(
-				"GetProduto", new TypeToken<ArrayList<ProdutoModel>>() {
-				}.getType());
 
-		Log.d("SincronizarProduto", "Iniciando SincronizarProduto....");
-		ProdutoHelper dbProduto = new ProdutoHelper(this.getActivity(),
-				progressDialog);
-		dbProduto.sincronizar(produtoLista);
-
-		dbProduto.closeDB();
-		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");
-	}
-
-	private void SincronizarGenericProduto() {
-		GetGenericApi<ProdutoModel> produto = new GetGenericApi<ProdutoModel>(
-				this.getActivity());
-		
 		List<ProdutoModel> produtoLista = produto.LoadListApiFromUrl(
 				"GetProduto", new TypeToken<ArrayList<ProdutoModel>>() {
 				}.getType());
 
 		Log.d("SincronizarProduto", "Iniciando SincronizarProduto....");
 		progressDialog = new ProgressDialog(this.getActivity());
-		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(this.getActivity(),
-				progressDialog);
+		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(
+				this.getActivity(), progressDialog);
 		dbProduto.sincronizar(produtoLista);
-				
-//		List<ProdutoModel> allToDos = dbProduto.getAll();
-//		for (ProdutoModel todo : allToDos) {
-//			Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
-//					+ todo.descricao);
-//		}
-		
+
+		// List<ProdutoModel> allToDos = dbProduto.getAll();
+		// for (ProdutoModel todo : allToDos) {
+		// Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
+		// + todo.descricao);
+		// }
+
 		dbProduto.closeDB();
 		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		if (progressDialog != null) {

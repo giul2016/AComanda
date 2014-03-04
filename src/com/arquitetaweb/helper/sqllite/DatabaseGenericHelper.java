@@ -96,7 +96,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("sincronizando produtos...");
+			progressDialog.setMessage("sincronizando dados....");
 			progressDialog.show();
 		}
 

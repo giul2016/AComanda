@@ -1,34 +1,32 @@
 package com.arquitetaweb.helper.sqllite;
 
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.arquitetaweb.comanda.model.GarcomModel;
-import com.arquitetaweb.comanda.model.ProdutoModel;
+import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
 
-public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
+public class ProdutoGrupoGenericHelper extends
+		DatabaseGenericHelper<ProdutoGrupoModel> {
 
 	// Table - column names
-	private static final String KEY_PRODUTO_PRODUTOGRUPOID = "produtoGrupoId";
 	private static final String KEY_PRODUTO_CODIGO = "codigo";
 	private static final String KEY_PRODUTO_DESCRICAO = "descricao";
 
-	public ProdutoGenericHelper(Context context, ProgressDialog progressDialog) {
+	public ProdutoGrupoGenericHelper(Context context,
+			ProgressDialog progressDialog) {
 		super(context, progressDialog);
 
-		TABLE = "produto";
+		TABLE = "produto_grupo";
 
 		CREATE_TABLE = "CREATE TABLE " + " IF NOT EXISTS " + TABLE + "("
 				+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRODUTO_CODIGO
 				+ " TEXT," + KEY_PRODUTO_DESCRICAO + " TEXT," + KEY_CREATED_AT
 				+ " DATETIME" + ")";
-		
-		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;		
+
+		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;
 	}
 
 	@Override
@@ -42,9 +40,9 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		super.onUpgrade(db, oldVersion, newVersion);
 		db.execSQL(DROP_TABLE);
 	}
-	
+
 	@Override
-	protected ContentValues getValuesModel(ProdutoModel model) {
+	protected ContentValues getValuesModel(ProdutoGrupoModel model) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_PRODUTO_CODIGO, model.codigo);
 		values.put(KEY_PRODUTO_DESCRICAO, model.descricao);
@@ -53,13 +51,13 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 	}
 
 	@Override
-	protected ProdutoModel createObject(Cursor c) {
-		ProdutoModel garcom = new ProdutoModel();
+	protected ProdutoGrupoModel createObject(Cursor c) {
+		ProdutoGrupoModel garcom = new ProdutoGrupoModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
-		garcom.codigo = ((c.getString(c
-				.getColumnIndex(KEY_PRODUTO_CODIGO))));
-		garcom.descricao = ((c.getString(c.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
-		
+		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
+		garcom.descricao = ((c.getString(c
+				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
+
 		return garcom;
 	}
 }
