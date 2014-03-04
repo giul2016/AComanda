@@ -30,4 +30,8 @@
     <string name="msgSucesso">Sucesso.</string>
     <string name="msgErro">Erro.</string>
     <string name="twoDots">:</string>
+    <string name="labelSincronizar">Sincronizar</string>
+    <string name="labelSincGarcom">Garçom</string>
+    <string name="labelSincProduto">Produto</string>
+    <string name="labelSincProdutoGrupo">Produto e Grupo</string>
 </resources>

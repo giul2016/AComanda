@@ -30,7 +30,7 @@ public class DetailsActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.details);
+		setContentView(R.layout.mesa_details);
 
 		// get the action bar
 		ActionBar actionBar = getActionBar();

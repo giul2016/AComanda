@@ -7,7 +7,8 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_marginBottom="50dp">
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -15,16 +16,18 @@
             android:layout_height="wrap_content" >
 
             <CheckBox
-                android:id="@+id/checkBox4"
-                android:layout_width="wrap_content"
+                android:id="@+id/checkBoxSincGarcom"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mesas" />
+                android:text="@string/labelSincGarcom"
+                android:textSize="20sp" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
-                android:layout_width="wrap_content"
+                android:id="@+id/checkBoxSincProdutoGrupo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Garçom" />
+                android:text="@string/labelSincProdutoGrupo"
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
@@ -32,17 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <CheckBox
-                android:id="@+id/checkBox1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Grupo de Produto" />
-
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Produto" />
         </TableRow>
 
         <TableRow
@@ -52,22 +44,12 @@
         </TableRow>
     </TableLayout>
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.19"
-        android:ems="10"
-        android:inputType="textMultiLine" >
-
-        <requestFocus />
-    </EditText>
-
     <Button
         android:id="@+id/btnSynchronize"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sincronizar" />
+        android:layout_gravity="bottom"        
+        android:text="@string/labelSincronizar" />
 
 </LinearLayout>

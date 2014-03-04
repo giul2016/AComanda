@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
@@ -31,6 +33,7 @@ public class SincronizationFragment extends Fragment implements
 	private static final String SETTINGS_AUTHORITY = "synchronize";
 	private ProgressDialog progressDialog;
 	private View viewRoot;
+	private CheckBox checkGarcom, checkProdutoGrupo;
 
 	public static final String TAG = SincronizationFragment.class
 			.getSimpleName();
@@ -55,6 +58,10 @@ public class SincronizationFragment extends Fragment implements
 		Button btnSalvar = (Button) viewRoot.findViewById(R.id.btnSynchronize);
 		btnSalvar.setOnClickListener(this);
 
+		checkGarcom = (CheckBox) viewRoot.findViewById(R.id.checkBoxSincGarcom);
+		checkProdutoGrupo = (CheckBox) viewRoot
+				.findViewById(R.id.checkBoxSincProdutoGrupo);
+
 		return viewRoot;
 	}
 
@@ -65,7 +72,6 @@ public class SincronizationFragment extends Fragment implements
 	}
 
 	protected class SincronizarDados extends AsyncTask<Void, Integer, Void> {
-		Integer positionProgress = 0;
 		String[] messages = new String[5];
 
 		private void createMessages() {
@@ -76,9 +82,8 @@ public class SincronizationFragment extends Fragment implements
 			messages[4] = "finalizando...";
 		}
 
-		private void updateMessage() {
-			positionProgress++;
-			publishProgress(positionProgress);
+		private void updateMessage(Integer pos) {
+			publishProgress(pos);
 		}
 
 		@Override
@@ -93,19 +98,23 @@ public class SincronizationFragment extends Fragment implements
 		@Override
 		protected Void doInBackground(Void... produtos) {
 			try {
-				publishProgress(positionProgress);
+				publishProgress(0);
 				Thread.sleep(1000);
 
-				updateMessage();
-				SincronizarGarcom();
+				updateMessage(1);
+				if (checkGarcom.isChecked())
+					SincronizarGarcom();
 
-				updateMessage();
-				SincronizarProdutoGrupo();
+				
+				if (checkProdutoGrupo.isChecked()) {
+					updateMessage(2);
+					SincronizarProdutoGrupo();
+					
+					updateMessage(3);
+					SincronizarProduto();
+				}
 
-				updateMessage();
-				SincronizarProduto();
-
-				updateMessage();
+				updateMessage(4);
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -129,8 +138,8 @@ public class SincronizationFragment extends Fragment implements
 	private void SincronizarGarcom() {
 		GetGenericApi<GarcomModel> garcomApi = new GetGenericApi<GarcomModel>(
 				this.getActivity());
-		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl("GetGarcom",
-				new TypeToken<ArrayList<GarcomModel>>() {
+		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl(
+				"GetGarcom", new TypeToken<ArrayList<GarcomModel>>() {
 				}.getType());
 
 		Log.d("SincronizarGarcom", "Iniciando SincronizarGarcom....");
@@ -155,9 +164,10 @@ public class SincronizationFragment extends Fragment implements
 		GetGenericApi<ProdutoGrupoModel> produtoGrupoApi = new GetGenericApi<ProdutoGrupoModel>(
 				this.getActivity());
 
-		List<ProdutoGrupoModel> produtoGrupoList = produtoGrupoApi.LoadListApiFromUrl(
-				"GetProduto", new TypeToken<ArrayList<ProdutoGrupoModel>>() {
-				}.getType());
+		List<ProdutoGrupoModel> produtoGrupoList = produtoGrupoApi
+				.LoadListApiFromUrl("GetProduto",
+						new TypeToken<ArrayList<ProdutoGrupoModel>>() {
+						}.getType());
 
 		Log.d("SincronizarProdutoGrupo",
 				"Iniciando SincronizarProdutoGrupo....");
@@ -168,8 +178,8 @@ public class SincronizationFragment extends Fragment implements
 
 		produtoGrupoList = dbProdutoGrupo.selectAll();
 		for (ProdutoGrupoModel produtoGrupo : produtoGrupoList) {
-			Log.d("getAllProduto", produtoGrupo.id + " - " + produtoGrupo.codigo + " - "
-					+ produtoGrupo.descricao);
+			Log.d("getAllProduto", produtoGrupo.id + " - "
+					+ produtoGrupo.codigo + " - " + produtoGrupo.descricao);
 		}
 
 		dbProdutoGrupo.closeDB();
@@ -193,8 +203,9 @@ public class SincronizationFragment extends Fragment implements
 
 		produtoList = dbProduto.selectAll();
 		for (ProdutoModel produto : produtoList) {
-			Log.d("getAllProduto", produto.id + " - " + produto.produto_grupo_id
-					+ " - " + produto.codigo + " - " + produto.descricao);
+			Log.d("getAllProduto", produto.id + " - "
+					+ produto.produto_grupo_id + " - " + produto.codigo + " - "
+					+ produto.descricao);
 		}
 
 		dbProduto.closeDB();
