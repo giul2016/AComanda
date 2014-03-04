@@ -147,7 +147,13 @@ public class SincronizationFragment extends Fragment implements
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(this.getActivity(),
 				progressDialog);
 		dbProduto.sincronizar(produtoLista);
-
+				
+//		List<ProdutoModel> allToDos = dbProduto.getAll();
+//		for (ProdutoModel todo : allToDos) {
+//			Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
+//					+ todo.descricao);
+//		}
+		
 		dbProduto.closeDB();
 		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");
 	}

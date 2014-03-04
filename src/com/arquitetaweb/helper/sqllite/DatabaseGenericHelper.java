@@ -1,6 +1,7 @@
 package com.arquitetaweb.helper.sqllite;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -9,9 +10,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.arquitetaweb.comanda.util.Utils;
 import com.arquitetaweb.comum.messages.Alerta;
@@ -24,7 +27,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	protected ProgressDialog progressDialog;
 
 	protected SQLiteDatabase db;
-	
+
 	protected Context context;
 
 	// Table Names
@@ -78,10 +81,15 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void sincronizar(List<T> produtos) {		
-		new Sincronizar().execute(produtos);		
+	public void sincronizar(List<T> produtos) {
+		new Sincronizar().execute(produtos);
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public void sincronizar() {
+		new Sincronizar().execute();
+	}
+
 	protected class Sincronizar extends AsyncTask<List<T>, Void, Boolean> {
 
 		@Override
@@ -110,6 +118,37 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		}
 	}
 
+	protected void sincronizarAbstract(List<T> listModel) {
+		Log.d("DatabaseGenericHelper", "Sincronizando....");
+		db = this.getWritableDatabase();
+		db.execSQL(DROP_TABLE);
+		db.execSQL(CREATE_TABLE);
+		for (T model : listModel) {
+			db.insert(TABLE, null, getValuesModel(model));
+		}
+	}
+
+	public List<T> getAll() {
+		Log.d("DatabaseGenericHelper", "Listando....");
+		db = this.getReadableDatabase();
+
+		// select
+		List<T> garcomLista = new ArrayList<T>();
+		String selectQuery = "SELECT  * FROM " + TABLE;
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (c.moveToFirst()) {
+			do {
+				// adding to todo list
+				garcomLista.add(createObject(c));
+			} while (c.moveToNext());
+		}
+
+		return garcomLista;
+	}
+
 	protected void errorConnectServer() {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
@@ -120,8 +159,8 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 			}
 		});
 	}
-	
-	protected abstract void sincronizarAbstract(List<T> listModel);
 
 	protected abstract ContentValues getValuesModel(T model);
+
+	protected abstract T createObject(Cursor c);
 }

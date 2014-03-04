@@ -5,8 +5,10 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.arquitetaweb.comanda.model.GarcomModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 
 public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
@@ -41,24 +43,24 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		db.execSQL(DROP_TABLE);
 	}
 		
-	@Override
-	protected void sincronizarAbstract(List<ProdutoModel> listModel) {
-		db = this.getWritableDatabase();
-		db.execSQL(DROP_TABLE);
-		db.execSQL(CREATE_TABLE);
-		for (ProdutoModel model : listModel) {
-			db.insert(TABLE, null, getValuesModel(model));
-		}				
-		
-		// select
-				// List<ProdutoGrupoModel> allToDos =
-				// dbProdutoGrupo.getAllProdutoGrupo();
-				// for (ProdutoGrupoModel todo : allToDos) {
-				// Log.d("getAllProdutoGrupo", todo.id + " - " + todo.codigo + " - "
-				// + todo.descricao);
-				// }
-	}
-	
+//	@Override
+//	protected void sincronizarAbstract(List<ProdutoModel> listModel) {
+//		db = this.getWritableDatabase();
+//		db.execSQL(DROP_TABLE);
+//		db.execSQL(CREATE_TABLE);
+//		for (ProdutoModel model : listModel) {
+//			db.insert(TABLE, null, getValuesModel(model));
+//		}				
+//		
+//		// select
+//				// List<ProdutoGrupoModel> allToDos =
+//				// dbProdutoGrupo.getAllProdutoGrupo();
+//				// for (ProdutoGrupoModel todo : allToDos) {
+//				// Log.d("getAllProdutoGrupo", todo.id + " - " + todo.codigo + " - "
+//				// + todo.descricao);
+//				// }
+//	}
+//	
 	@Override
 	protected ContentValues getValuesModel(ProdutoModel model) {
 		ContentValues values = new ContentValues();
@@ -66,5 +68,16 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		values.put(KEY_PRODUTO_DESCRICAO, model.descricao);
 		values.put(KEY_CREATED_AT, getDateTime());
 		return values;
+	}
+
+	@Override
+	protected ProdutoModel createObject(Cursor c) {
+		ProdutoModel garcom = new ProdutoModel();
+		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
+		garcom.codigo = ((c.getString(c
+				.getColumnIndex(KEY_PRODUTO_CODIGO))));
+		garcom.descricao = ((c.getString(c.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
+		
+		return garcom;
 	}
 }
