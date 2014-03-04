@@ -127,9 +127,9 @@ public class SincronizationFragment extends Fragment implements
 	}
 
 	private void SincronizarGarcom() {
-		GetGenericApi<GarcomModel> produto = new GetGenericApi<GarcomModel>(
+		GetGenericApi<GarcomModel> garcomApi = new GetGenericApi<GarcomModel>(
 				this.getActivity());
-		List<GarcomModel> garcomLista = produto.LoadListApiFromUrl("GetGarcom",
+		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl("GetGarcom",
 				new TypeToken<ArrayList<GarcomModel>>() {
 				}.getType());
 
@@ -137,12 +137,12 @@ public class SincronizationFragment extends Fragment implements
 
 		GarcomGenericHelper dbGarcom = new GarcomGenericHelper(
 				this.getActivity());
-		dbGarcom.sincronizar(garcomLista);
+		dbGarcom.sincronizar(garcomList);
 
-		List<GarcomModel> allToDos = dbGarcom.getAll();
-		for (GarcomModel todo : allToDos) {
-			Log.d("GarcomModel", todo.id + " - " + todo.codigo + " - "
-					+ todo.nome);
+		garcomList = dbGarcom.selectAll();
+		for (GarcomModel garcom : garcomList) {
+			Log.d("GarcomModel", garcom.id + " - " + garcom.codigo + " - "
+					+ garcom.nome);
 		}
 
 		// Don't forget to close database connection
@@ -152,10 +152,10 @@ public class SincronizationFragment extends Fragment implements
 
 	private void SincronizarProdutoGrupo() {
 
-		GetGenericApi<ProdutoGrupoModel> produto = new GetGenericApi<ProdutoGrupoModel>(
+		GetGenericApi<ProdutoGrupoModel> produtoGrupoApi = new GetGenericApi<ProdutoGrupoModel>(
 				this.getActivity());
 
-		List<ProdutoGrupoModel> produtoLista = produto.LoadListApiFromUrl(
+		List<ProdutoGrupoModel> produtoGrupoList = produtoGrupoApi.LoadListApiFromUrl(
 				"GetProduto", new TypeToken<ArrayList<ProdutoGrupoModel>>() {
 				}.getType());
 
@@ -164,12 +164,12 @@ public class SincronizationFragment extends Fragment implements
 
 		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
 				this.getActivity());
-		dbProdutoGrupo.sincronizar(produtoLista);
+		dbProdutoGrupo.sincronizar(produtoGrupoList);
 
-		List<ProdutoGrupoModel> allToDos = dbProdutoGrupo.getAll();
-		for (ProdutoGrupoModel todo : allToDos) {
-			Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
-					+ todo.descricao);
+		produtoGrupoList = dbProdutoGrupo.selectAll();
+		for (ProdutoGrupoModel produtoGrupo : produtoGrupoList) {
+			Log.d("getAllProduto", produtoGrupo.id + " - " + produtoGrupo.codigo + " - "
+					+ produtoGrupo.descricao);
 		}
 
 		dbProdutoGrupo.closeDB();
@@ -178,10 +178,10 @@ public class SincronizationFragment extends Fragment implements
 	}
 
 	private void SincronizarProduto() {
-		GetGenericApi<ProdutoModel> produto = new GetGenericApi<ProdutoModel>(
+		GetGenericApi<ProdutoModel> produtoApi = new GetGenericApi<ProdutoModel>(
 				this.getActivity());
 
-		List<ProdutoModel> produtoLista = produto.LoadListApiFromUrl(
+		List<ProdutoModel> produtoList = produtoApi.LoadListApiFromUrl(
 				"GetProduto", new TypeToken<ArrayList<ProdutoModel>>() {
 				}.getType());
 
@@ -189,12 +189,12 @@ public class SincronizationFragment extends Fragment implements
 
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(
 				this.getActivity());
-		dbProduto.sincronizar(produtoLista);
+		dbProduto.sincronizar(produtoList);
 
-		List<ProdutoModel> allToDos = dbProduto.getAll();
-		for (ProdutoModel todo : allToDos) {
-			Log.d("getAllProduto", todo.id + " - " + todo.produto_grupo_id
-					+ " - " + todo.codigo + " - " + todo.descricao);
+		produtoList = dbProduto.selectAll();
+		for (ProdutoModel produto : produtoList) {
+			Log.d("getAllProduto", produto.id + " - " + produto.produto_grupo_id
+					+ " - " + produto.codigo + " - " + produto.descricao);
 		}
 
 		dbProduto.closeDB();

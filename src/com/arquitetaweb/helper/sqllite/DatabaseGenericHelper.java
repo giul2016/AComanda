@@ -123,7 +123,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		}
 	}
 
-	public List<T> getAll() {
+	public List<T> selectAll() {
 		Log.d("DatabaseGenericHelper", "Listando....");
 		db = this.getReadableDatabase();
 
