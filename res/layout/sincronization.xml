@@ -25,7 +25,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Garçom" />
-
         </TableRow>
 
         <TableRow
@@ -44,36 +43,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Produto" />
-                    
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
         </TableRow>
-
     </TableLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-    
-     <CheckBox
-         android:id="@+id/checkBox5"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center"
-         android:text="Sincronizar tudo" />
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.19"
+        android:ems="10"
+        android:inputType="textMultiLine" >
 
-     <ProgressBar
-         android:id="@+id/progressBarSynchronize"
-         style="?android:attr/progressBarStyleHorizontal"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" />
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/btnSynchronize"

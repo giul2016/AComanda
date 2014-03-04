@@ -3,6 +3,7 @@ package com.arquitetaweb.helper.sqllite;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,8 +30,8 @@ public class GarcomHelper extends DatabaseHelper {
 
 	private static final String DROP_TABLE_GARCOM = "DROP TABLE IF EXISTS " + TABLE_GARCOM;
 	
-	public GarcomHelper(Context context) {
-		super(context);
+	public GarcomHelper(Context context, ProgressDialog progressDialog) {
+		super(context, progressDialog);
 	}
 
 	@Override

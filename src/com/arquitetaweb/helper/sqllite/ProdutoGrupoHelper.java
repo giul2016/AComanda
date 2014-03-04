@@ -3,6 +3,7 @@ package com.arquitetaweb.helper.sqllite;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -28,11 +29,11 @@ public class ProdutoGrupoHelper extends DatabaseHelper {
 	
 	// Table DROP Statements
 	private static final String DROP_TABLE_PRODUTOGRUPO = "DROP TABLE IF EXISTS " + TABLE_PRODUTOGRUPO;
-
-	public ProdutoGrupoHelper(Context context) {
-		super(context);
+	
+	public ProdutoGrupoHelper(Context context, ProgressDialog progressDialog) {
+		super(context, progressDialog);
 	}
-
+	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		super.onCreate(db);

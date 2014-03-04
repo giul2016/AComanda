@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -31,9 +32,10 @@ public class ProdutoHelper extends DatabaseHelper {
 	private static final String DROP_TABLE_PRODUTO = "DROP TABLE IF EXISTS "
 			+ TABLE_PRODUTO;
 
-	public ProdutoHelper(Context context) {
-		super(context);
+	public ProdutoHelper(Context context, ProgressDialog progressDialog) {
+		super(context, progressDialog);
 	}
+
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {

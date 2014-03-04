@@ -42,7 +42,6 @@ public class SampleSqlLiteFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		viewRoot = inflater.inflate(R.layout.sincronization, container, false);
 
-		txt = (TextView) viewRoot.findViewById(R.id.textView1);
 		Button btnSalvar = (Button) viewRoot.findViewById(R.id.btnSynchronize);
 		btnSalvar.setOnClickListener(this);
 

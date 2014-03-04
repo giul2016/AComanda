@@ -9,23 +9,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comanda.util.JSONParser;
 import com.arquitetaweb.comanda.util.Utils;
 import com.arquitetaweb.comum.messages.Alerta;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class GetGenericApi<T> {
 
 	private Context context;
 	private static String URL_API = "GetMethod"; // GetProdutoGrupo
-
-	public GetGenericApi(Context context) {
-		this.context = context;
+	private Type type;
+	
+	public GetGenericApi(Context context ) {
+		this.context = context;		
 	}
 
-	public List<T> LoadListApiFromUrl(String urlApi) {
+	public List<T> LoadListApiFromUrl(String urlApi,Type type) {
+		this.type = type;
 		LoadListAsync list = new LoadListAsync();
 		try {
 			URL_API = urlApi;
@@ -69,14 +69,8 @@ public class GetGenericApi<T> {
 			JSONParser jParser = new JSONParser();
 			final String jsonGarcom = jParser.getJSONFromApi(urlApi);
 			List<T> list = new ArrayList<T>();
-			Gson gson = new Gson();
-			//list = gson.fromJson(jsonGarcom, new ProdutoModel().getType());
-			//list = gson.fromJson(jsonGarcom, new TypeToken<ArrayList<T>>(){}.getType());
-			
-			Type collectionType = new TypeToken<ArrayList<T>>(){}.getType();
-			
-			list = gson.fromJson(jsonGarcom, collectionType);
-			
+			Gson gson = new Gson();			
+			list = gson.fromJson(jsonGarcom, type);
 
 			return list;
 		} else {

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -20,8 +21,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	protected static final String KEY_ID = "id";
 	protected static final String KEY_CREATED_AT = "created_at";
 
-	public DatabaseHelper(Context context) {
+	protected ProgressDialog progressDialog;
+
+	protected Context context;
+
+	public DatabaseHelper(Context context, ProgressDialog progressDialog) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
+		this.progressDialog = progressDialog;
 	}
 
 	@Override
