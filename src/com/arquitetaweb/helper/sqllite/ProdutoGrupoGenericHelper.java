@@ -1,6 +1,5 @@
 package com.arquitetaweb.helper.sqllite;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,9 +14,8 @@ public class ProdutoGrupoGenericHelper extends
 	private static final String KEY_PRODUTO_CODIGO = "codigo";
 	private static final String KEY_PRODUTO_DESCRICAO = "descricao";
 
-	public ProdutoGrupoGenericHelper(Context context,
-			ProgressDialog progressDialog) {
-		super(context, progressDialog);
+	public ProdutoGrupoGenericHelper(Context context) {
+		super(context);
 
 		TABLE = "produto_grupo";
 
@@ -42,7 +40,7 @@ public class ProdutoGrupoGenericHelper extends
 	}
 
 	@Override
-	protected ContentValues getValuesModel(ProdutoGrupoModel model) {
+	protected ContentValues insertFromValuesGeneric(ProdutoGrupoModel model) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_PRODUTO_CODIGO, model.codigo);
 		values.put(KEY_PRODUTO_DESCRICAO, model.descricao);
@@ -51,7 +49,7 @@ public class ProdutoGrupoGenericHelper extends
 	}
 
 	@Override
-	protected ProdutoGrupoModel createObject(Cursor c) {
+	protected ProdutoGrupoModel selectFromObjectGeneric(Cursor c) {
 		ProdutoGrupoModel garcom = new ProdutoGrupoModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
 		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));

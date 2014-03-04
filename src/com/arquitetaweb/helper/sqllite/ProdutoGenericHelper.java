@@ -1,14 +1,10 @@
 package com.arquitetaweb.helper.sqllite;
 
-import java.util.List;
-
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.arquitetaweb.comanda.model.GarcomModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 
 public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
@@ -18,17 +14,22 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 	private static final String KEY_PRODUTO_CODIGO = "codigo";
 	private static final String KEY_PRODUTO_DESCRICAO = "descricao";
 
-	public ProdutoGenericHelper(Context context, ProgressDialog progressDialog) {
-		super(context, progressDialog);
+	public ProdutoGenericHelper(Context context) {
+		super(context);
 
 		TABLE = "produto";
+		TABLE_FK = "produto_grupo";
 
-		CREATE_TABLE = "CREATE TABLE " + " IF NOT EXISTS " + TABLE + "("
-				+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRODUTO_CODIGO
-				+ " TEXT," + KEY_PRODUTO_DESCRICAO + " TEXT," + KEY_CREATED_AT
-				+ " DATETIME" + ")";
-		
-		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;		
+		CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE + "("
+				+ KEY_ID + " INTEGER PRIMARY KEY,"
+				+ KEY_PRODUTO_PRODUTOGRUPOID + " INTEGER," 
+				+ KEY_PRODUTO_CODIGO + " TEXT," 
+				+ KEY_PRODUTO_DESCRICAO + " TEXT,"
+				+ KEY_CREATED_AT + " DATETIME," 				
+				+ "FOREIGN KEY (" + KEY_PRODUTO_PRODUTOGRUPOID + ") REFERENCES " + TABLE_FK + "(" + KEY_ID + ")"
+				+ ");";
+
+		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;
 	}
 
 	@Override
@@ -42,10 +43,11 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		super.onUpgrade(db, oldVersion, newVersion);
 		db.execSQL(DROP_TABLE);
 	}
-	
+
 	@Override
-	protected ContentValues getValuesModel(ProdutoModel model) {
+	protected ContentValues insertFromValuesGeneric(ProdutoModel model) {
 		ContentValues values = new ContentValues();
+		values.put(KEY_PRODUTO_PRODUTOGRUPOID, model.produto_grupo_id);
 		values.put(KEY_PRODUTO_CODIGO, model.codigo);
 		values.put(KEY_PRODUTO_DESCRICAO, model.descricao);
 		values.put(KEY_CREATED_AT, getDateTime());
@@ -53,13 +55,14 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 	}
 
 	@Override
-	protected ProdutoModel createObject(Cursor c) {
+	protected ProdutoModel selectFromObjectGeneric(Cursor c) {
 		ProdutoModel garcom = new ProdutoModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
-		garcom.codigo = ((c.getString(c
-				.getColumnIndex(KEY_PRODUTO_CODIGO))));
-		garcom.descricao = ((c.getString(c.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
-		
+		garcom.produto_grupo_id = (c.getLong((c.getColumnIndex(KEY_PRODUTO_PRODUTOGRUPOID))));
+		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
+		garcom.descricao = ((c.getString(c
+				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
+
 		return garcom;
 	}
 }

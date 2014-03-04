@@ -1,6 +1,5 @@
 package com.arquitetaweb.helper.sqllite;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,8 +13,8 @@ public class GarcomGenericHelper extends DatabaseGenericHelper<GarcomModel> {
 	private static final String KEY_GARCOM_CODIGO = "codigo";
 	private static final String KEY_GARCOM_DESCRICAO = "descricao";
 
-	public GarcomGenericHelper(Context context, ProgressDialog progressDialog) {
-		super(context, progressDialog);
+	public GarcomGenericHelper(Context context) {
+		super(context);
 
 		TABLE = "garcom";
 
@@ -38,9 +37,10 @@ public class GarcomGenericHelper extends DatabaseGenericHelper<GarcomModel> {
 		super.onUpgrade(db, oldVersion, newVersion);
 		db.execSQL(DROP_TABLE);
 	}
-
+	
+	
 	@Override
-	protected ContentValues getValuesModel(GarcomModel model) {
+	protected ContentValues insertFromValuesGeneric(GarcomModel model) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_GARCOM_CODIGO, model.codigo);
 		values.put(KEY_GARCOM_DESCRICAO, model.nome);
@@ -49,7 +49,7 @@ public class GarcomGenericHelper extends DatabaseGenericHelper<GarcomModel> {
 	}
 
 	@Override
-	protected GarcomModel createObject(Cursor c) {
+	protected GarcomModel selectFromObjectGeneric(Cursor c) {
 		GarcomModel garcom = new GarcomModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
 		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_GARCOM_CODIGO))));

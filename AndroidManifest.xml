@@ -20,7 +20,7 @@
         <!-- Main Activity -->
         <activity
             android:name="com.arquitetaweb.comanda.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:configChanges="orientation|screenSize" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.arquitetaweb.comanda.activity.SearchDummiesActivity" />

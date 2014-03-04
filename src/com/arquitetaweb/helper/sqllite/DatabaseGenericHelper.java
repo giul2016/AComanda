@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -24,14 +23,13 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	// Database Version
 	protected static final int DATABASE_VERSION = 1;
 
-	protected ProgressDialog progressDialog;
-
 	protected SQLiteDatabase db;
 
 	protected Context context;
 
 	// Table Names
 	protected static String TABLE = "";
+	protected static String TABLE_FK = "";
 
 	// Table Create Statements
 	protected static String CREATE_TABLE = "";
@@ -45,16 +43,14 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	protected static final String KEY_ID = "id";
 	protected static final String KEY_CREATED_AT = "created_at";
 
-	public DatabaseGenericHelper(Context context, ProgressDialog progressDialog) {
+	public DatabaseGenericHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		this.context = context;
-		this.progressDialog = progressDialog;
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// creating required tables
-		// db.execSQL(CREATE_TABLE_GARCOM);
 	}
 
 	@Override
@@ -81,8 +77,12 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void sincronizar(List<T> produtos) {
+	public void sincronizarAsync(List<T> produtos) {
 		new Sincronizar().execute(produtos);
+	}
+		
+	public void sincronizar(List<T> produtos) {
+		sincronizarDados(produtos);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -95,15 +95,12 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog.setCancelable(false);
-			progressDialog.setMessage("sincronizando dados....");
-			progressDialog.show();
 		}
 
 		@Override
 		protected Boolean doInBackground(List<T>... produtos) {
 			if (Utils.isConnected(context)) {
-				sincronizarAbstract(produtos[0]);
+				sincronizarDados(produtos[0]);
 			} else {
 				errorConnectServer();
 			}
@@ -112,19 +109,17 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 
 		@Override
 		protected void onPostExecute(Boolean result) {
-			progressDialog.dismiss();
-
 			super.onPostExecute(result);
 		}
 	}
 
-	protected void sincronizarAbstract(List<T> listModel) {
+	protected void sincronizarDados(List<T> listModel) {
 		Log.d("DatabaseGenericHelper", "Sincronizando....");
 		db = this.getWritableDatabase();
 		db.execSQL(DROP_TABLE);
 		db.execSQL(CREATE_TABLE);
 		for (T model : listModel) {
-			db.insert(TABLE, null, getValuesModel(model));
+			db.insert(TABLE, null, insertFromValuesGeneric(model));
 		}
 	}
 
@@ -142,7 +137,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		if (c.moveToFirst()) {
 			do {
 				// adding to todo list
-				garcomLista.add(createObject(c));
+				garcomLista.add(selectFromObjectGeneric(c));
 			} while (c.moveToNext());
 		}
 
@@ -160,7 +155,17 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		});
 	}
 
-	protected abstract ContentValues getValuesModel(T model);
+	/**
+	 * Método para enviar os valores da coluna a ser inserido no banco
+	 * @param model
+	 * @return ContentValues - Nome/Valores das colunas
+	 */
+	protected abstract ContentValues insertFromValuesGeneric(T model);
 
-	protected abstract T createObject(Cursor c);
+	/**
+	 * Método para gerar os Objeto Tipados
+	 * @param c
+	 * @return Objeto Tipado
+	 */
+	protected abstract T selectFromObjectGeneric(Cursor c);
 }

@@ -17,7 +17,7 @@ public class ProdutoModel {
     public String descricao;
 	
 	@SerializedName("ProdutoGrupoId")
-    public String produto_grupo_id;
+    public Long produto_grupo_id;
 
 	public Type getType() {
 		return new TypeToken<ArrayList<ProdutoModel>>(){}.getType();

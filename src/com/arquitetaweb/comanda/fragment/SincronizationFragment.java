@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,9 +60,70 @@ public class SincronizationFragment extends Fragment implements
 
 	@Override
 	public void onClick(View v) {
-		SincronizarGarcom();
-		//SincronizarProdutoGrupo();
-		//SincronizarProduto(); // Generics
+		progressDialog = new ProgressDialog(this.getActivity());
+		new SincronizarDados().execute();
+	}
+
+	protected class SincronizarDados extends AsyncTask<Void, Integer, Void> {
+		Integer positionProgress = 0;
+		String[] messages = new String[5];
+
+		private void createMessages() {
+			messages[0] = "sincronizando dados....";
+			messages[1] = "sincronizando garçom....";
+			messages[2] = "sincronizando grupo de produto....";
+			messages[3] = "sincronizando produto....";
+			messages[4] = "finalizando...";
+		}
+
+		private void updateMessage() {
+			positionProgress++;
+			publishProgress(positionProgress);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			createMessages();
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage(messages[0]);
+			progressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(Void... produtos) {
+			try {
+				publishProgress(positionProgress);
+				Thread.sleep(1000);
+
+				updateMessage();
+				SincronizarGarcom();
+
+				updateMessage();
+				SincronizarProdutoGrupo();
+
+				updateMessage();
+				SincronizarProduto();
+
+				updateMessage();
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			progressDialog.dismiss();
+			super.onPostExecute(result);
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			super.onProgressUpdate(values);
+			progressDialog.setMessage(messages[values[0]]);
+		}
 	}
 
 	private void SincronizarGarcom() {
@@ -72,10 +134,16 @@ public class SincronizationFragment extends Fragment implements
 				}.getType());
 
 		Log.d("SincronizarGarcom", "Iniciando SincronizarGarcom....");
-		progressDialog = new ProgressDialog(this.getActivity());
+
 		GarcomGenericHelper dbGarcom = new GarcomGenericHelper(
-				this.getActivity(), progressDialog);
+				this.getActivity());
 		dbGarcom.sincronizar(garcomLista);
+
+		List<GarcomModel> allToDos = dbGarcom.getAll();
+		for (GarcomModel todo : allToDos) {
+			Log.d("GarcomModel", todo.id + " - " + todo.codigo + " - "
+					+ todo.nome);
+		}
 
 		// Don't forget to close database connection
 		dbGarcom.closeDB();
@@ -93,10 +161,16 @@ public class SincronizationFragment extends Fragment implements
 
 		Log.d("SincronizarProdutoGrupo",
 				"Iniciando SincronizarProdutoGrupo....");
-		progressDialog = new ProgressDialog(this.getActivity());
+
 		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
-				this.getActivity(), progressDialog);
+				this.getActivity());
 		dbProdutoGrupo.sincronizar(produtoLista);
+
+		List<ProdutoGrupoModel> allToDos = dbProdutoGrupo.getAll();
+		for (ProdutoGrupoModel todo : allToDos) {
+			Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
+					+ todo.descricao);
+		}
 
 		dbProdutoGrupo.closeDB();
 		Log.d("SincronizarProdutoGrupo",
@@ -112,16 +186,16 @@ public class SincronizationFragment extends Fragment implements
 				}.getType());
 
 		Log.d("SincronizarProduto", "Iniciando SincronizarProduto....");
-		progressDialog = new ProgressDialog(this.getActivity());
+
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(
-				this.getActivity(), progressDialog);
+				this.getActivity());
 		dbProduto.sincronizar(produtoLista);
 
-		// List<ProdutoModel> allToDos = dbProduto.getAll();
-		// for (ProdutoModel todo : allToDos) {
-		// Log.d("getAllProduto", todo.id + " - " + todo.codigo + " - "
-		// + todo.descricao);
-		// }
+		List<ProdutoModel> allToDos = dbProduto.getAll();
+		for (ProdutoModel todo : allToDos) {
+			Log.d("getAllProduto", todo.id + " - " + todo.produto_grupo_id
+					+ " - " + todo.codigo + " - " + todo.descricao);
+		}
 
 		dbProduto.closeDB();
 		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");

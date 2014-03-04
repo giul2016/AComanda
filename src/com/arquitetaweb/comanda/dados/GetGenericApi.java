@@ -3,11 +3,9 @@ package com.arquitetaweb.comanda.dados;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.arquitetaweb.comanda.util.JSONParser;
 import com.arquitetaweb.comanda.util.Utils;
@@ -19,48 +17,15 @@ public class GetGenericApi<T> {
 	private Context context;
 	private static String URL_API = "GetMethod"; // GetProdutoGrupo
 	private Type type;
-	
-	public GetGenericApi(Context context ) {
-		this.context = context;		
+
+	public GetGenericApi(Context context) {
+		this.context = context;
 	}
 
-	public List<T> LoadListApiFromUrl(String urlApi,Type type) {
+	public List<T> LoadListApiFromUrl(String urlApi, Type type) {
 		this.type = type;
-		LoadListAsync list = new LoadListAsync();
-		try {
-			URL_API = urlApi;
-			return (List<T>) list.execute().get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return null;
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	private class LoadListAsync extends AsyncTask<String, Void, List<T>> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-
-		}
-
-		@Override
-		protected List<T> doInBackground(String... params) {
-			if (Utils.isConnected(context)) {
-				return getObject();
-			} else {
-				errorConnectServer();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(List<T> result) {
-			super.onPostExecute(result);
-		}
+		URL_API = urlApi;
+		return getObject();
 	}
 
 	private List<T> getObject() {
@@ -69,7 +34,7 @@ public class GetGenericApi<T> {
 			JSONParser jParser = new JSONParser();
 			final String jsonGarcom = jParser.getJSONFromApi(urlApi);
 			List<T> list = new ArrayList<T>();
-			Gson gson = new Gson();			
+			Gson gson = new Gson();
 			list = gson.fromJson(jsonGarcom, type);
 
 			return list;
