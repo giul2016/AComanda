@@ -3,6 +3,7 @@ package com.arquitetaweb.comanda.model;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import com.arquitetaweb.comanda.model.model_enum.SituacaoMesa;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,9 +15,9 @@ public class MesaModel {
     public String numero_mesa;
 	
 	@SerializedName("Situacao")
-    public String situacao;
+    public SituacaoMesa situacao;
 
 	public Type getType() {
 		return new TypeToken<ArrayList<MesaModel>>(){}.getType();
-	}
+	}	
 }

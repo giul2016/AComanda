@@ -40,6 +40,7 @@ public class DetailsActivity extends FragmentActivity {
 		Gson gson = new Gson();
 		MesaModel mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
 				MesaModel.class); // converte pra ArrayList de mesas
+		
 		final String idMesa = mesa.id.toString();
 
 		TextView txtIdMesa = (TextView) findViewById(R.id.idMesa);

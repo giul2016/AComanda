@@ -58,32 +58,36 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		if (convertView == null) {
 			vi = inflater.inflate(R.layout.mesa_info, null);
 		}
-		TextView idItem = (TextView) vi.findViewById(R.id.idItem); // id
-		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); // numero
-		TextView situacao = (TextView) vi.findViewById(R.id.situacao); // situacao
-
+		
+		// number table
+		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); 
+		
+		// change the background color for the situation condition
 		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
-		GradientDrawable bgShape = (GradientDrawable) layout.getBackground();
+		GradientDrawable bgShape = (GradientDrawable) layout.getBackground(); 
 
+		// get item from position
 		MesaModel item = new MesaModel();
 		item = data.get(position);
 
-		// Setting all values in gridview
-		idItem.setText(item.id.toString());
+		// setting all values in gridview
 		numero_mesa.setText(item.numero_mesa);
-		situacao.setText(item.situacao);
+		numero_mesa.setTextColor(Color.BLACK); // reset font color
 
-		numero_mesa.setTextColor(Color.BLACK);
-		String _situacao = situacao.getText().toString();
-		if (_situacao.equals("1")) {
-			bgShape.setColor(Color.parseColor("#43CD80")); // green
-		} else if (_situacao.equals("2")) {
-			bgShape.setColor(Color.parseColor("#FF4040"));
-			numero_mesa.setTextColor(Color.WHITE);
-		} else if (_situacao.equals("7")) {
-			bgShape.setColor(Color.parseColor("#C5C1AA"));
-		} else {
-			bgShape.setColor(Color.parseColor("#EEFF44"));
+		switch (item.situacao) {
+			case LIVRE:
+				bgShape.setColor(Color.parseColor("#43CD80")); // green
+				break;
+			case OCUPADA:
+				bgShape.setColor(Color.parseColor("#FF4040"));
+				numero_mesa.setTextColor(Color.WHITE);
+				break;
+			case OCIOSA:
+				bgShape.setColor(Color.parseColor("#C5C1AA"));
+				break;
+			default:
+				bgShape.setColor(Color.parseColor("#EEFF44"));
+				break;
 		}
 
 		return vi;
@@ -108,8 +112,9 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 				} else {
 					for (int i = 0; i < dataOriginal.size(); i++) {
 						MesaModel mesaObject = dataOriginal.get(i);
-						// pesquisa pelo numero da mesa
-						if (mesaObject.numero_mesa.startsWith(prefix.toString())) {
+						// search by condition table started by criterion
+						if (mesaObject.numero_mesa
+								.startsWith(prefix.toString())) {
 							FilteredByNumero.add(mesaObject);
 						}
 					}

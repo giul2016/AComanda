@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
 	private String currentFragmentTag = null;
 	private static final String STATE_URI = "state:uri";
 	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
-	//private Uri currentUri = MainFragment.MESAS_URI;
-	private Uri currentUri = SincronizationFragment.SINCRONIZATION_URI;
+	private Uri currentUri = MainFragment.MESAS_URI;
+	//private Uri currentUri = SincronizationFragment.SINCRONIZATION_URI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

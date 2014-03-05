@@ -71,15 +71,15 @@ public class MainController {
 
 	private void SincronizarMesa() {
 		
-		GetGenericApi<MesaModel> garcomApi = new GetGenericApi<MesaModel>(
+		GetGenericApi<MesaModel> mesaApi = new GetGenericApi<MesaModel>(
 				context);
 		
-		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(URL_API,
+		List<MesaModel> mesaList = mesaApi.LoadListApiFromUrl(URL_API,
 				new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
 		GridView mesas = (GridView) view.findViewById(R.id.mapa_mesa);
-		MesaAdapter adapter = new MesaAdapter((Activity) context, garcomList);
+		MesaAdapter adapter = new MesaAdapter((Activity) context, mesaList);
 
 		updateListView(mesas, fragment, adapter);
 	}
@@ -103,7 +103,7 @@ public class MainController {
 						Intent intent = new Intent(view.getContext(),
 								DetailsActivity.class);
 
-						MesaModel mesaObj = adapter.getItem(idMesa);
+						MesaModel mesaObj = adapter.getItem(idMesa);						
 						String mesaGson = new Gson().toJson(mesaObj);
 						intent.putExtra("mesa", mesaGson);
 						fragment.startActivityForResult(intent, 100);
