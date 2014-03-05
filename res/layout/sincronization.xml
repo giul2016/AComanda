@@ -19,6 +19,8 @@
                 android:id="@+id/checkBoxSincGarcom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
                 android:text="@string/labelSincGarcom"
                 android:textSize="20sp" />
 
@@ -26,6 +28,8 @@
                 android:id="@+id/checkBoxSincProdutoGrupo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
                 android:text="@string/labelSincProdutoGrupo"
                 android:textSize="20sp" />
         </TableRow>
@@ -41,8 +45,30 @@
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
+
         </TableRow>
     </TableLayout>
+
+    <TextView
+        android:id="@+id/txtSincronizadoSucesso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/sincronizado_sucesso"
+        android:textColor="#007300"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/txtSincronizadoSucessoTempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#007300"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/btnSynchronize"

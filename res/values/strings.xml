@@ -34,4 +34,5 @@
     <string name="labelSincGarcom">Garçom</string>
     <string name="labelSincProduto">Produto</string>
     <string name="labelSincProdutoGrupo">Produto e Grupo</string>
+    <string name="sincronizado_sucesso">sincronizado com sucesso</string>
 </resources>

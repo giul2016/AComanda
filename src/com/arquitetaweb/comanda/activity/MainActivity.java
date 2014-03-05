@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -29,7 +28,7 @@ import android.widget.SearchView.OnQueryTextListener;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
-import com.arquitetaweb.comanda.dados.GetMesas;
+import com.arquitetaweb.comanda.controller.MainController;
 import com.arquitetaweb.comanda.fragment.AboutFragment;
 import com.arquitetaweb.comanda.fragment.MainFragment;
 import com.arquitetaweb.comanda.fragment.SettingsFragment;
@@ -48,6 +47,8 @@ public class MainActivity extends Activity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle; 
 	private String[] mActionTitles;
+	
+	private MainController controller;
 	
 	private SearchView searchView;
 	private KeyboardAction kb = new KeyboardAction();
@@ -147,7 +148,7 @@ public class MainActivity extends Activity {
 				@Override
 				public boolean onQueryTextChange(String arg0) {
 					GridView mesas = (GridView) fragment.getView()
-							.findViewById(R.id.list);
+							.findViewById(R.id.mapa_mesa);
 					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
 					if (v != null) {
 						v.getFilter().filter(arg0);
@@ -159,7 +160,7 @@ public class MainActivity extends Activity {
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
 					GridView mesaGrid = (GridView) fragment.getView()
-							.findViewById(R.id.list);
+							.findViewById(R.id.mapa_mesa);
 					MesaAdapter mesaAdapter = (MesaAdapter) mesaGrid
 							.getAdapter();
 					if (mesaAdapter.getCount() > 0) {
@@ -207,8 +208,11 @@ public class MainActivity extends Activity {
 		
 		switch (item.getItemId()) {
 		case R.id.action_refresh_mapa:
-			refreshMenuItem = item;
-			new SyncData().execute();
+			refreshMenuItem = item;					
+
+			controller = new MainController(fragment, null);
+			controller.atualizarMesa(refreshMenuItem);
+			
 			clearSearch();
 			return true;
 		case R.id.action_search:
@@ -235,7 +239,7 @@ public class MainActivity extends Activity {
 			currentFragmentTag = SettingsFragment.TAG;
 			fragment = new SettingsFragment();
 		} else if (MainFragment.MESAS_URI.equals(uri)) {
-			currentFragmentTag = MainFragment.TAG;
+			currentFragmentTag = MainFragment.TAG;			
 			fragment = new MainFragment();
 		} else if (AboutFragment.ABOUT_URI.equals(uri)) {
 			currentFragmentTag = AboutFragment.TAG;
@@ -297,29 +301,4 @@ public class MainActivity extends Activity {
 		clearSearch();				
 		super.onSaveInstanceState(outState);
 	}
-
-	/**
-	 * Async task to load the data from server
-	 * **/
-	private class SyncData extends AsyncTask<String, Void, String> {
-		@Override
-		protected void onPreExecute() {
-			refreshMenuItem.setActionView(R.layout.action_progressbar);
-			refreshMenuItem.expandActionView();
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			GetMesas getMesas = new GetMesas(fragment);
-			getMesas.reload();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			refreshMenuItem.collapseActionView();
-			// remove the progress bar view
-			refreshMenuItem.setActionView(null);
-		}
-	};		
 }

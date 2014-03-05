@@ -1,10 +1,13 @@
 package com.arquitetaweb.comanda.fragment;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
@@ -34,6 +37,9 @@ public class SincronizationFragment extends Fragment implements
 	private ProgressDialog progressDialog;
 	private View viewRoot;
 	private CheckBox checkGarcom, checkProdutoGrupo;
+	private TextView txtSincSucess;
+	private TextView txtSincSucessTime;
+	
 
 	public static final String TAG = SincronizationFragment.class
 			.getSimpleName();
@@ -62,17 +68,31 @@ public class SincronizationFragment extends Fragment implements
 		checkProdutoGrupo = (CheckBox) viewRoot
 				.findViewById(R.id.checkBoxSincProdutoGrupo);
 
+		txtSincSucess = (TextView) viewRoot.findViewById(R.id.txtSincronizadoSucesso);
+		txtSincSucessTime = (TextView) viewRoot.findViewById(R.id.txtSincronizadoSucessoTempo);
+				
 		return viewRoot;
+	}
+
+	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 
 	@Override
 	public void onClick(View v) {
+		if (txtSincSucess.getVisibility() == View.VISIBLE) {
+			txtSincSucess.setTextColor(Color.parseColor("#000066"));
+			txtSincSucess.setText("sincronizando aguarde...");
+			txtSincSucessTime.setVisibility(View.INVISIBLE);
+		}
 		progressDialog = new ProgressDialog(this.getActivity());
 		new SincronizarDados().execute();
 	}
 
 	protected class SincronizarDados extends AsyncTask<Void, Integer, Void> {
 		String[] messages = new String[5];
+		long mStartTime;
 
 		private void createMessages() {
 			messages[0] = "sincronizando dados....";
@@ -88,6 +108,7 @@ public class SincronizationFragment extends Fragment implements
 
 		@Override
 		protected void onPreExecute() {
+			mStartTime = System.currentTimeMillis();
 			super.onPreExecute();
 			createMessages();
 			progressDialog.setCancelable(false);
@@ -97,7 +118,7 @@ public class SincronizationFragment extends Fragment implements
 
 		@Override
 		protected Void doInBackground(Void... produtos) {
-			try {
+			try {				
 				publishProgress(0);
 				Thread.sleep(1000);
 
@@ -105,11 +126,10 @@ public class SincronizationFragment extends Fragment implements
 				if (checkGarcom.isChecked())
 					SincronizarGarcom();
 
-				
 				if (checkProdutoGrupo.isChecked()) {
 					updateMessage(2);
 					SincronizarProdutoGrupo();
-					
+
 					updateMessage(3);
 					SincronizarProduto();
 				}
@@ -125,6 +145,20 @@ public class SincronizationFragment extends Fragment implements
 		@Override
 		protected void onPostExecute(Void result) {
 			progressDialog.dismiss();
+
+			long mEndTime = System.currentTimeMillis();
+			long diff = (mEndTime - mStartTime);
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+
+			txtSincSucess.setVisibility(View.VISIBLE);
+			txtSincSucess.setTextColor(Color.parseColor("#007300"));
+			txtSincSucess.setText("sincronizado com sucesso");
+			
+			txtSincSucessTime.setVisibility(View.VISIBLE);
+			String timeSucess = diffMinutes + " min. e " + diffSeconds + " seg.";
+			txtSincSucessTime.setText(timeSucess);			
+			
 			super.onPostExecute(result);
 		}
 
@@ -132,6 +166,7 @@ public class SincronizationFragment extends Fragment implements
 		protected void onProgressUpdate(Integer... values) {
 			super.onProgressUpdate(values);
 			progressDialog.setMessage(messages[values[0]]);
+			txtSincSucess.setText(messages[values[0]]);
 		}
 	}
 
@@ -165,7 +200,7 @@ public class SincronizationFragment extends Fragment implements
 				this.getActivity());
 
 		List<ProdutoGrupoModel> produtoGrupoList = produtoGrupoApi
-				.LoadListApiFromUrl("GetProduto",
+				.LoadListApiFromUrl("GetProdutoGrupo",
 						new TypeToken<ArrayList<ProdutoGrupoModel>>() {
 						}.getType());
 

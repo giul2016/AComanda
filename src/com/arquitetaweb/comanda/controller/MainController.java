@@ -1,4 +1,4 @@
-package com.arquitetaweb.comanda.fragment;
+package com.arquitetaweb.comanda.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,11 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -20,64 +18,34 @@ import android.widget.GridView;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailsActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
-import com.arquitetaweb.comanda.controller.MainController;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class MainFragment extends Fragment {
+public class MainController {
 
 	private ProgressDialog progressDialog;
-	private MainController controller;
-	
-	private static final String ABOUT_SCHEME = "category";
-	private static final String ABOUT_AUTHORITY = "mesas";
+	private Context context;
+	private Fragment fragment;
+	private View view;
 
-	public static final String TAG = MainFragment.class.getSimpleName();
-	public static final Uri MESAS_URI = new Uri.Builder().scheme(ABOUT_SCHEME)
-			.authority(ABOUT_AUTHORITY).build();
-
-	public MainFragment() {
-		// Empty constructor required for fragment subclasses
+	public MainController(Fragment fragment, ProgressDialog progressDialog) {
+		this.progressDialog = progressDialog;
+		this.fragment = fragment;
+		this.context = fragment.getActivity();
+		this.view = fragment.getView();
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		View rootView = inflater.inflate(R.layout.mesa_lista, container, false);
-
-		return rootView;
+	public void sincronizarMesa() {
+		new SincronizarDados().execute();
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		progressDialog = new ProgressDialog(this.getActivity());
-		
-		controller = new MainController(this, progressDialog);
-		controller.sincronizarMesa();
-		
-		super.onActivityCreated(savedInstanceState);
+	public void atualizarMesa() {
+		SincronizarMesa();
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (Activity.RESULT_OK == resultCode) {
-			controller.sincronizarMesa();
-		}
-	}
-
-	@Override
-	public void onDestroy() {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
-			progressDialog = null;
-		}
-		super.onDestroy();
-	}
-
-	protected class SincronizarDados extends AsyncTask<Void, Void, Void> {
+	private class SincronizarDados extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected void onPreExecute() {
@@ -102,20 +70,20 @@ public class MainFragment extends Fragment {
 
 	private void SincronizarMesa() {
 		GetGenericApi<MesaModel> garcomApi = new GetGenericApi<MesaModel>(
-				this.getActivity());
+				context);
 		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(
 				"SituacaoMesas", new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
-		GridView mesas = (GridView) this.getView().findViewById(R.id.mapa_mesa);
-		MesaAdapter adapter = new MesaAdapter(this.getActivity(), garcomList);
+		GridView mesas = (GridView) view.findViewById(R.id.mapa_mesa);
+		MesaAdapter adapter = new MesaAdapter((Activity) context, garcomList);
 
-		updateListView(mesas, this, adapter);
+		updateListView(mesas, fragment, adapter);
 	}
 
 	private void updateListView(final GridView mesas, final Fragment fragment,
 			final MesaAdapter adapter) {
-		this.getActivity().runOnUiThread(new Runnable() {
+		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
 				mesas.setAdapter(adapter);
 
@@ -141,4 +109,39 @@ public class MainFragment extends Fragment {
 			}
 		});
 	}
+
+	public void atualizarMesa (MenuItem refreshMenuItem) {
+		new AtualizarMesa(refreshMenuItem).execute();
+	}
+	
+	/**
+	 * Async task to load the data from server
+	 * **/
+	private class AtualizarMesa extends AsyncTask<Void, Void, Void> {
+
+		private MenuItem refreshMenuItem;
+		
+		public AtualizarMesa(MenuItem refreshMenuItem) {
+			this.refreshMenuItem = refreshMenuItem;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			refreshMenuItem.setActionView(R.layout.action_progressbar);
+			refreshMenuItem.expandActionView();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			atualizarMesa();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			refreshMenuItem.collapseActionView();
+			// remove the progress bar view
+			refreshMenuItem.setActionView(null);
+		}
+	};
 }
