@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 public class GetGenericApi<T> {
 
 	private Context context;
-	private static String URL_API = "GetMethod"; // GetProdutoGrupo
+	private String URL_API = "GetMethod"; // GetProdutoGrupo
 	private Type type;
 
 	public GetGenericApi(Context context) {

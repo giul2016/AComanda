@@ -30,7 +30,7 @@ public class MainFragment extends Fragment {
 
 	private ProgressDialog progressDialog;
 	private MainController controller;
-	
+
 	private static final String ABOUT_SCHEME = "category";
 	private static final String ABOUT_AUTHORITY = "mesas";
 
@@ -54,10 +54,10 @@ public class MainFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		progressDialog = new ProgressDialog(this.getActivity());
-		
+
 		controller = new MainController(this, progressDialog);
 		controller.sincronizarMesa();
-		
+
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -101,10 +101,11 @@ public class MainFragment extends Fragment {
 	}
 
 	private void SincronizarMesa() {
+		String URL_API = "GetMesas";
 		GetGenericApi<MesaModel> garcomApi = new GetGenericApi<MesaModel>(
 				this.getActivity());
-		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(
-				"SituacaoMesas", new TypeToken<ArrayList<MesaModel>>() {
+		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(URL_API,
+				new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
 		GridView mesas = (GridView) this.getView().findViewById(R.id.mapa_mesa);

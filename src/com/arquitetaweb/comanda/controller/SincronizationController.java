@@ -46,7 +46,7 @@ public class SincronizationController {
 		txtSincSucessTime = (TextView) fragment.getView().findViewById(
 				R.id.txtSincronizadoSucessoTempo);
 	}
-	
+
 	public void sincronizarDados() {
 		new SincronizarDados().execute();
 	}
@@ -58,7 +58,7 @@ public class SincronizationController {
 			txtSincSucessTime.setVisibility(View.INVISIBLE);
 		}
 	}
-	
+
 	private class SincronizarDados extends AsyncTask<Void, Integer, Void> {
 		String[] messages = new String[5];
 		long mStartTime;
@@ -141,10 +141,11 @@ public class SincronizationController {
 	}
 
 	private void SincronizarGarcom() {
+		String URL_API = "GetGarcom";
 		GetGenericApi<GarcomModel> garcomApi = new GetGenericApi<GarcomModel>(
 				context);
-		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl(
-				"GetGarcom", new TypeToken<ArrayList<GarcomModel>>() {
+		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl(URL_API,
+				new TypeToken<ArrayList<GarcomModel>>() {
 				}.getType());
 
 		Log.d("SincronizarGarcom", "Iniciando SincronizarGarcom....");
@@ -164,12 +165,12 @@ public class SincronizationController {
 	}
 
 	private void SincronizarProdutoGrupo() {
-
+		String URL_API = "GetProdutoGrupo";
 		GetGenericApi<ProdutoGrupoModel> produtoGrupoApi = new GetGenericApi<ProdutoGrupoModel>(
 				context);
 
 		List<ProdutoGrupoModel> produtoGrupoList = produtoGrupoApi
-				.LoadListApiFromUrl("GetProdutoGrupo",
+				.LoadListApiFromUrl(URL_API,
 						new TypeToken<ArrayList<ProdutoGrupoModel>>() {
 						}.getType());
 
@@ -192,11 +193,12 @@ public class SincronizationController {
 	}
 
 	private void SincronizarProduto() {
+		String URL_API = "GetProduto";
 		GetGenericApi<ProdutoModel> produtoApi = new GetGenericApi<ProdutoModel>(
 				context);
 
-		List<ProdutoModel> produtoList = produtoApi.LoadListApiFromUrl(
-				"GetProduto", new TypeToken<ArrayList<ProdutoModel>>() {
+		List<ProdutoModel> produtoList = produtoApi.LoadListApiFromUrl(URL_API,
+				new TypeToken<ArrayList<ProdutoModel>>() {
 				}.getType());
 
 		Log.d("SincronizarProduto", "Iniciando SincronizarProduto....");

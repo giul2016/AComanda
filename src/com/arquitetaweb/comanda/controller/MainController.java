@@ -29,6 +29,7 @@ public class MainController {
 	private Context context;
 	private Fragment fragment;
 	private View view;
+	private String URL_API = "GetMesas";
 
 	public MainController(Fragment fragment, ProgressDialog progressDialog) {
 		this.progressDialog = progressDialog;
@@ -69,10 +70,12 @@ public class MainController {
 	}
 
 	private void SincronizarMesa() {
+		
 		GetGenericApi<MesaModel> garcomApi = new GetGenericApi<MesaModel>(
 				context);
-		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(
-				"SituacaoMesas", new TypeToken<ArrayList<MesaModel>>() {
+		
+		List<MesaModel> garcomList = garcomApi.LoadListApiFromUrl(URL_API,
+				new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
 		GridView mesas = (GridView) view.findViewById(R.id.mapa_mesa);
@@ -110,17 +113,17 @@ public class MainController {
 		});
 	}
 
-	public void atualizarMesa (MenuItem refreshMenuItem) {
+	public void atualizarMesa(MenuItem refreshMenuItem) {
 		new AtualizarMesa(refreshMenuItem).execute();
 	}
-	
+
 	/**
 	 * Async task to load the data from server
 	 * **/
 	private class AtualizarMesa extends AsyncTask<Void, Void, Void> {
 
 		private MenuItem refreshMenuItem;
-		
+
 		public AtualizarMesa(MenuItem refreshMenuItem) {
 			this.refreshMenuItem = refreshMenuItem;
 		}
