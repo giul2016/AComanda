@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.arquitetaweb.restaurantes.DetailsActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_weight="0.13"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/idMesa_teste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/idNumeroMesa_teste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/idSituacao_teste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnLivre_teste"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Livre" />
+
+        <Button
+            android:id="@+id/btnOcupada_teste"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ocupada" />
+
+        <Button
+            android:id="@+id/btnEmConta_teste"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EmConta" />
+    </LinearLayout>
+    
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnLimpar_teste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limpar" />
+        
+         <Button
+              android:id="@+id/btnAgrupada_teste"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Agrupada" />
+            
+          <Button
+              android:id="@+id/btnReservada_teste"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Reservada" />
+          
+    </LinearLayout>
+          
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="0dip"
+          android:layout_weight="0.64" >
+
+          <Button
+              android:id="@+id/btnOciosa_teste"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Ociosa" />
+
+          <Button
+              android:id="@+id/btnIndefinido_teste"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="Indefinido" />
+      </LinearLayout>
+
+</LinearLayout>

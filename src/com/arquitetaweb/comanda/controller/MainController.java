@@ -13,10 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailsActivity;
+import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
@@ -90,6 +92,26 @@ public class MainController {
 			public void run() {
 				mesas.setAdapter(adapter);
 
+				mesas.setOnItemLongClickListener(new OnItemLongClickListener() {
+					
+					@Override
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							View arg1, int arg2, long arg3) {
+						abrirDetalhes(view, arg2);
+						return true;
+					}
+					
+					private void abrirDetalhes(View view, Integer idMesa) {
+						Intent intent = new Intent(view.getContext(),
+								TestePutActivity.class);
+
+						MesaModel mesaObj = adapter.getItem(idMesa);						
+						String mesaGson = new Gson().toJson(mesaObj);
+						intent.putExtra("mesa", mesaGson);
+						fragment.startActivityForResult(intent, 100);
+					}					
+				});
+				
 				// Click event for single list row
 				mesas.setOnItemClickListener(new OnItemClickListener() {
 					@Override

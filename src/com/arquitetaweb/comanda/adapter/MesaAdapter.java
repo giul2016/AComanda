@@ -75,18 +75,36 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 		numero_mesa.setTextColor(Color.BLACK); // reset font color
 
 		switch (item.situacao) {
-			case LIVRE:
+			case Livre: // 1
 				bgShape.setColor(Color.parseColor("#43CD80")); // green
 				break;
-			case OCUPADA:
-				bgShape.setColor(Color.parseColor("#FF4040"));
+			case Ocupada: // 2
+				bgShape.setColor(Color.parseColor("#FF4040")); // red
 				numero_mesa.setTextColor(Color.WHITE);
 				break;
-			case OCIOSA:
-				bgShape.setColor(Color.parseColor("#C5C1AA"));
+			case EmConta: // 3
+				bgShape.setColor(Color.parseColor("#EEFF44")); // yellow
+				break;
+			case Limpar: // 4
+				bgShape.setColor(Color.parseColor("#CF7C2C")); // brow
+				numero_mesa.setTextColor(Color.WHITE); 
+				break;
+			case Agrupada: // 5
+				bgShape.setColor(Color.parseColor("#C5C1AA")); // gray
+				break;
+			case Reservada: // 6
+				bgShape.setColor(Color.parseColor("#946E6E")); // red
+				numero_mesa.setTextColor(Color.WHITE);
+				break;
+			case Ociosa: // 7
+				bgShape.setColor(Color.parseColor("#587AC4")); // blink blue
+				numero_mesa.setTextColor(Color.WHITE);
+				break;
+			case Indefinido: // 8
+				bgShape.setColor(Color.WHITE); // white 
 				break;
 			default:
-				bgShape.setColor(Color.parseColor("#EEFF44"));
+				bgShape.setColor(Color.WHITE); // white
 				break;
 		}
 

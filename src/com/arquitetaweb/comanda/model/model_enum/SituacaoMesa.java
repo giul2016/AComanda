@@ -5,26 +5,26 @@ import com.google.gson.annotations.SerializedName;
 public enum SituacaoMesa {
 
 	@SerializedName("1")
-	LIVRE,
+	Livre,
 
 	@SerializedName("2")
-	OCUPADA,
+	Ocupada,
 
 	@SerializedName("3")
-	ABRIR,
+	EmConta,
 
 	@SerializedName("4")
-	VISUALIZAR,
+	Limpar,
 
 	@SerializedName("5")
-	FECHAR,
+	Agrupada,
 
 	@SerializedName("6")
-	LIMPAR,
+	Reservada,
 
 	@SerializedName("7")
-	OCIOSA,
+	Ociosa,
 
 	@SerializedName("8")
-	TESTE;
+	Indefinido;
 }
