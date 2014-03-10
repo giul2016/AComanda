@@ -31,7 +31,7 @@ public class MainController {
 	private Context context;
 	private Fragment fragment;
 	private View view;
-	private String URL_API = "GetMesas";
+	private String URL_API = "Mesas";
 
 	public MainController(Fragment fragment, ProgressDialog progressDialog) {
 		this.progressDialog = progressDialog;

@@ -141,7 +141,7 @@ public class SincronizationController {
 	}
 
 	private void SincronizarGarcom() {
-		String URL_API = "GetGarcom";
+		String URL_API = "Garcom";
 		GetGenericApi<GarcomModel> garcomApi = new GetGenericApi<GarcomModel>(
 				context);
 		List<GarcomModel> garcomList = garcomApi.LoadListApiFromUrl(URL_API,
@@ -165,7 +165,7 @@ public class SincronizationController {
 	}
 
 	private void SincronizarProdutoGrupo() {
-		String URL_API = "GetProdutoGrupo";
+		String URL_API = "ProdutoGrupo";
 		GetGenericApi<ProdutoGrupoModel> produtoGrupoApi = new GetGenericApi<ProdutoGrupoModel>(
 				context);
 
@@ -193,7 +193,7 @@ public class SincronizationController {
 	}
 
 	private void SincronizarProduto() {
-		String URL_API = "GetProduto";
+		String URL_API = "Produto";
 		GetGenericApi<ProdutoModel> produtoApi = new GetGenericApi<ProdutoModel>(
 				context);
 
