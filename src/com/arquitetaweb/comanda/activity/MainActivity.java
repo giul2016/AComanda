@@ -3,10 +3,12 @@ package com.arquitetaweb.comanda.activity;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -39,29 +41,30 @@ import com.arquitetaweb.comum.messages.AlertaToast;
 import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
-	
+
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	private CharSequence mDrawerTitle;
-	private CharSequence mTitle; 
+	private CharSequence mTitle;
 	private String[] mActionTitles;
-	
+
 	private MainController controller;
-	
+
 	private SearchView searchView;
 	private KeyboardAction kb = new KeyboardAction();
-	
+
 	// Refresh menu item
 	private MenuItem refreshMenuItem;
-	
+
 	private Fragment fragment = null;
 	private String currentFragmentTag = null;
 	private static final String STATE_URI = "state:uri";
 	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
 	private Uri currentUri = MainFragment.MESAS_URI;
-	//private Uri currentUri = SincronizationFragment.SINCRONIZATION_URI;
+
+	// private Uri currentUri = SincronizationFragment.SINCRONIZATION_URI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +117,7 @@ public class MainActivity extends Activity {
 			currentFragmentTag = savedInstanceState
 					.getString(STATE_FRAGMENT_TAG);
 		}
-		 
+
 		selectItem(currentUri);
 	}
 
@@ -194,7 +197,7 @@ public class MainActivity extends Activity {
 		menu.findItem(R.id.action_refresh_mapa).setVisible(!drawerOpen);
 		menu.findItem(R.id.action_search).setVisible(!drawerOpen);
 
-		clearSearch();		
+		clearSearch();
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -205,14 +208,14 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		
+
 		switch (item.getItemId()) {
 		case R.id.action_refresh_mapa:
-			refreshMenuItem = item;					
+			refreshMenuItem = item;
 
 			controller = new MainController(fragment, null);
 			controller.atualizarMesa(refreshMenuItem);
-			
+
 			clearSearch();
 			return true;
 		case R.id.action_search:
@@ -239,7 +242,7 @@ public class MainActivity extends Activity {
 			currentFragmentTag = SettingsFragment.TAG;
 			fragment = new SettingsFragment();
 		} else if (MainFragment.MESAS_URI.equals(uri)) {
-			currentFragmentTag = MainFragment.TAG;			
+			currentFragmentTag = MainFragment.TAG;
 			fragment = new MainFragment();
 		} else if (AboutFragment.ABOUT_URI.equals(uri)) {
 			currentFragmentTag = AboutFragment.TAG;
@@ -297,8 +300,31 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putString(STATE_URI, currentUri.toString());
 		outState.putString(STATE_FRAGMENT_TAG, currentFragmentTag);
-		
-		clearSearch();				
+
+		clearSearch();
 		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(isTaskRoot()) {
+		    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		    builder.setMessage("Tem certeza de que deseja sair?")
+		       .setCancelable(false)
+		       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                MainActivity.super.onBackPressed();
+		           }
+		       })
+		       .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
+		    AlertDialog alert = builder.create();
+		    alert.show();
+		} else {
+		    super.onBackPressed();
+		}
 	}
 }

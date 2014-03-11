@@ -6,54 +6,13 @@
     android:orientation="vertical"
     tools:context="com.arquitetaweb.restaurantes.DetailsActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="95dp"
-        android:layout_weight="0.13"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/idMesa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/idNumeroMesa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/idSituacao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.64" >
-
-        <Button
-            android:id="@+id/btnLivre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Livre" />
-
-        <Button
-            android:id="@+id/btnCcupada"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ocupada" />
-
-        <Button
-            android:id="@+id/btnOciosa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ociosa" />
-    </LinearLayout>
+    <ListView
+        android:id="@+id/listDetail"
+        android:layout_width="fill_parent"
+        android:background="@drawable/gradient_bg"
+        android:layout_height="wrap_content"
+        android:divider="#b5b5b5"
+        android:dividerHeight="2dp"        
+        android:listSelector="@drawable/list_selector" />    
 
 </LinearLayout>

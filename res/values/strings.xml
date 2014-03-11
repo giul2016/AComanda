@@ -35,4 +35,6 @@
     <string name="labelSincProduto">Produto</string>
     <string name="labelSincProdutoGrupo">Produto e Grupo</string>
     <string name="sincronizado_sucesso">sincronizado com sucesso</string>
+    <string name="grupo_produto">Grupo Produto Teste</string>
+    <string name="grupo_produto_codigo">99999</string>
 </resources>

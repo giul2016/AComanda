@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/produtogrupo_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:gravity="start" 
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <TextView
+        android:id="@+id/txtGrupoProdutoDescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtGrupoProdutoCodigo"
+        android:layout_alignBottom="@+id/txtGrupoProdutoCodigo"
+        android:layout_alignParentLeft="true"
+        android:text="@string/grupo_produto"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_next_item" />
+
+    <TextView
+        android:id="@+id/txtGrupoProdutoCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imageView1"
+        android:layout_alignTop="@+id/imageView1"
+        android:paddingRight="30dip"
+        android:paddingTop="3dip"
+        android:layout_marginRight="16dp"
+        android:text="@string/grupo_produto_codigo"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>
