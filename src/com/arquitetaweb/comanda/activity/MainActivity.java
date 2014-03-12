@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
 						String mesaGson = new Gson().toJson(mesaObj);
 
 						Intent intent = new Intent(fragment.getView()
-								.getContext(), DetailsActivity.class);
+								.getContext(), DetailMesaActivity.class);
 						intent.putExtra("mesa", mesaGson);
 						fragment.startActivityForResult(intent, 100);
 					} else {

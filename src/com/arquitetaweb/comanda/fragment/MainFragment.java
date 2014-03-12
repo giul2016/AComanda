@@ -18,7 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.activity.DetailsActivity;
+import com.arquitetaweb.comanda.activity.DetailMesaActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.controller.MainController;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
@@ -131,7 +131,7 @@ public class MainFragment extends Fragment {
 
 					private void abrirDetalhes(View view, Integer idMesa) {
 						Intent intent = new Intent(view.getContext(),
-								DetailsActivity.class);
+								DetailMesaActivity.class);
 
 						MesaModel mesaObj = adapter.getItem(idMesa);
 						String mesaGson = new Gson().toJson(mesaObj);

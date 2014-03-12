@@ -48,6 +48,9 @@
         <!-- Detalhes da Mesa -->
         <activity android:name="com.arquitetaweb.comanda.activity.DetailsActivity" />
         
+        <!-- Detalhes da Mesa Fragment -->
+        <activity android:name="com.arquitetaweb.comanda.activity.DetailMesaActivity" />
+        
          <!-- Teste Put -->
         <activity android:name="com.arquitetaweb.comanda.activity.TestePutActivity" />
         
