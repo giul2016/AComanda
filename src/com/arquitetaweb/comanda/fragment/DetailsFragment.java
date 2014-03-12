@@ -46,9 +46,6 @@ public class DetailsFragment extends Fragment {
 		MesaModel mesa = gson.fromJson(getActivity().getIntent().getStringExtra("mesa"),
 				MesaModel.class); // converte pra ArrayList de mesas
 		
-//		MesaModel mesa = gson.fromJson(this.getIntent().getStringExtra("mesa"),
-//				MesaModel.class); // converte pra ArrayList de mesas
-		
 		progressDialog = new ProgressDialog(this.getActivity());
 
 		controller = new DetailMesaController(this, progressDialog);

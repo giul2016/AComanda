@@ -9,12 +9,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
@@ -29,7 +27,6 @@ public class DetailMesaController {
 	private Context context;
 	private Fragment fragment;
 	private View view;
-	private String URL_API = "Mesas";
 	private ListView list;
 
 	public DetailMesaController(Fragment fragment, ProgressDialog progressDialog) {
@@ -40,34 +37,8 @@ public class DetailMesaController {
 	}
 
 	public void sincronizarMesa() {
-		new SincronizarDados().execute();
-	}
-
-	public void atualizarMesa() {
+		//new SincronizarDados().execute();
 		SincronizarMesa();
-	}
-
-	private class SincronizarDados extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			progressDialog.setCancelable(false);
-			progressDialog.setMessage("atualizando mesas...");
-			progressDialog.show();
-		}
-
-		@Override
-		protected Void doInBackground(Void... produtos) {
-			SincronizarMesa();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			progressDialog.dismiss();
-			super.onPostExecute(result);
-		}
 	}
 
 	private void SincronizarMesa() {
@@ -113,14 +84,13 @@ public class DetailMesaController {
 						ProdutoGenericHelper dbProdutoGrupo = new ProdutoGenericHelper(
 								context);
 						List<ProdutoModel> produtoGrupoList = dbProdutoGrupo
-								.selectAll();
+								.selectWhere("produtoGrupoId = " + id.toString());
 						dbProdutoGrupo.closeDB();
 
 						ProdutoAdapter adapter = new ProdutoAdapter(
 								(Activity) context, produtoGrupoList);
 
 						updateListView2(list, adapter);
-
 					}
 				});
 			}

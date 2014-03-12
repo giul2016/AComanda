@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 
 public class ProdutoAdapter extends BaseAdapter {
@@ -59,14 +60,42 @@ public class ProdutoAdapter extends BaseAdapter {
 				.findViewById(R.id.txtprodutodescricao);
 		TextView codigo = (TextView) vi
 				.findViewById(R.id.txtprodutocodigo);
+		
+		final TextView quantidade = (TextView) vi
+				.findViewById(R.id.txt_quantidade_produto);
 
+		ImageButton decrementa = (ImageButton) vi
+				.findViewById(R.id.btnRemoveProduto);
+		decrementa.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				int qtde = Integer.parseInt(quantidade.getText().toString());
+				if (qtde > 0) {
+					qtde--;
+					quantidade.setText(Integer.toString(qtde));
+				}
+			}
+		});
+		
+		ImageButton incrementa = (ImageButton) vi
+				.findViewById(R.id.btnAddProduto);		
+		incrementa.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				int qtde = Integer.parseInt(quantidade.getText().toString());
+				qtde++;
+				quantidade.setText(Integer.toString(qtde));
+			}
+		});
+		
 		// get item from position
 		ProdutoModel item = new ProdutoModel();
 		item = data.get(position);
 
-		// setting all values in gridview
+		// setting all values
 		descricao.setText(item.descricao);
 		codigo.setText(item.codigo);
+		quantidade.setText("0");
 
 		return vi;
 	}

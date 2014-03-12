@@ -144,6 +144,27 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		return garcomLista;
 	}
 
+	public List<T> selectWhere(String where) {
+		Log.d("DatabaseGenericHelper", "Listando....");
+		db = this.getReadableDatabase();
+
+		// select
+		List<T> garcomLista = new ArrayList<T>();
+		String selectQuery = "SELECT  * FROM " + TABLE + " WHERE " + where;
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (c.moveToFirst()) {
+			do {
+				// adding to todo list
+				garcomLista.add(selectFromObjectGeneric(c));
+			} while (c.moveToNext());
+		}
+
+		return garcomLista;
+	}
+	
 	protected void errorConnectServer() {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {

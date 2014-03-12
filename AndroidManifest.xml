@@ -43,13 +43,11 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-        
-        <!-- Detalhes da Mesa -->
-        <activity android:name="com.arquitetaweb.comanda.activity.DetailsActivity" />
+        </activity>            
         
         <!-- Detalhes da Mesa Fragment -->
-        <activity android:name="com.arquitetaweb.comanda.activity.DetailMesaActivity" />
+        <activity android:name="com.arquitetaweb.comanda.activity.DetailMesaActivity"
+            android:configChanges="orientation|screenSize" />
         
          <!-- Teste Put -->
         <activity android:name="com.arquitetaweb.comanda.activity.TestePutActivity" />
