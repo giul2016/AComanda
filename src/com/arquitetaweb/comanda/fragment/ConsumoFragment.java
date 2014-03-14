@@ -15,9 +15,14 @@
  */
 package com.arquitetaweb.comanda.fragment;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +44,7 @@ public class ConsumoFragment extends ListFragment {
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
 	private int mQuickReturnHeight;
-	
+
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
 	private static final int STATE_RETURNING = 2;
@@ -47,45 +52,56 @@ public class ConsumoFragment extends ListFragment {
 
 	private int mScrollY;
 	private int mMinRawY = 0;
-	
+
 	private TranslateAnimation anim;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_consumo, null);
-				
-		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);		
-		
+
+		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
+
 		Button btnFechaConta = (Button) view.findViewById(R.id.fechar_conta);
 		btnFechaConta.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Toast toast = Toast.makeText(getActivity(), "fechar conta",
 						Toast.LENGTH_SHORT);
-				toast.show();				
+				toast.show();
 			}
-		});
-		
+		});		
+	    
 		return view;
 	}
+
+	private void showFooter(Integer seconds) {
+		Handler handler = null;
+	    handler = new Handler(); 
+	    handler.postDelayed(new Runnable(){ 
+	         public void run(){
+	        	 mQuickReturnView.setTranslationY(0);
+	         }
+	    }, seconds * 1000);
+	}
 	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		mListView = (ListViewCustom) getListView();
-				
+
 		String[] array = new String[] { "Android", "Android", "Android",
 				"Android", "Android", "Android", "Android", "Android",
 				"Android", "Android", "Android", "Android", "Android",
 				"Android", "Android", "Android" };
-		
+
 		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				R.layout.produtogrupo_info,
-				R.id.txtGrupoProdutoDescricao, array));
-		
+				R.layout.produtogrupo_info, R.id.txtGrupoProdutoDescricao,
+				array));
+
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
@@ -100,9 +116,9 @@ public class ConsumoFragment extends ListFragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				
+
 				int translationY = bottonAnim();
-				
+
 				/** this can be used if the build is below honeycomb **/
 				if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
 					mQuickReturnView.startAnimation(anim);
@@ -130,7 +146,7 @@ public class ConsumoFragment extends ListFragment {
 					} else {
 						mState = STATE_RETURNING;
 					}
-					translationY = rawY;
+					translationY = rawY;					
 					break;
 
 				case STATE_ONSCREEN:
@@ -142,7 +158,6 @@ public class ConsumoFragment extends ListFragment {
 					break;
 
 				case STATE_RETURNING:
-
 					translationY = (rawY - mMinRawY) + mQuickReturnHeight;
 
 					System.out.println(translationY);
@@ -167,6 +182,7 @@ public class ConsumoFragment extends ListFragment {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				//
 			}
 		});
 	}
