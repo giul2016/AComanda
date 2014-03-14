@@ -1,96 +1,107 @@
 package com.arquitetaweb.comanda.activity;
 
-import java.util.Arrays;
-
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.net.Uri;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.fragment.AboutFragment;
-import com.arquitetaweb.comanda.fragment.DetailsFragment;
-import com.arquitetaweb.comanda.fragment.MainFragment;
-import com.arquitetaweb.comanda.fragment.SettingsFragment;
-import com.arquitetaweb.comanda.fragment.SincronizationFragment;
-import com.arquitetaweb.comum.messages.AlertaToast;
+import com.arquitetaweb.comanda.fragment.ConsumoFragment;
+import com.arquitetaweb.comanda.fragment.ProdutoFragment;
+import com.arquitetaweb.comanda.model.MesaModel;
+import com.google.gson.Gson;
 
-public class DetailMesaActivity extends Activity {
-
-	private static final String SCHEME = "settings";
-	private static final String AUTHORITY = "details";
-
-	public static final Uri URI = new Uri.Builder().scheme(SCHEME)
-			.authority(AUTHORITY).build();
-
-	// acima ja existia
-
-	private Fragment fragment = null;
-	private String currentFragmentTag = null;
-	private static final String STATE_URI = "state:uri";
-	private static final String STATE_FRAGMENT_TAG = "state:fragment_tag";
-	private Uri currentUri = DetailsFragment.DETAIL_URI;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-
-		if (savedInstanceState != null) {
-			currentUri = Uri.parse(savedInstanceState.getString(STATE_URI));
-			currentFragmentTag = savedInstanceState
-					.getString(STATE_FRAGMENT_TAG);
-		}
-
-		selectItem(currentUri);
-	}
-
-	private void selectItem(Uri uri) {
-		if (DetailsFragment.DETAIL_URI.equals(uri)) {
-			currentFragmentTag = DetailsFragment.TAG;
-			fragment = new DetailsFragment();
-		}
-
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
-
-		// update selected item and title, then close the drawer
-		//String[] mActionLinks = getResources().getStringArray(
-		//		R.array.actions_link);
-		//Integer position = Arrays.asList(mActionLinks).indexOf(uri.toString());
-		// setTitle(mActionTitles[position]);
-
-		currentUri = uri;
-	}
-
-	@Override
-	public void setTitle(CharSequence title) {
-		// mTitle = title;
-		getActionBar().setTitle("teste");
-	}
-
-	/**
-	 * When using the ActionBarDrawerToggle, you must call it during
-	 * onPostCreate() and onConfigurationChanged()...
-	 */
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString(STATE_URI, currentUri.toString());
-		outState.putString(STATE_FRAGMENT_TAG, currentFragmentTag);
-		super.onSaveInstanceState(outState);
-	}
+public class DetailMesaActivity extends FragmentActivity implements ActionBar.TabListener {
 	
-	@Override
+    private ViewPager mPager;
+    private MesaModel mesa;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+        
+        // button back
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+        Gson gson = new Gson();
+		mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
+				MesaModel.class); // converte pra ArrayList de mesas
+		
+		setTitle("Mesa: " + mesa.numero_mesa);
+		
+		// TAB
+        PagerAdapter adapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return new ProdutoFragment();
+                    case 1:
+                        return new ConsumoFragment();                    
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.tab_produto);
+                    case 1:
+                        return getString(R.string.tab_consumo);                  
+                }
+                return null;
+            }
+        };
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(adapter);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                getActionBar().setSelectedNavigationItem(position);
+            }
+        });
+
+        mPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
+
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        for (int position = 0; position < adapter.getCount(); position++) {
+            getActionBar().addTab(getActionBar().newTab()
+                    .setText(adapter.getPageTitle(position))
+                    .setTabListener(this));
+        }        		
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+    
+    @Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		onBackPressed();
 		return true;
 	}
 }
+

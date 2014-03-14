@@ -49,7 +49,7 @@ public class DetailMesaController {
 		List<ProdutoGrupoModel> produtoGrupoList = dbProdutoGrupo.selectAll();
 		dbProdutoGrupo.closeDB();
 
-		list = (ListView) view.findViewById(R.id.listDetail);
+		//list = (ListView) view.findViewById(R.id.listDetail);
 
 		ProdutoGrupoAdapter adapter = new ProdutoGrupoAdapter(
 				(Activity) context, produtoGrupoList);

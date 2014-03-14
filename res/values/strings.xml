@@ -5,6 +5,10 @@
     <string name="drawer_close">Close navigation drawer</string>    
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     
+    <!--  Tabs  -->
+    <string name="tab_produto">Produtos</string>
+    <string name="tab_consumo">Consumo</string>
+    
     <!-- Action titles -->
     <string name="action_mesas">Mapa das Mesas</string>
     <string name="action_settings">Configuração</string>

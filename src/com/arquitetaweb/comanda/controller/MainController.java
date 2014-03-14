@@ -122,6 +122,13 @@ public class MainController {
 					}
 
 					private void abrirDetalhes(View view, Integer idMesa) {
+//						Intent intent = new Intent(view.getContext(),
+//								DetailMesaActivity.class);
+//						MesaModel mesaObj = adapter.getItem(idMesa);						
+//						String mesaGson = new Gson().toJson(mesaObj);
+//						intent.putExtra("mesa", mesaGson);
+//						fragment.startActivityForResult(intent, 100);
+						
 						Intent intent = new Intent(view.getContext(),
 								DetailMesaActivity.class);
 						MesaModel mesaObj = adapter.getItem(idMesa);						
