@@ -41,7 +41,7 @@ public class GetGenericApi<T> {
 		} else {
 			errorConnectServer();
 		}
-		return null;
+		return new ArrayList<T>();
 	}
 
 	private void errorConnectServer() {

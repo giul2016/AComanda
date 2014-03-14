@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.fragment.ConsumoFragment;
 import com.arquitetaweb.comanda.fragment.ProdutoFragment;
+import com.arquitetaweb.comanda.fragment.ProdutoFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.google.gson.Gson;
 

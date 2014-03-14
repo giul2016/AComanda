@@ -11,23 +11,26 @@ import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
+import com.arquitetaweb.comanda.controller.ConsumoController;
 import com.arquitetaweb.comum.component.ListViewCustom;
 
 public class ProdutoFragment extends ListFragment {
 
+	private ConsumoController controller; 
+	
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnViewTop;
 	private int mQuickReturnHeightTop;
-	
+
 	private View mPlaceHolder;
 	private View mHeader;
-	
+
 	private int mCachedVerticalScrollRange;
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
@@ -35,48 +38,53 @@ public class ProdutoFragment extends ListFragment {
 	private int mState = STATE_ONSCREEN;
 	private int mScrollYtop;
 	private int mMinRawYtop = 0;
-	
+
 	private TranslateAnimation animTop;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		//		View view = inflater.inflate(R.layout.fragment, null);
 		View view = inflater.inflate(R.layout.fragment_produto, null);
-		mHeader = inflater.inflate(R.layout.header, null);
-				
-		mQuickReturnViewTop = (LinearLayout) view.findViewById(R.id.comanda_layout);
-		
+		mHeader = inflater.inflate(R.layout.produto_header, null);
+
+		mQuickReturnViewTop = (LinearLayout) view
+				.findViewById(R.id.comanda_layout);
+
 		mPlaceHolder = mHeader.findViewById(R.id.placeholder);
-		
+
 		Button btn1 = (Button) view.findViewById(R.id.produtos_recentes);
 		btn1.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Toast toast = Toast.makeText(getActivity(), "teste 1 btn",
 						Toast.LENGTH_SHORT);
-				toast.show();				
+				toast.show();
 			}
 		});
-		
+
 		return view;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+
+		controller = new ConsumoController(this.getActivity());
+		controller.sincron();
 		
 		mListView = (ListViewCustom) getListView();
-				
-		String[] array = new String[] { "Android", "Android", "Android",
-				"Android", "Android", "Android", "Android", "Android",
-				"Android", "Android", "Android", "Android", "Android",
-				"Android", "Android", "Android" };
+		mListView.addHeaderView(mHeader);
 		
-		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				R.layout.produtogrupo_info,
-				R.id.txtGrupoProdutoDescricao, array));
+		ProdutoGrupoAdapter adapter = new ProdutoGrupoAdapter(
+				this.getActivity(), controller.sincron());
+
+		setListAdapter(adapter);
 		
+		mListView = (ListViewCustom) getListView();
+
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
@@ -92,9 +100,9 @@ public class ProdutoFragment extends ListFragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				
-				int translationYtop = topAnim();							
-				
+
+				int translationYtop = topAnim();
+
 				/** this can be used if the build is below honeycomb **/
 				if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
 					animTop = new TranslateAnimation(0, 0, translationYtop,
@@ -111,7 +119,7 @@ public class ProdutoFragment extends ListFragment {
 			private int topAnim() {
 				mScrollYtop = 0;
 				int translationYtop = 0;
-				
+
 				if (mListView.scrollYIsComputed()) {
 					mScrollYtop = mListView.getComputedScrollY();
 				}
@@ -120,7 +128,7 @@ public class ProdutoFragment extends ListFragment {
 						- Math.min(
 								mCachedVerticalScrollRange
 										- mListView.getHeight(), mScrollYtop);
-				
+
 				switch (mState) {
 				case STATE_OFFSCREEN:
 					if (rawYtop <= mMinRawYtop) {
@@ -140,7 +148,8 @@ public class ProdutoFragment extends ListFragment {
 					break;
 
 				case STATE_RETURNING:
-					translationYtop = (rawYtop - mMinRawYtop) - mQuickReturnHeightTop;
+					translationYtop = (rawYtop - mMinRawYtop)
+							- mQuickReturnHeightTop;
 					if (translationYtop > 0) {
 						translationYtop = 0;
 						mMinRawYtop = rawYtop - mQuickReturnHeightTop;

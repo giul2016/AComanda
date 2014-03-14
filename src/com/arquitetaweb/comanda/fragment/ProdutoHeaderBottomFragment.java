@@ -49,7 +49,7 @@ public class ProdutoHeaderBottomFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_produto, null);
-		mHeader = inflater.inflate(R.layout.header, null);
+		mHeader = inflater.inflate(R.layout.produto_header, null);
 				
 		mQuickReturnViewTop = (LinearLayout) view.findViewById(R.id.comanda_layout);
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);

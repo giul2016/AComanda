@@ -20,6 +20,7 @@ import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView.FindListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
@@ -37,10 +39,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.controller.DetailMesaController;
 import com.arquitetaweb.comum.component.ListViewCustom;
 
 public class ConsumoFragment extends ListFragment {
 
+	private ProgressDialog progressDialog;
+	private DetailMesaController controller;
+	
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
 	private int mQuickReturnHeight;
@@ -61,7 +67,7 @@ public class ConsumoFragment extends ListFragment {
 		View view = inflater.inflate(R.layout.fragment_consumo, null);
 
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
-
+		
 		Button btnFechaConta = (Button) view.findViewById(R.id.fechar_conta);
 		btnFechaConta.setOnClickListener(new View.OnClickListener() {
 
@@ -72,7 +78,7 @@ public class ConsumoFragment extends ListFragment {
 				toast.show();
 			}
 		});		
-	    
+		   
 		return view;
 	}
 
@@ -91,6 +97,11 @@ public class ConsumoFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		
+		progressDialog = new ProgressDialog(this.getActivity());
+		//controller = new DetailMesaController(this, progressDialog);
+		//controller.sincronizarMesa();
+		
 		mListView = (ListViewCustom) getListView();
 
 		String[] array = new String[] { "Android", "Android", "Android",
