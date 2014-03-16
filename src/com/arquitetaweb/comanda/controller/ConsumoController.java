@@ -1,130 +1,75 @@
 package com.arquitetaweb.comanda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.os.AsyncTask;
 
-import com.arquitetaweb.comanda.adapter.ProdutoAdapter;
-import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
-import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
-import com.arquitetaweb.comanda.model.ProdutoModel;
-import com.arquitetaweb.comum.component.ListViewCustom;
-import com.arquitetaweb.comum.messages.AlertaToast;
-import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
-import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
+import com.arquitetaweb.comanda.dados.GetGenericApi;
+import com.arquitetaweb.comanda.model.ConsumoModel;
+import com.google.gson.reflect.TypeToken;
 
 public class ConsumoController {
 
+	private ProgressDialog progressDialog;
 	private Context context;
-	private ListViewCustom list;
-	
-	public ConsumoController(Context context) {
+	private String URL_API = "Mesa/";
+	private long MESA_ID = 0;
+
+	public ConsumoController(Context context, ProgressDialog progressDialog,
+			Long mesaId) {
+		this.progressDialog = progressDialog;
 		this.context = context;
+		this.MESA_ID = mesaId;
+		URL_API = URL_API + MESA_ID;
 	}
 
-	public void sincronizarMesa() {
-		//new SincronizarDados().execute();
-		SincronizarMesa();
+	public List<ConsumoModel> sincronizar() {
+		try {
+			return new SincronizarDados().execute().get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ConsumoModel>();
 	}
 
-	
-	public List<ProdutoGrupoModel> sincron() {
+	private class SincronizarDados extends
+			AsyncTask<Void, Void, List<ConsumoModel>> {
 
-		// Get List ProdutoGrupo from DB SQLLite
-		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage("carregando consumo...");
+			progressDialog.show();
+		}
+
+		@Override
+		protected List<ConsumoModel> doInBackground(Void... produtos) {
+			return SincronizarConsumo();
+		}
+
+		@Override
+		protected void onPostExecute(List<ConsumoModel> result) {
+			progressDialog.dismiss();
+			super.onPostExecute(result);
+		}
+	}
+
+	private List<ConsumoModel> SincronizarConsumo() {
+		GetGenericApi<ConsumoModel> api = new GetGenericApi<ConsumoModel>(
 				context);
-		List<ProdutoGrupoModel> produtoGrupoList = dbProdutoGrupo.selectAll();
-		dbProdutoGrupo.closeDB();
-
-		return produtoGrupoList;
-	}
-	
-	private void SincronizarMesa() {
-
-		// Get List ProdutoGrupo from DB SQLLite
-		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
-				context);
-		List<ProdutoGrupoModel> produtoGrupoList = dbProdutoGrupo.selectAll();
-		dbProdutoGrupo.closeDB();
-
-		//list = (ListView) view.findViewById(R.id.listDetail);
-
-		ProdutoGrupoAdapter adapter = new ProdutoGrupoAdapter(
-				(Activity) context, produtoGrupoList);
-
-		updateListView(list, adapter);
+		List<ConsumoModel> mesaList = api.LoadListApiFromUrl(URL_API,
+				new TypeToken<ArrayList<ConsumoModel>>() {
+				}.getType());
+		return mesaList;
 	}
 
-
-	private void updateListView(final ListViewCustom listView,
-			final ProdutoGrupoAdapter adapter) {
-		((Activity) context).runOnUiThread(new Runnable() {
-			public void run() {
-				listView.setAdapter(adapter);
-
-				// Click event for single list row
-				listView.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-
-						abrirDetalhes(view, position);
-					}
-
-					private void abrirDetalhes(View view, Integer id) {
-						ProdutoGrupoModel produtoGrupoObj = adapter.getItem(id);
-						new AlertaToast().show(view.getContext(),
-								produtoGrupoObj.codigo + " :: " + id.toString());
-						// String mesaGson = new Gson().toJson(produtoGrupoObj);
-						// intent.putExtra("mesa", mesaGson);
-						// fragment.startActivityForResult(intent, 100);
-
-						// Get List ProdutoGrupo from DB SQLLite
-						ProdutoGenericHelper dbProdutoGrupo = new ProdutoGenericHelper(
-								context);
-						List<ProdutoModel> produtoGrupoList = dbProdutoGrupo
-								.selectWhere("produtoGrupoId = " + id.toString());
-						dbProdutoGrupo.closeDB();
-
-						ProdutoAdapter adapter = new ProdutoAdapter(
-								(Activity) context, produtoGrupoList);
-
-						updateListView2(list, adapter);
-					}
-				});
-			}
-		});
-	}
-
-	private void updateListView2(final ListViewCustom listView,
-			final ProdutoAdapter adapter) {
-		((Activity) context).runOnUiThread(new Runnable() {
-			public void run() {
-				listView.setAdapter(adapter);
-
-				// Click event for single list row
-				listView.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-
-						abrirDetalhes(view, position);
-					}
-
-					private void abrirDetalhes(View view, Integer id) {
-						ProdutoModel produtoGrupoObj = adapter.getItem(id);
-						new AlertaToast().show(view.getContext(),
-								produtoGrupoObj.codigo + " :: " + id.toString());
-						// String mesaGson = new Gson().toJson(produtoGrupoObj);
-						// intent.putExtra("mesa", mesaGson);
-						// fragment.startActivityForResult(intent, 100);
-					}
-				});
-			}
-		});
-	}
 }

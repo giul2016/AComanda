@@ -49,13 +49,12 @@ public class ProdutoGrupoGenericHelper extends
 	}
 
 	@Override
-	protected ProdutoGrupoModel selectFromObjectGeneric(Cursor c) {
+	protected ProdutoGrupoModel selectFromObjectGeneric(Cursor c) {		
 		ProdutoGrupoModel garcom = new ProdutoGrupoModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
 		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
 		garcom.descricao = ((c.getString(c
-				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
-
+				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));		
 		return garcom;
 	}
 }

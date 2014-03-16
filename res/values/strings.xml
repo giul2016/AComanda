@@ -41,4 +41,10 @@
     <string name="sincronizado_sucesso">sincronizado com sucesso</string>
     <string name="grupo_produto">Grupo Produto Teste</string>
     <string name="grupo_produto_codigo">99999</string>
+    
+    <string name="consumo_nome_produto">Produto Teste</string>
+    <string name="consumo_quantidade">999</string>
+    <string name="consumo_valor_unitario">R$ 0,00</string>
+    <string name="consumo_valor_total">R$ 0,00</string>
+    
 </resources>

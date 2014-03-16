@@ -16,7 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.util.Log;
 
 public class JSONParser {
-
+	private static final String ENCODING = "UTF-8";
+	 
 	public JSONParser() {
 	}	
 
@@ -32,7 +33,8 @@ public class JSONParser {
 				HttpEntity entity = response.getEntity();
 				InputStream content = entity.getContent();
 				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(content));
+						new InputStreamReader(content, ENCODING));			
+				
 				String line;
 				while ((line = reader.readLine()) != null) {
 					builder.append(line);

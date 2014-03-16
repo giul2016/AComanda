@@ -15,11 +15,9 @@
  */
 package com.arquitetaweb.comanda.fragment;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,32 +28,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
-import android.webkit.WebView.FindListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.controller.DetailMesaController;
+import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.adapter.ConsumoAdapter;
+import com.arquitetaweb.comanda.controller.ConsumoController;
+import com.arquitetaweb.comanda.model.ConsumoModel;
+import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
 
 public class ConsumoFragment extends ListFragment {
 
 	private ProgressDialog progressDialog;
-	private DetailMesaController controller;
-	
+	private ConsumoController controller;
+
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
-	private int mQuickReturnHeight;
-
+	private View mHeader;		
+	
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
 	private static final int STATE_RETURNING = 2;
 	private int mState = STATE_ONSCREEN;
 
+	private int mQuickReturnHeight;
 	private int mScrollY;
 	private int mMinRawY = 0;
 
@@ -65,8 +66,10 @@ public class ConsumoFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_consumo, null);
-
+		
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
+
+		mHeader = inflater.inflate(R.layout.consumo_header, null);
 		
 		Button btnFechaConta = (Button) view.findViewById(R.id.fechar_conta);
 		btnFechaConta.setOnClickListener(new View.OnClickListener() {
@@ -77,42 +80,39 @@ public class ConsumoFragment extends ListFragment {
 						Toast.LENGTH_SHORT);
 				toast.show();
 			}
-		});		
-		   
+		});
+
 		return view;
 	}
 
 	private void showFooter(Integer seconds) {
 		Handler handler = null;
-	    handler = new Handler(); 
-	    handler.postDelayed(new Runnable(){ 
-	         public void run(){
-	        	 mQuickReturnView.setTranslationY(0);
-	         }
-	    }, seconds * 1000);
+		handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				mQuickReturnView.setTranslationY(0);
+			}
+		}, seconds * 1000);
 	}
-	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		
+		MesaModel mesa = ((DetailMesaActivity) this.getActivity())
+				.getMesaModel();
 		progressDialog = new ProgressDialog(this.getActivity());
-		//controller = new DetailMesaController(this, progressDialog);
-		//controller.sincronizarMesa();
-		
+		controller = new ConsumoController(this.getActivity(), progressDialog,
+				mesa.id);		
+		List<ConsumoModel> listConsumo = controller.sincronizar();
+		ConsumoAdapter adapter = new ConsumoAdapter(this.getActivity(),
+				listConsumo);
+
+		setListAdapter(adapter);
+
 		mListView = (ListViewCustom) getListView();
-
-		String[] array = new String[] { "Android", "Android", "Android",
-				"Android", "Android", "Android", "Android", "Android",
-				"Android", "Android", "Android", "Android", "Android",
-				"Android", "Android", "Android" };
-
-		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				R.layout.produtogrupo_info, R.id.txtGrupoProdutoDescricao,
-				array));
-
+		mListView.addHeaderView(mHeader);
+		
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
@@ -157,7 +157,7 @@ public class ConsumoFragment extends ListFragment {
 					} else {
 						mState = STATE_RETURNING;
 					}
-					translationY = rawY;					
+					translationY = rawY;
 					break;
 
 				case STATE_ONSCREEN:
@@ -196,5 +196,14 @@ public class ConsumoFragment extends ListFragment {
 				//
 			}
 		});
+	}
+
+	@Override
+	public void onDestroy() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
+		super.onDestroy();
 	}
 }

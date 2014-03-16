@@ -32,10 +32,10 @@ public class GetGenericApi<T> {
 		if (Utils.isConnected(context)) {
 			String urlApi = Utils.getUrlServico(context) + "/Api/" + URL_API;
 			JSONParser jParser = new JSONParser();
-			final String jsonGarcom = jParser.getJSONFromApi(urlApi);
+			final String json = jParser.getJSONFromApi(urlApi);
 			List<T> list = new ArrayList<T>();
 			Gson gson = new Gson();
-			list = gson.fromJson(jsonGarcom, type);
+			list = gson.fromJson(json, type);
 
 			return list;
 		} else {

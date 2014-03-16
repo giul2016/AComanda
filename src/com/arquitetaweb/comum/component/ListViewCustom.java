@@ -51,8 +51,8 @@ public class ListViewCustom extends ListView {
 		View view = null;
 		pos = getFirstVisiblePosition();
 		view = getChildAt(0);
-		nItemY = view.getTop();
-		nScrollY = mItemOffsetY[pos] - nItemY;
+		nItemY = (view == null) ? 0 : view.getTop();
+		nScrollY = mItemOffsetY.length == 0 ? 0 : mItemOffsetY[pos] - nItemY;
 		return nScrollY;
 	}
 }

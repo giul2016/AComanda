@@ -16,16 +16,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/comanda_item_text"
-        android:orientation="horizontal" >
-
+        android:orientation="vertical" >
+       
         <Button
             android:id="@+id/fechar_conta"
+            style="@style/Item.Comanda"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/Item.Comanda"
             android:text="Fechar conta" />
-
     </LinearLayout>
 
 </RelativeLayout>

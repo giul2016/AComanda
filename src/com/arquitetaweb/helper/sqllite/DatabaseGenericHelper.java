@@ -80,7 +80,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	public void sincronizarAsync(List<T> produtos) {
 		new Sincronizar().execute(produtos);
 	}
-		
+
 	public void sincronizar(List<T> produtos) {
 		sincronizarDados(produtos);
 	}
@@ -164,7 +164,25 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 
 		return garcomLista;
 	}
-	
+
+	public T selectById(Long id) {
+		Log.d("DatabaseGenericHelper", "Listando....");
+		db = this.getReadableDatabase();
+
+		// select
+		String selectQuery = "SELECT  * FROM " + TABLE + " WHERE " + KEY_ID
+				+ " = " + id;
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (c != null) {
+			c.moveToFirst();
+			return selectFromObjectGeneric(c);
+		}
+		return null;
+	}
+
 	protected void errorConnectServer() {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
@@ -178,6 +196,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 
 	/**
 	 * Método para enviar os valores da coluna a ser inserido no banco
+	 * 
 	 * @param model
 	 * @return ContentValues - Nome/Valores das colunas
 	 */
@@ -185,6 +204,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 
 	/**
 	 * Método para gerar os Objeto Tipados
+	 * 
 	 * @param c
 	 * @return Objeto Tipado
 	 */

@@ -5,13 +5,41 @@
     android:orientation="vertical" >
 
     <TableLayout
+        android:id="@+id/infoheader"
+        android:layout_width="match_parent"
+        android:layout_height="75dp" >       
+
+        <TextView
+            android:id="@+id/txtidmesaheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/txtmesaheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+         <TextView
+            android:id="@+id/txtdetailmesaheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Situação: ----"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+         
+    </TableLayout>
+
+    <TableLayout
         android:id="@+id/placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_dark" >
 
         <TableRow
-            android:id="@+id/tableRow1"
+            android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
@@ -22,19 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantidade de Pessoas: 10"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
     </TableLayout>
 

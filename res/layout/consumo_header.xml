@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Item.Comanda"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/Item.Comanda"
+        android:id="@+id/txtidmesaheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pessoas: 10"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        style="@style/Item.Comanda"
+        android:id="@+id/txtmesaheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor Total: R$ 111,00"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</TableLayout>
