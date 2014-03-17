@@ -27,7 +27,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
@@ -153,6 +155,130 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 
 			}
 
+//			private int animation() {
+//				mScrollYtop = 0;
+//				int translationY = 0;
+//
+//				if (mListView.scrollYIsComputed()) {
+//					mScrollYtop = mListView.getComputedScrollY();
+//				}
+//
+//				rawY = mPlaceHolder.getTop()
+//						- Math.min(
+//								mCachedVerticalScrollRange
+//										- mListView.getHeight(), mScrollYtop);
+//
+//				switch (mState) {
+//				case STATE_OFFSCREEN:
+//					if (rawY <= mMinRawYtop) {
+//						mMinRawYtop = rawY;
+//					} else {
+//						mState = STATE_RETURNING;
+//					}
+//					translationY = rawY;
+//					break;
+//
+//				case STATE_ONSCREEN:
+//					if (rawY < -mQuickReturnHeightTop) {
+//						mState = STATE_OFFSCREEN;
+//						mMinRawYtop = rawY;
+//					}
+//					translationY = rawY;
+//					break;
+//
+//				case STATE_RETURNING:
+//
+//					if (translationY > 0) {
+//						translationY = 0;
+//						mMinRawYtop = rawY - mQuickReturnHeightTop;
+//					}
+//
+//					else if (rawY > 0) {
+//						mState = STATE_ONSCREEN;
+//						translationY = rawY;
+//					}
+//
+//					else if (translationY < -mQuickReturnHeightTop) {
+//						mState = STATE_OFFSCREEN;
+//						mMinRawYtop = rawY;
+//
+//					} else if (mQuickReturnViewTop.getTranslationY() != 0
+//							&& !noAnimation) {
+//						noAnimation = true;
+//						animTop = new TranslateAnimation(0, 0,
+//								-mQuickReturnHeightTop, 0);
+//						animTop.setFillAfter(true);
+//						animTop.setDuration(250);
+//						mQuickReturnViewTop.startAnimation(animTop);
+//						animTop.setAnimationListener(new AnimationListener() {
+//
+//							@Override
+//							public void onAnimationStart(Animation animation) {
+//								// TODO Auto-generated method stub
+//
+//							}
+//
+//							@Override
+//							public void onAnimationRepeat(Animation animation) {
+//								// TODO Auto-generated method stub
+//
+//							}
+//
+//							@Override
+//							public void onAnimationEnd(Animation animation) {
+//								noAnimation = false;
+//								mMinRawYtop = rawY;
+//								mState = STATE_EXPANDED;
+//							}
+//						});
+//					}
+//					break;
+//
+//				case STATE_EXPANDED:
+//					if (rawY < mMinRawYtop - 2 && !noAnimation) {
+//						noAnimation = true;
+//						animTop = new TranslateAnimation(0, 0, 0,
+//								-mQuickReturnHeightTop);
+//						animTop.setFillAfter(true);
+//						animTop.setDuration(250);
+//						animTop.setAnimationListener(new AnimationListener() {
+//
+//							@Override
+//							public void onAnimationStart(Animation animation) {
+//							}
+//
+//							@Override
+//							public void onAnimationRepeat(Animation animation) {
+//
+//							}
+//
+//							@Override
+//							public void onAnimationEnd(Animation animation) {
+//								noAnimation = false;
+//								mState = STATE_OFFSCREEN;
+//							}
+//						});
+//						mQuickReturnViewTop.startAnimation(animTop);
+//					} else if (translationY > 0) {
+//						translationY = 0;
+//						mMinRawYtop = rawY - mQuickReturnHeightTop;
+//					}
+//
+//					else if (rawY > 0) {
+//						mState = STATE_ONSCREEN;
+//						translationY = rawY;
+//					}
+//
+//					else if (translationY < -mQuickReturnHeightTop) {
+//						mState = STATE_OFFSCREEN;
+//						mMinRawYtop = rawY;
+//					} else {
+//						mMinRawYtop = rawY;
+//					}
+//				}
+//				return translationY;
+//			}
+			
 			private int bottonAnim() {
 				// bottom
 				mScrollY = 0;
