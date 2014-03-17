@@ -160,7 +160,6 @@ public class ProdutoFragment extends ListFragment {
 
 				case STATE_ONSCREEN:
 					if (rawY < -mQuickReturnHeightTop) {
-						System.out.println("test3");
 						mState = STATE_OFFSCREEN;
 						mMinRawYtop = rawY;
 					}

@@ -114,7 +114,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	protected void sincronizarDados(List<T> listModel) {
-		Log.d("DatabaseGenericHelper", "Sincronizando....");
+		Log.d("DatabaseGenericHelper", "Sincronizando...." + TABLE);
 		db = this.getWritableDatabase();
 		db.execSQL(DROP_TABLE);
 		db.execSQL(CREATE_TABLE);
@@ -124,7 +124,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public List<T> selectAll() {
-		Log.d("DatabaseGenericHelper", "Listando....");
+		Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
@@ -145,7 +145,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public List<T> selectWhere(String where) {
-		Log.d("DatabaseGenericHelper", "Listando....");
+		Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
@@ -166,7 +166,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public T selectById(Long id) {
-		Log.d("DatabaseGenericHelper", "Listando....");
+		Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
@@ -178,6 +178,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// looping through all rows and adding to list
 		if (c != null) {
 			c.moveToFirst();
+			Log.d("DatabaseGenericHelper", selectQuery);
 			return selectFromObjectGeneric(c);
 		}
 		return null;

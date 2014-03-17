@@ -138,8 +138,6 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 					}
 
 					results.count = FilteredByNumero.size();
-					System.out.println(results.count);
-
 					results.values = FilteredByNumero;
 				}
 

@@ -38,19 +38,20 @@ import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
 import com.arquitetaweb.comanda.adapter.ConsumoAdapter;
 import com.arquitetaweb.comanda.controller.ConsumoController;
+import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
 
-public class ConsumoFragment extends ListFragment {
+public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 
 	private ProgressDialog progressDialog;
 	private ConsumoController controller;
 
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
-	private View mHeader;		
-	
+	private View mHeader;
+
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
 	private static final int STATE_RETURNING = 2;
@@ -66,11 +67,11 @@ public class ConsumoFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_consumo, null);
-		
+
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
 
 		mHeader = inflater.inflate(R.layout.consumo_header, null);
-		
+
 		Button btnFechaConta = (Button) view.findViewById(R.id.fechar_conta);
 		btnFechaConta.setOnClickListener(new View.OnClickListener() {
 
@@ -85,6 +86,7 @@ public class ConsumoFragment extends ListFragment {
 		return view;
 	}
 
+	@SuppressWarnings("unused")
 	private void showFooter(Integer seconds) {
 		Handler handler = null;
 		handler = new Handler();
@@ -103,16 +105,28 @@ public class ConsumoFragment extends ListFragment {
 				.getMesaModel();
 		progressDialog = new ProgressDialog(this.getActivity());
 		controller = new ConsumoController(this.getActivity(), progressDialog,
-				mesa.id);		
-		List<ConsumoModel> listConsumo = controller.sincronizar();
-		ConsumoAdapter adapter = new ConsumoAdapter(this.getActivity(),
-				listConsumo);
+				mesa.id);
+		controller.sincronizar(this); // onTaskComplete callback
+	}
+
+	@Override
+	public void onDestroy() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
+		super.onDestroy();
+	}
+
+	@Override
+	public void onTaskComplete(List<ConsumoModel> result) {
+		ConsumoAdapter adapter = new ConsumoAdapter(this.getActivity(), result);
 
 		setListAdapter(adapter);
 
 		mListView = (ListViewCustom) getListView();
 		mListView.addHeaderView(mHeader);
-		
+
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
@@ -196,14 +210,5 @@ public class ConsumoFragment extends ListFragment {
 				//
 			}
 		});
-	}
-
-	@Override
-	public void onDestroy() {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
-			progressDialog = null;
-		}
-		super.onDestroy();
 	}
 }

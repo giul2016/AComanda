@@ -37,7 +37,6 @@ public class ListViewCustom extends ListView {
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			mItemOffsetY[i] = mHeight;
 			mHeight += view.getMeasuredHeight();
-			System.out.println(mHeight);
 		}
 		scrollIsComputed = true;
 	}

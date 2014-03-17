@@ -2,13 +2,14 @@ package com.arquitetaweb.comanda.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 
 import com.arquitetaweb.comanda.dados.GetGenericApi;
+import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,21 +28,18 @@ public class ConsumoController {
 		URL_API = URL_API + MESA_ID;
 	}
 
-	public List<ConsumoModel> sincronizar() {
-		try {
-			return new SincronizarDados().execute().get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<ConsumoModel>();
+	public void sincronizar(Fragment fragment) {
+		new SincronizarDados(fragment).execute();
 	}
 
-	private class SincronizarDados extends
+	public class SincronizarDados extends
 			AsyncTask<Void, Void, List<ConsumoModel>> {
+
+		private AsyncTaskListener callback;
+
+		public SincronizarDados(Fragment fragment) {
+			this.callback = (AsyncTaskListener) fragment;
+		}
 
 		@Override
 		protected void onPreExecute() {
@@ -58,8 +56,9 @@ public class ConsumoController {
 
 		@Override
 		protected void onPostExecute(List<ConsumoModel> result) {
-			progressDialog.dismiss();
 			super.onPostExecute(result);
+			callback.onTaskComplete(result);			
+			progressDialog.dismiss();
 		}
 	}
 
