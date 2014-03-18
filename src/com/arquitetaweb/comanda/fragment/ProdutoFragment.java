@@ -1,5 +1,7 @@
 package com.arquitetaweb.comanda.fragment;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +24,14 @@ import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.adapter.ProdutoAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
+import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
+import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
+import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
 public class ProdutoFragment extends ListFragment {
 
@@ -97,23 +103,17 @@ public class ProdutoFragment extends ListFragment {
 		controller = new ProdutoController(this.getActivity());
 		ProdutoGrupoAdapter adapter = new ProdutoGrupoAdapter(
 				this.getActivity(), controller.sincronizar());
-		
+
 		mListView = (ListViewCustom) getListView();
 		mListView.addHeaderView(mHeader);
-		
-		setListAdapter(adapter);	
-		//mListView.setAdapter(adapter);
-
+		// setListAdapter(adapter);
+		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				Toast toast = Toast.makeText(getActivity(),
-						position + " - " + id, Toast.LENGTH_SHORT);
-				toast.show();
-
+				abrirDetalhes(view, id);
 				// Intent intent = new Intent(view.getContext(),
 				// TestePutActivity.class);
 				//
@@ -124,6 +124,19 @@ public class ProdutoFragment extends ListFragment {
 
 			}
 
+			private void abrirDetalhes(View view, long id) {
+				// Get List Produto from DB SQLLite
+				ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(
+						getActivity());
+				List<ProdutoModel> produtoGrupoList = dbProduto
+						.selectWhere("produtoGrupoId = " + id);
+				dbProduto.closeDB();
+
+				ProdutoAdapter adapterProduto = new ProdutoAdapter(
+						getActivity(), produtoGrupoList);
+
+				mListView.setAdapter(adapterProduto);
+			}
 		});
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
