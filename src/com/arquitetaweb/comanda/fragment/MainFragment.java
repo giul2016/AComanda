@@ -1,30 +1,16 @@
 package com.arquitetaweb.comanda.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.activity.DetailMesaActivity;
-import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.controller.MainController;
-import com.arquitetaweb.comanda.dados.GetGenericApi;
-import com.arquitetaweb.comanda.model.MesaModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class MainFragment extends Fragment {
 

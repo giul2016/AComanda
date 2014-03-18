@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.helper.sqllite.SampleSqlLiteDatabaseHelper;
@@ -22,7 +21,6 @@ public class SampleSqlLiteFragment extends Fragment implements
 			.scheme(SETTINGS_SCHEME).authority(SETTINGS_AUTHORITY).build();
 
 	private View viewRoot;
-	private TextView txt;
 
 	// Database Helper
 	SampleSqlLiteDatabaseHelper db;

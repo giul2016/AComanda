@@ -35,8 +35,7 @@
     <TableLayout
         android:id="@+id/placeholder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_dark" >
+        android:layout_height="wrap_content">
 
         <TableRow
             android:id="@+id/tableRow2"
@@ -45,11 +44,9 @@
 
             <Button
                 android:id="@+id/fake_recentes"
-                style="@style/Item.Comanda"
-                android:layout_width="0dp"
+                style="@style/Produto.Header"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="" />
+                android:layout_weight="1" />
         </TableRow>
     </TableLayout>
 

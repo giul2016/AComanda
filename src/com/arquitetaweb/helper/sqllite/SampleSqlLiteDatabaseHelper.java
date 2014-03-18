@@ -73,8 +73,8 @@ public class SampleSqlLiteDatabaseHelper extends SQLiteOpenHelper {
 	// Todo table create statement
 	private static final String CREATE_TABLE_GARCOM = "CREATE TABLE "
 			+ TABLE_GARCOM + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-			+ KEY_GARCOM_CODIGO + " TEXT," + KEY_GARCOM_NOME + " TEXT," + KEY_CREATED_AT
-			+ " DATETIME" + ")";
+			+ KEY_GARCOM_CODIGO + " TEXT," + KEY_GARCOM_NOME + " TEXT,"
+			+ KEY_CREATED_AT + " DATETIME" + ")";
 
 	public SampleSqlLiteDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,242 +96,243 @@ public class SampleSqlLiteDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODO);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAG);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODO_TAG);
-		
+
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_GARCOM);
 
 		// create new tables
 		onCreate(db);
 	}
-//
-//	// ------------------------ "todos" table methods ----------------//
-//
-//	/*
-//	 * Creating a todo
-//	 */
-//	public long createToDo(Todo todo, long[] tag_ids) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_TODO, todo.getNote());
-//		values.put(KEY_STATUS, todo.getStatus());
-//		values.put(KEY_CREATED_AT, getDateTime());
-//
-//		// insert row
-//		long todo_id = db.insert(TABLE_TODO, null, values);
-//
-//		// insert tag_ids
-//		for (long tag_id : tag_ids) {
-//			createTodoTag(todo_id, tag_id);
-//		}
-//
-//		return todo_id;
-//	}
-//
-//	/*
-//	 * get single todo
-//	 */
-//	public Todo getTodo(long todo_id) {
-//		SQLiteDatabase db = this.getReadableDatabase();
-//
-//		String selectQuery = "SELECT  * FROM " + TABLE_TODO + " WHERE "
-//				+ KEY_ID + " = " + todo_id;
-//
-//		Log.e(LOG, selectQuery);
-//
-//		Cursor c = db.rawQuery(selectQuery, null);
-//
-//		if (c != null)
-//			c.moveToFirst();
-//
-//		Todo td = new Todo();
-//		td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-//		td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
-//		td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-//
-//		return td;
-//	}
-//
-//	/**
-//	 * getting all todos
-//	 * */
-//	public List<Todo> getAllToDos() {
-//		List<Todo> todos = new ArrayList<Todo>();
-//		String selectQuery = "SELECT  * FROM " + TABLE_TODO;
-//
-//		Log.e(LOG, selectQuery);
-//
-//		SQLiteDatabase db = this.getReadableDatabase();
-//		Cursor c = db.rawQuery(selectQuery, null);
-//
-//		// looping through all rows and adding to list
-//		if (c.moveToFirst()) {
-//			do {
-//				Todo td = new Todo();
-//				td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-//				td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
-//				td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-//
-//				// adding to todo list
-//				todos.add(td);
-//			} while (c.moveToNext());
-//		}
-//
-//		return todos;
-//	}
-//
-//	/**
-//	 * getting all todos under single tag
-//	 * */
-//	public List<Todo> getAllToDosByTag(String tag_name) {
-//		List<Todo> todos = new ArrayList<Todo>();
-//
-//		String selectQuery = "SELECT  * FROM " + TABLE_TODO + " td, "
-//				+ TABLE_TAG + " tg, " + TABLE_TODO_TAG + " tt WHERE tg."
-//				+ KEY_TAG_NAME + " = '" + tag_name + "'" + " AND tg." + KEY_ID
-//				+ " = " + "tt." + KEY_TAG_ID + " AND td." + KEY_ID + " = "
-//				+ "tt." + KEY_TODO_ID;
-//
-//		Log.e(LOG, selectQuery);
-//
-//		SQLiteDatabase db = this.getReadableDatabase();
-//		Cursor c = db.rawQuery(selectQuery, null);
-//
-//		// looping through all rows and adding to list
-//		if (c.moveToFirst()) {
-//			do {
-//				Todo td = new Todo();
-//				td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-//				td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
-//				td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-//
-//				// adding to todo list
-//				todos.add(td);
-//			} while (c.moveToNext());
-//		}
-//
-//		return todos;
-//	}
-//
-//	/*
-//	 * getting todo count
-//	 */
-//	public int getToDoCount() {
-//		String countQuery = "SELECT  * FROM " + TABLE_TODO;
-//		SQLiteDatabase db = this.getReadableDatabase();
-//		Cursor cursor = db.rawQuery(countQuery, null);
-//
-//		int count = cursor.getCount();
-//		cursor.close();
-//
-//		// return count
-//		return count;
-//	}
-//
-//	/*
-//	 * Updating a todo
-//	 */
-//	public int updateToDo(Todo todo) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_TODO, todo.getNote());
-//		values.put(KEY_STATUS, todo.getStatus());
-//
-//		// updating row
-//		return db.update(TABLE_TODO, values, KEY_ID + " = ?",
-//				new String[] { String.valueOf(todo.getId()) });
-//	}
-//
-//	/*
-//	 * Deleting a todo
-//	 */
-//	public void deleteToDo(long tado_id) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//		db.delete(TABLE_TODO, KEY_ID + " = ?",
-//				new String[] { String.valueOf(tado_id) });
-//	}
-//
-//	// ------------------------ "tags" table methods ----------------//
-//
-//	/*
-//	 * Creating tag
-//	 */
-//	public long createTag(Tag tag) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_TAG_NAME, tag.getTagName());
-//		values.put(KEY_CREATED_AT, getDateTime());
-//
-//		// insert row
-//		long tag_id = db.insert(TABLE_TAG, null, values);
-//
-//		return tag_id;
-//	}
-//
-//	/**
-//	 * getting all tags
-//	 * */
-//	public List<Tag> getAllTags() {
-//		List<Tag> tags = new ArrayList<Tag>();
-//		String selectQuery = "SELECT  * FROM " + TABLE_TAG;
-//
-//		Log.e(LOG, selectQuery);
-//
-//		SQLiteDatabase db = this.getReadableDatabase();
-//		Cursor c = db.rawQuery(selectQuery, null);
-//
-//		// looping through all rows and adding to list
-//		if (c.moveToFirst()) {
-//			do {
-//				Tag t = new Tag();
-//				t.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-//				t.setTagName(c.getString(c.getColumnIndex(KEY_TAG_NAME)));
-//
-//				// adding to tags list
-//				tags.add(t);
-//			} while (c.moveToNext());
-//		}
-//		return tags;
-//	}
-//
-//	/*
-//	 * Updating a tag
-//	 */
-//	public int updateTag(Tag tag) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_TAG_NAME, tag.getTagName());
-//
-//		// updating row
-//		return db.update(TABLE_TAG, values, KEY_ID + " = ?",
-//				new String[] { String.valueOf(tag.getId()) });
-//	}
-//
-//	/*
-//	 * Deleting a tag
-//	 */
-//	public void deleteTag(Tag tag, boolean should_delete_all_tag_todos) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		// before deleting tag
-//		// check if todos under this tag should also be deleted
-//		if (should_delete_all_tag_todos) {
-//			// get all todos under this tag
-//			List<Todo> allTagToDos = getAllToDosByTag(tag.getTagName());
-//
-//			// delete all todos
-//			for (Todo todo : allTagToDos) {
-//				// delete todo
-//				deleteToDo(todo.getId());
-//			}
-//		}
-//
-//		// now delete the tag
-//		db.delete(TABLE_TAG, KEY_ID + " = ?",
-//				new String[] { String.valueOf(tag.getId()) });
-//	}
+
+	//
+	// // ------------------------ "todos" table methods ----------------//
+	//
+	// /*
+	// * Creating a todo
+	// */
+	// public long createToDo(Todo todo, long[] tag_ids) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	//
+	// ContentValues values = new ContentValues();
+	// values.put(KEY_TODO, todo.getNote());
+	// values.put(KEY_STATUS, todo.getStatus());
+	// values.put(KEY_CREATED_AT, getDateTime());
+	//
+	// // insert row
+	// long todo_id = db.insert(TABLE_TODO, null, values);
+	//
+	// // insert tag_ids
+	// for (long tag_id : tag_ids) {
+	// createTodoTag(todo_id, tag_id);
+	// }
+	//
+	// return todo_id;
+	// }
+	//
+	// /*
+	// * get single todo
+	// */
+	// public Todo getTodo(long todo_id) {
+	// SQLiteDatabase db = this.getReadableDatabase();
+	//
+	// String selectQuery = "SELECT  * FROM " + TABLE_TODO + " WHERE "
+	// + KEY_ID + " = " + todo_id;
+	//
+	// Log.e(LOG, selectQuery);
+	//
+	// Cursor c = db.rawQuery(selectQuery, null);
+	//
+	// if (c != null)
+	// c.moveToFirst();
+	//
+	// Todo td = new Todo();
+	// td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+	// td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
+	// td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+	//
+	// return td;
+	// }
+	//
+	// /**
+	// * getting all todos
+	// * */
+	// public List<Todo> getAllToDos() {
+	// List<Todo> todos = new ArrayList<Todo>();
+	// String selectQuery = "SELECT  * FROM " + TABLE_TODO;
+	//
+	// Log.e(LOG, selectQuery);
+	//
+	// SQLiteDatabase db = this.getReadableDatabase();
+	// Cursor c = db.rawQuery(selectQuery, null);
+	//
+	// // looping through all rows and adding to list
+	// if (c.moveToFirst()) {
+	// do {
+	// Todo td = new Todo();
+	// td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+	// td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
+	// td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+	//
+	// // adding to todo list
+	// todos.add(td);
+	// } while (c.moveToNext());
+	// }
+	//
+	// return todos;
+	// }
+	//
+	// /**
+	// * getting all todos under single tag
+	// * */
+	// public List<Todo> getAllToDosByTag(String tag_name) {
+	// List<Todo> todos = new ArrayList<Todo>();
+	//
+	// String selectQuery = "SELECT  * FROM " + TABLE_TODO + " td, "
+	// + TABLE_TAG + " tg, " + TABLE_TODO_TAG + " tt WHERE tg."
+	// + KEY_TAG_NAME + " = '" + tag_name + "'" + " AND tg." + KEY_ID
+	// + " = " + "tt." + KEY_TAG_ID + " AND td." + KEY_ID + " = "
+	// + "tt." + KEY_TODO_ID;
+	//
+	// Log.e(LOG, selectQuery);
+	//
+	// SQLiteDatabase db = this.getReadableDatabase();
+	// Cursor c = db.rawQuery(selectQuery, null);
+	//
+	// // looping through all rows and adding to list
+	// if (c.moveToFirst()) {
+	// do {
+	// Todo td = new Todo();
+	// td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+	// td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
+	// td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+	//
+	// // adding to todo list
+	// todos.add(td);
+	// } while (c.moveToNext());
+	// }
+	//
+	// return todos;
+	// }
+	//
+	// /*
+	// * getting todo count
+	// */
+	// public int getToDoCount() {
+	// String countQuery = "SELECT  * FROM " + TABLE_TODO;
+	// SQLiteDatabase db = this.getReadableDatabase();
+	// Cursor cursor = db.rawQuery(countQuery, null);
+	//
+	// int count = cursor.getCount();
+	// cursor.close();
+	//
+	// // return count
+	// return count;
+	// }
+	//
+	// /*
+	// * Updating a todo
+	// */
+	// public int updateToDo(Todo todo) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	//
+	// ContentValues values = new ContentValues();
+	// values.put(KEY_TODO, todo.getNote());
+	// values.put(KEY_STATUS, todo.getStatus());
+	//
+	// // updating row
+	// return db.update(TABLE_TODO, values, KEY_ID + " = ?",
+	// new String[] { String.valueOf(todo.getId()) });
+	// }
+	//
+	// /*
+	// * Deleting a todo
+	// */
+	// public void deleteToDo(long tado_id) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	// db.delete(TABLE_TODO, KEY_ID + " = ?",
+	// new String[] { String.valueOf(tado_id) });
+	// }
+	//
+	// // ------------------------ "tags" table methods ----------------//
+	//
+	// /*
+	// * Creating tag
+	// */
+	// public long createTag(Tag tag) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	//
+	// ContentValues values = new ContentValues();
+	// values.put(KEY_TAG_NAME, tag.getTagName());
+	// values.put(KEY_CREATED_AT, getDateTime());
+	//
+	// // insert row
+	// long tag_id = db.insert(TABLE_TAG, null, values);
+	//
+	// return tag_id;
+	// }
+	//
+	// /**
+	// * getting all tags
+	// * */
+	// public List<Tag> getAllTags() {
+	// List<Tag> tags = new ArrayList<Tag>();
+	// String selectQuery = "SELECT  * FROM " + TABLE_TAG;
+	//
+	// Log.e(LOG, selectQuery);
+	//
+	// SQLiteDatabase db = this.getReadableDatabase();
+	// Cursor c = db.rawQuery(selectQuery, null);
+	//
+	// // looping through all rows and adding to list
+	// if (c.moveToFirst()) {
+	// do {
+	// Tag t = new Tag();
+	// t.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+	// t.setTagName(c.getString(c.getColumnIndex(KEY_TAG_NAME)));
+	//
+	// // adding to tags list
+	// tags.add(t);
+	// } while (c.moveToNext());
+	// }
+	// return tags;
+	// }
+	//
+	// /*
+	// * Updating a tag
+	// */
+	// public int updateTag(Tag tag) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	//
+	// ContentValues values = new ContentValues();
+	// values.put(KEY_TAG_NAME, tag.getTagName());
+	//
+	// // updating row
+	// return db.update(TABLE_TAG, values, KEY_ID + " = ?",
+	// new String[] { String.valueOf(tag.getId()) });
+	// }
+	//
+	// /*
+	// * Deleting a tag
+	// */
+	// public void deleteTag(Tag tag, boolean should_delete_all_tag_todos) {
+	// SQLiteDatabase db = this.getWritableDatabase();
+	//
+	// // before deleting tag
+	// // check if todos under this tag should also be deleted
+	// if (should_delete_all_tag_todos) {
+	// // get all todos under this tag
+	// List<Todo> allTagToDos = getAllToDosByTag(tag.getTagName());
+	//
+	// // delete all todos
+	// for (Todo todo : allTagToDos) {
+	// // delete todo
+	// deleteToDo(todo.getId());
+	// }
+	// }
+	//
+	// // now delete the tag
+	// db.delete(TABLE_TAG, KEY_ID + " = ?",
+	// new String[] { String.valueOf(tag.getId()) });
+	// }
 
 	// ------------------------ "todo_tags" table methods ----------------//
 
@@ -390,159 +391,160 @@ public class SampleSqlLiteDatabaseHelper extends SQLiteOpenHelper {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
-	
+
 	// ------------------------ "todos" table methods ----------------//
 
-		/*
-		 * Creating a todo
-		 */
-		public long createGarcom(GarcomModel todo) {
-			SQLiteDatabase db = this.getWritableDatabase();
+	/*
+	 * Creating a todo
+	 */
+	public long createGarcom(GarcomModel todo) {
+		SQLiteDatabase db = this.getWritableDatabase();
 
-			ContentValues values = new ContentValues();
-			values.put(KEY_GARCOM_CODIGO, todo.codigo);
-			values.put(KEY_GARCOM_NOME, todo.nome);
+		ContentValues values = new ContentValues();
+		values.put(KEY_GARCOM_CODIGO, todo.codigo);
+		values.put(KEY_GARCOM_NOME, todo.nome);
+		values.put(KEY_CREATED_AT, getDateTime());
+
+		// insert row
+		long todo_id = db.insert(TABLE_GARCOM, null, values);
+		return todo_id;
+	}
+
+	public void createGarcom(List<GarcomModel> todo) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+
+		for (GarcomModel l : todo) {
+			values.put(KEY_GARCOM_CODIGO, l.codigo);
+			values.put(KEY_GARCOM_NOME, l.nome);
 			values.put(KEY_CREATED_AT, getDateTime());
 
-			// insert row
-			long todo_id = db.insert(TABLE_GARCOM, null, values);
-			return todo_id;
+			// long todo_id =
+			db.insert(TABLE_GARCOM, null, values);
+		}
+	}
+
+	/*
+	 * get single todo
+	 */
+	public GarcomModel getGarcom(long todo_id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String selectQuery = "SELECT  * FROM " + TABLE_GARCOM + " WHERE "
+				+ KEY_ID + " = " + todo_id;
+
+		Log.e(LOG, selectQuery);
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c != null)
+			c.moveToFirst();
+
+		GarcomModel td = new GarcomModel();
+		// td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+		// td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
+		// td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+		return td;
+	}
+
+	/**
+	 * getting all todos
+	 * */
+	public List<GarcomModel> getAllGarcom() {
+		List<GarcomModel> todos = new ArrayList<GarcomModel>();
+		String selectQuery = "SELECT  * FROM " + TABLE_GARCOM;
+
+		Log.e(LOG, selectQuery);
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (c.moveToFirst()) {
+			do {
+				GarcomModel td = new GarcomModel();
+				td.id = (c.getLong((c.getColumnIndex(KEY_ID))));
+				td.codigo = ((c.getString(c.getColumnIndex(KEY_GARCOM_CODIGO))));
+				td.nome = ((c.getString(c.getColumnIndex(KEY_GARCOM_NOME))));
+
+				// adding to todo list
+				todos.add(td);
+			} while (c.moveToNext());
 		}
 
-		public void createGarcom(List<GarcomModel> todo) {
-			SQLiteDatabase db = this.getWritableDatabase();
+		return todos;
+	}
 
-			ContentValues values = new ContentValues();
-			
-			for (GarcomModel l : todo) {
-				values.put(KEY_GARCOM_CODIGO, l.codigo);
-				values.put(KEY_GARCOM_NOME, l.nome);
-				values.put(KEY_CREATED_AT, getDateTime());
-				
-				long todo_id = db.insert(TABLE_GARCOM, null, values);
-			}
-		}
-		
-		/*
-		 * get single todo
-		 */
-		public GarcomModel getGarcom(long todo_id) {
-			SQLiteDatabase db = this.getReadableDatabase();
+	/**
+	 * getting all todos under single tag
+	 * */
+	public List<GarcomModel> getAllGarcomByTag(String tag_name) {
+		List<GarcomModel> todos = new ArrayList<GarcomModel>();
 
-			String selectQuery = "SELECT  * FROM " + TABLE_GARCOM + " WHERE "
-					+ KEY_ID + " = " + todo_id;
+		String selectQuery = "SELECT  * FROM " + TABLE_GARCOM + " td, "
+				+ TABLE_TAG + " tg, " + TABLE_TODO_TAG + " tt WHERE tg."
+				+ KEY_TAG_NAME + " = '" + tag_name + "'" + " AND tg." + KEY_ID
+				+ " = " + "tt." + KEY_TAG_ID + " AND td." + KEY_ID + " = "
+				+ "tt." + KEY_TODO_ID;
 
-			Log.e(LOG, selectQuery);
+		Log.e(LOG, selectQuery);
 
-			Cursor c = db.rawQuery(selectQuery, null);
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
 
-			if (c != null)
-				c.moveToFirst();
+		// looping through all rows and adding to list
+		if (c.moveToFirst()) {
+			do {
+				GarcomModel td = new GarcomModel();
+				// td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+				// td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
+				// td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
-			GarcomModel td = new GarcomModel();
-			//td.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-			//td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
-			//td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-
-			return td;
+				// adding to todo list
+				todos.add(td);
+			} while (c.moveToNext());
 		}
 
-		/**
-		 * getting all todos
-		 * */
-		public List<GarcomModel> getAllGarcom() {
-			List<GarcomModel> todos = new ArrayList<GarcomModel>();
-			String selectQuery = "SELECT  * FROM " + TABLE_GARCOM;
+		return todos;
+	}
 
-			Log.e(LOG, selectQuery);
+	/*
+	 * getting todo count
+	 */
+	public int getGarcomCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_GARCOM;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
 
-			SQLiteDatabase db = this.getReadableDatabase();
-			Cursor c = db.rawQuery(selectQuery, null);
+		int count = cursor.getCount();
+		cursor.close();
 
-			// looping through all rows and adding to list
-			if (c.moveToFirst()) {
-				do {
-					GarcomModel td = new GarcomModel();
-					td.id = (c.getLong((c.getColumnIndex(KEY_ID))));
-					td.codigo = ((c.getString(c.getColumnIndex(KEY_GARCOM_CODIGO))));
-					td.nome = ((c.getString(c.getColumnIndex(KEY_GARCOM_NOME))));
+		// return count
+		return count;
+	}
 
-					// adding to todo list
-					todos.add(td);
-				} while (c.moveToNext());
-			}
+	/*
+	 * Updating a todo
+	 */
+	public int updateGarcom(GarcomModel todo) {
+		SQLiteDatabase db = this.getWritableDatabase();
 
-			return todos;
-		}
+		ContentValues values = new ContentValues();
+		values.put(KEY_GARCOM_NOME, todo.nome);
 
-		/**
-		 * getting all todos under single tag
-		 * */
-		public List<GarcomModel> getAllGarcomByTag(String tag_name) {
-			List<GarcomModel> todos = new ArrayList<GarcomModel>();
+		// updating row
+		return db.update(TABLE_GARCOM, values, KEY_ID + " = ?",
+				new String[] { String.valueOf(todo.id) });
+	}
 
-			String selectQuery = "SELECT  * FROM " + TABLE_GARCOM + " td, "
-					+ TABLE_TAG + " tg, " + TABLE_TODO_TAG + " tt WHERE tg."
-					+ KEY_TAG_NAME + " = '" + tag_name + "'" + " AND tg." + KEY_ID
-					+ " = " + "tt." + KEY_TAG_ID + " AND td." + KEY_ID + " = "
-					+ "tt." + KEY_TODO_ID;
-
-			Log.e(LOG, selectQuery);
-
-			SQLiteDatabase db = this.getReadableDatabase();
-			Cursor c = db.rawQuery(selectQuery, null);
-
-			// looping through all rows and adding to list
-			if (c.moveToFirst()) {
-				do {
-					GarcomModel td = new GarcomModel();
-					//td.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-					//td.setNote((c.getString(c.getColumnIndex(KEY_TODO))));
-					//td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-
-					// adding to todo list
-					todos.add(td);
-				} while (c.moveToNext());
-			}
-
-			return todos;
-		}
-
-		/*
-		 * getting todo count
-		 */
-		public int getGarcomCount() {
-			String countQuery = "SELECT  * FROM " + TABLE_GARCOM;
-			SQLiteDatabase db = this.getReadableDatabase();
-			Cursor cursor = db.rawQuery(countQuery, null);
-
-			int count = cursor.getCount();
-			cursor.close();
-
-			// return count
-			return count;
-		}
-
-		/*
-		 * Updating a todo
-		 */
-		public int updateGarcom(GarcomModel todo) {
-			SQLiteDatabase db = this.getWritableDatabase();
-
-			ContentValues values = new ContentValues();
-			values.put(KEY_GARCOM_NOME, todo.nome);
-
-			// updating row
-			return db.update(TABLE_GARCOM, values, KEY_ID + " = ?",
-					new String[] { String.valueOf(todo.id) });
-		}
-
-		/*
-		 * Deleting a todo
-		 */
-		public void deleteGarcom(long tado_id) {
-			SQLiteDatabase db = this.getWritableDatabase();
-			db.delete(TABLE_GARCOM, KEY_ID + " = ?",
-					new String[] { String.valueOf(tado_id) });
-		}
+	/*
+	 * Deleting a todo
+	 */
+	public void deleteGarcom(long tado_id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_GARCOM, KEY_ID + " = ?",
+				new String[] { String.valueOf(tado_id) });
+	}
 }

@@ -158,6 +158,7 @@ public class ProdutoFragment extends ListFragment {
 				}
 			}
 
+			@SuppressWarnings("unused")
 			private int animation() {
 				mScrollYtop = 0;
 				int translationY = 0;
