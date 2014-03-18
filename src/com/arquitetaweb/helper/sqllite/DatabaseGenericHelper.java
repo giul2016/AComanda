@@ -158,7 +158,9 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		if (c.moveToFirst()) {
 			do {
 				// adding to todo list
-				garcomLista.add(selectFromObjectGeneric(c));
+				T obj = selectFromObjectGeneric(c);
+				//Log.d("DatabaseGenericHelper", obj);
+				garcomLista.add(obj);
 			} while (c.moveToNext());
 		}
 

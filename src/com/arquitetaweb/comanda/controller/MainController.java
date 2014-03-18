@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
@@ -118,12 +117,6 @@ public class MainController {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-
-
-						Toast toast = Toast.makeText(context,
-								position + " - " + id, Toast.LENGTH_SHORT);
-						toast.show();
-						
 						abrirDetalhes(view, position);
 					}
 

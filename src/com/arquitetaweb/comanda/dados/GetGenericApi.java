@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.arquitetaweb.comanda.util.JSONParser;
 import com.arquitetaweb.comanda.util.Utils;
@@ -28,6 +29,11 @@ public class GetGenericApi<T> {
 		return getObject();
 	}
 
+	public boolean LoadListApiFromUrl_(String urlApi) {
+		URL_API = urlApi;
+		return getUrl();
+	}
+
 	private List<T> getObject() {
 		if (Utils.isConnected(context)) {
 			String urlApi = Utils.getUrlServico(context) + "/Api/" + URL_API;
@@ -42,6 +48,21 @@ public class GetGenericApi<T> {
 			errorConnectServer();
 		}
 		return new ArrayList<T>();
+	}
+
+	private boolean getUrl() {
+		if (Utils.isConnected(context)) {
+			String urlApi = Utils.getUrlServico(context) + "/Api/" + URL_API;
+			JSONParser jParser = new JSONParser();
+			String json = jParser.getJSONFromApi(urlApi);
+			Log.i("AQUI",json +" - "+ urlApi);
+			if (json.contains("sucess"))
+				return true;
+			return false;
+		} else {
+			errorConnectServer();
+		}
+		return false;
 	}
 
 	private void errorConnectServer() {

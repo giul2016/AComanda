@@ -1,7 +1,6 @@
 package com.arquitetaweb.comanda.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -17,19 +16,16 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
-import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
-import com.google.gson.Gson;
 
 public class ProdutoFragment extends ListFragment {
 
@@ -98,23 +94,22 @@ public class ProdutoFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mListView = (ListViewCustom) getListView();
-		mListView.addHeaderView(mHeader);
-
 		controller = new ProdutoController(this.getActivity());
 		ProdutoGrupoAdapter adapter = new ProdutoGrupoAdapter(
 				this.getActivity(), controller.sincronizar());
-
-		//setListAdapter(adapter);
 		
-		mListView.setAdapter(adapter);
+		mListView = (ListViewCustom) getListView();
+		mListView.addHeaderView(mHeader);
+		
+		setListAdapter(adapter);	
+		//mListView.setAdapter(adapter);
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
-
+			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
+				
 				Toast toast = Toast.makeText(getActivity(),
 						position + " - " + id, Toast.LENGTH_SHORT);
 				toast.show();
@@ -128,9 +123,8 @@ public class ProdutoFragment extends ListFragment {
 				// fragment.startActivityForResult(intent, 100);
 
 			}
-		});
 
-		mListView = (ListViewCustom) getListView();
+		});
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {

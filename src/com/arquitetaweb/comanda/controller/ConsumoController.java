@@ -17,22 +17,28 @@ public class ConsumoController {
 
 	private ProgressDialog progressDialog;
 	private Context context;
+	private Fragment fragment;
 	private String URL_API = "Mesa/";
+	private String URL_API_FECHAR = "Conta/";
 	private long MESA_ID = 0;
 
-	public ConsumoController(Context context, ProgressDialog progressDialog,
+	public ConsumoController(Fragment fragment, ProgressDialog progressDialog,
 			Long mesaId) {
 		this.progressDialog = progressDialog;
-		this.context = context;
+		this.context = fragment.getActivity();
+		this.fragment = fragment;
 		this.MESA_ID = mesaId;
-		URL_API = URL_API + MESA_ID;
 	}
 
-	public void sincronizar(Fragment fragment) {
+	public void sincronizar() {
 		new SincronizarDados(fragment).execute();
 	}
 
-	public class SincronizarDados extends
+	public void fecharConta() {
+		new FecharConta(fragment).execute();
+	}
+
+	private class SincronizarDados extends
 			AsyncTask<Void, Void, List<ConsumoModel>> {
 
 		private AsyncTaskListener callback;
@@ -57,18 +63,52 @@ public class ConsumoController {
 		@Override
 		protected void onPostExecute(List<ConsumoModel> result) {
 			super.onPostExecute(result);
-			callback.onTaskComplete(result);			
+			callback.onTaskComplete(result);
 			progressDialog.dismiss();
+		}
+
+		private List<ConsumoModel> SincronizarConsumo() {
+			GetGenericApi<ConsumoModel> api = new GetGenericApi<ConsumoModel>(
+					context);
+			List<ConsumoModel> mesaList = api.LoadListApiFromUrl(URL_API
+					+ MESA_ID, new TypeToken<ArrayList<ConsumoModel>>() {
+			}.getType());
+			return mesaList;
 		}
 	}
 
-	private List<ConsumoModel> SincronizarConsumo() {
-		GetGenericApi<ConsumoModel> api = new GetGenericApi<ConsumoModel>(
-				context);
-		List<ConsumoModel> mesaList = api.LoadListApiFromUrl(URL_API,
-				new TypeToken<ArrayList<ConsumoModel>>() {
-				}.getType());
-		return mesaList;
+	private class FecharConta extends AsyncTask<Void, Void, Boolean> {
+		private AsyncTaskListener callback;
+
+		public FecharConta(Fragment fragment) {
+			this.callback = (AsyncTaskListener) fragment;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog.setCancelable(false);
+			progressDialog.setMessage("fechando conta...");
+			progressDialog.show();
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			return fecharConta();
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			callback.onClosedComplete(result);
+			progressDialog.dismiss();
+		}
+
+		private Boolean fecharConta() {
+			GetGenericApi<ConsumoModel> api = new GetGenericApi<ConsumoModel>(
+					context);
+			return api.LoadListApiFromUrl_(URL_API + URL_API_FECHAR + MESA_ID);
+		}
 	}
 
 }

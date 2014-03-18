@@ -53,19 +53,18 @@ public class MainFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		progressDialog = new ProgressDialog(this.getActivity());
-
-		controller = new MainController(this, progressDialog);
-		controller.sincronizarMesa();
-
 		super.onActivityCreated(savedInstanceState);
+		progressDialog = new ProgressDialog(this.getActivity());
+		controller = new MainController(this, progressDialog);
+		controller.sincronizarMesa();		
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (Activity.RESULT_OK == resultCode) {
-			controller.sincronizarMesa();
-		}
+//		if (Activity.RESULT_OK == resultCode) {
+//			controller.sincronizarMesa();
+//		}
+		controller.sincronizarMesa();
 	}
 
 	@Override
