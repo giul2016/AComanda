@@ -52,30 +52,34 @@ public class ConsumoAdapter extends BaseAdapter {
 		View vi = convertView;
 		if (convertView == null) {
 			vi = inflater.inflate(R.layout.consumo_info, null);
+
+			// get item from position
+			ConsumoModel item = new ConsumoModel();
+			item = data.get(position);
+
+			// number table
+			TextView nomeProduto = (TextView) vi
+					.findViewById(R.id.txtnomeproduto);
+			// Get Produto from DB SQLLite
+			ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
+			ProdutoModel produto = dbProduto.selectById((long) item.produtoid);
+			dbProduto.closeDB();
+
+			nomeProduto.setText(produto.descricao);
+
+			TextView quantidade = (TextView) vi
+					.findViewById(R.id.txtquantidade);
+			quantidade.setText(item.quantidade);
+
+			TextView valorUnitario = (TextView) vi
+					.findViewById(R.id.txtvalorunitario);
+			valorUnitario.setText("R$ 1,20");
+
+			TextView valorTotal = (TextView) vi
+					.findViewById(R.id.txtvalortotal);
+			Double total = (1.20 * Integer.parseInt(item.quantidade));
+			valorTotal.setText(String.format("R$ %.2f", total));
 		}
-		// get item from position
-		ConsumoModel item = new ConsumoModel();
-		item = data.get(position);
-
-		// number table
-		TextView nomeProduto = (TextView) vi.findViewById(R.id.txtnomeproduto);
-		// Get Produto from DB SQLLite
-		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-		ProdutoModel produto = dbProduto.selectById((long) item.produtoid);
-		dbProduto.closeDB();
-
-		nomeProduto.setText(produto.descricao);
-
-		TextView quantidade = (TextView) vi.findViewById(R.id.txtquantidade);
-		quantidade.setText(item.quantidade);
-
-		TextView valorUnitario = (TextView) vi
-				.findViewById(R.id.txtvalorunitario);
-		valorUnitario.setText("R$ 1,20");
-
-		TextView valorTotal = (TextView) vi.findViewById(R.id.txtvalortotal);
-		Double total = (1.20 * Integer.parseInt(item.quantidade));
-		valorTotal.setText(String.format("R$ %.2f", total));
 
 		return vi;
 	}

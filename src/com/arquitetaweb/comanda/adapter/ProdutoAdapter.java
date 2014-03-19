@@ -52,49 +52,50 @@ public class ProdutoAdapter extends BaseAdapter {
 		View vi = convertView;
 		if (convertView == null) {
 			vi = inflater.inflate(R.layout.produto_info, null);
-		}
 
-		// number table
-		TextView descricao = (TextView) vi
-				.findViewById(R.id.txtprodutodescricao);
-		TextView codigo = (TextView) vi
-				.findViewById(R.id.txtprodutocodigo);
-		
-		final TextView quantidade = (TextView) vi
-				.findViewById(R.id.txt_quantidade_produto);
+			// number table
+			TextView descricao = (TextView) vi
+					.findViewById(R.id.txtprodutodescricao);
+			TextView codigo = (TextView) vi.findViewById(R.id.txtprodutocodigo);
 
-		ImageButton decrementa = (ImageButton) vi
-				.findViewById(R.id.btnRemoveProduto);
-		decrementa.setOnClickListener(new View.OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				int qtde = Integer.parseInt(quantidade.getText().toString());
-				if (qtde > 0) {
-					qtde--;
+			final TextView quantidade = (TextView) vi
+					.findViewById(R.id.txt_quantidade_produto);
+
+			ImageButton decrementa = (ImageButton) vi
+					.findViewById(R.id.btnRemoveProduto);
+			decrementa.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					int qtde = Integer
+							.parseInt(quantidade.getText().toString());
+					if (qtde > 0) {
+						qtde--;
+						quantidade.setText(Integer.toString(qtde));
+					}
+				}
+			});
+
+			ImageButton incrementa = (ImageButton) vi
+					.findViewById(R.id.btnAddProduto);
+			incrementa.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					int qtde = Integer
+							.parseInt(quantidade.getText().toString());
+					qtde++;
 					quantidade.setText(Integer.toString(qtde));
 				}
-			}
-		});
-		
-		ImageButton incrementa = (ImageButton) vi
-				.findViewById(R.id.btnAddProduto);		
-		incrementa.setOnClickListener(new View.OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				int qtde = Integer.parseInt(quantidade.getText().toString());
-				qtde++;
-				quantidade.setText(Integer.toString(qtde));
-			}
-		});
-		
-		// get item from position
-		ProdutoModel item = new ProdutoModel();
-		item = data.get(position);
+			});
 
-		// setting all values
-		descricao.setText(item.descricao);
-		codigo.setText(item.codigo);
-		quantidade.setText("0");
+			// get item from position
+			ProdutoModel item = new ProdutoModel();
+			item = data.get(position);
+
+			// setting all values
+			descricao.setText(item.descricao);
+			codigo.setText(item.codigo);
+			quantidade.setText("0");
+		}
 
 		return vi;
 	}
