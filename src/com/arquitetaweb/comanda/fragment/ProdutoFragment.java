@@ -26,6 +26,7 @@ import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
 import com.arquitetaweb.comanda.adapter.ProdutoAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
+import com.arquitetaweb.comanda.adapter.ProdutoLancamentoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
@@ -124,17 +125,10 @@ public class ProdutoFragment extends ListFragment {
 
 			}
 
-			private void abrirDetalhes(View view, long id) {
-				// Get List Produto from DB SQLLite
-				ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(
-						getActivity());
-				List<ProdutoModel> produtoGrupoList = dbProduto
-						.selectWhere("produtoGrupoId = " + id);
-				dbProduto.closeDB();
-
-				ProdutoAdapter adapterProduto = new ProdutoAdapter(
-						getActivity(), produtoGrupoList);
-
+			private void abrirDetalhes(View view, long idProduto) {				
+				ProdutoLancamentoAdapter adapterProduto = new ProdutoLancamentoAdapter(
+						getActivity(), idProduto);
+				
 				mListView.setAdapter(adapterProduto);
 			}
 		});
