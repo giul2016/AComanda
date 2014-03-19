@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,30 +48,50 @@ public class ProdutoAdapter extends BaseAdapter {
 		super.notifyDataSetChanged();
 	}
 
+	static class ViewHolder {
+		TextView descricao;
+		TextView codigo;
+		TextView quantidade;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		final ViewHolder holder;
 		View vi = convertView;
 		if (convertView == null) {
 			vi = inflater.inflate(R.layout.produto_info, null);
-
-			// number table
-			TextView descricao = (TextView) vi
-					.findViewById(R.id.txtprodutodescricao);
-			TextView codigo = (TextView) vi.findViewById(R.id.txtprodutocodigo);
-
-			final TextView quantidade = (TextView) vi
-					.findViewById(R.id.txt_quantidade_produto);
-
+			holder = new ViewHolder();
+			holder.codigo = (TextView) vi.findViewById(R.id.txtprodutocodigo);
+			holder.descricao = (TextView) vi.findViewById(R.id.txtprodutodescricao);
+			holder.quantidade = (TextView) vi.findViewById(R.id.txt_quantidade_produto);
+			
+			convertView.setTag(holder);
+			
+			holder.codigo.setTag(holder.codigo);
+			holder.descricao.setTag(holder.descricao);
+			holder.quantidade.setTag(holder.quantidade);
+			
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+			
+//			// number table
+//			TextView descricao = (TextView) vi
+//					.findViewById(R.id.txtprodutodescricao);
+//			TextView codigo = (TextView) vi.findViewById(R.id.txtprodutocodigo);
+//
+//			final TextView quantidade = (TextView) vi
+//					.findViewById(R.id.txt_quantidade_produto);
+//
 			ImageButton decrementa = (ImageButton) vi
 					.findViewById(R.id.btnRemoveProduto);
 			decrementa.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					int qtde = Integer
-							.parseInt(quantidade.getText().toString());
+							.parseInt(holder.quantidade.getText().toString());
 					if (qtde > 0) {
 						qtde--;
-						quantidade.setText(Integer.toString(qtde));
+						holder.quantidade.setText(Integer.toString(qtde));
 					}
 				}
 			});
@@ -81,9 +102,9 @@ public class ProdutoAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					int qtde = Integer
-							.parseInt(quantidade.getText().toString());
+							.parseInt(holder.quantidade.getText().toString());
 					qtde++;
-					quantidade.setText(Integer.toString(qtde));
+					holder.quantidade.setText(Integer.toString(qtde));
 				}
 			});
 
@@ -91,12 +112,14 @@ public class ProdutoAdapter extends BaseAdapter {
 			ProdutoModel item = new ProdutoModel();
 			item = data.get(position);
 
-			// setting all values
-			descricao.setText(item.descricao);
-			codigo.setText(item.codigo);
-			quantidade.setText("0");
-		}
+			Log.d("selectFromObjectGeneric", item.id + " - " + item.codigo
+					+ " - " + position);
 
+			// setting all values
+			holder.descricao.setText(item.descricao);
+			holder.codigo.setText(item.codigo);
+			holder.quantidade.setText("0");
+		}
 		return vi;
 	}
 }
