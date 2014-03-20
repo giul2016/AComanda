@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-public class ConsumoModel {		
+public class ConsumoModel {	
 	@SerializedName("MesaId")
-	public Long mesaid;
+	public long mesaid;
 	
 	@SerializedName("DeviceId")
-    public Long deviceid;
+    public long deviceid;
 	
 	@SerializedName("ProdutoId")
-    public Long produtoid;
+    public long produtoid;
 		
 	@SerializedName("Quantidade")
     public String quantidade;

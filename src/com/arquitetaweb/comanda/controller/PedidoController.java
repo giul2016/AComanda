@@ -10,7 +10,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.adapter.PedidoAdapter;
-import com.arquitetaweb.comanda.dados.GetGenericApi;
+import com.arquitetaweb.comanda.dados.PostGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
 
@@ -19,29 +19,31 @@ public class PedidoController {
 	private ProgressDialog progressDialog;
 	private Context context;
 	private Fragment fragment;
-	private String URL_API = "Mesa/";
-	private String URL_API_FECHAR = "Conta/";
-	private long MESA_ID = 0;
+	private String URL_API = "Mesa";
+	private List<ConsumoModel> lst;
+	private long mesaId;
 
 	public PedidoController(Fragment fragment, ProgressDialog progressDialog,
 			long mesaId) {
 		this.progressDialog = progressDialog;
 		this.context = fragment.getActivity();
 		this.fragment = fragment;
-		this.MESA_ID = mesaId;
+		this.mesaId = mesaId;
 	}
 
 	public void fecharConta(PedidoAdapter adapter) {
-		List<ConsumoModel> lst = new ArrayList<ConsumoModel>();
+		lst = new ArrayList<ConsumoModel>();
 		for (ConsumoModel item : adapter.getItens()) {
 			int qtde = Integer.parseInt(item.quantidade);
 			if (qtde > 0) {
-				lst.add(item);				
-			}				
+				item.deviceid = (long) 1;
+				item.mesaid = mesaId;
+				lst.add(item);
+			}
 		}
-		
-		Toast toast = Toast.makeText(context, "Enviando " + lst.size() + " Objetos",
-				Toast.LENGTH_SHORT);
+
+		Toast toast = Toast.makeText(context, "Enviando " + lst.size()
+				+ " Objetos", Toast.LENGTH_SHORT);
 		toast.show();
 
 		new EnviarPedido(fragment).execute();
@@ -75,9 +77,9 @@ public class PedidoController {
 		}
 
 		private Boolean fecharConta() {
-			GetGenericApi<ConsumoModel> api = new GetGenericApi<ConsumoModel>(
+			PostGenericApi<List<ConsumoModel>> api = new PostGenericApi<List<ConsumoModel>>(
 					context);
-			return api.LoadListApiFromUrl_(URL_API + URL_API_FECHAR + MESA_ID);
+			return api.sendData(URL_API, lst);
 		}
 	}
 

@@ -37,8 +37,6 @@ public class PedidoAdapter extends BaseAdapter {
 		for (ProdutoModel produtoModel : produtoModelList) {
 
 			ConsumoModel item = new ConsumoModel();
-			item.mesaid = (long) 1;
-			item.deviceid = (long) 1;
 			item.produtoid = produtoModel.id;
 			item.quantidade = "0";
 			data.add(item);

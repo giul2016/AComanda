@@ -41,7 +41,7 @@ public class TestePutActivity extends FragmentActivity {
 		MesaModel mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
 				MesaModel.class); // converte pra ArrayList de mesas
 		
-		final String idMesa = mesa.id.toString();
+		final String idMesa = Long.toString(mesa.id);
 
 		TextView txtIdMesa = (TextView) findViewById(R.id.idMesa_teste);
 		txtIdMesa.setText("Id Mesa: " + idMesa);

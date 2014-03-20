@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class GarcomModel {
 	@SerializedName("id")
-	public Long id;
+	public long id;
 	
 	@SerializedName("Codigo")
 	public String codigo;

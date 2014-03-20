@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class MesaModel {
 	@SerializedName("Id")
-	public Long id;
+	public long id;
 	
 	@SerializedName("NumeroMesa")
     public String numero_mesa;

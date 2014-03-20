@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ProdutoModel {
 	@SerializedName("Id")
-	public Long id;
+	public long id;
 	
 	@SerializedName("Codigo")
     public String codigo;
@@ -17,7 +17,7 @@ public class ProdutoModel {
     public String descricao;
 	
 	@SerializedName("ProdutoGrupoId")
-    public Long produto_grupo_id;
+    public long produto_grupo_id;
 
 	public Type getType() {
 		return new TypeToken<ArrayList<ProdutoModel>>(){}.getType();

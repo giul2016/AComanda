@@ -82,7 +82,7 @@ public class ProdutoFragment extends ListFragment {
 		MesaModel mesa = ((DetailMesaActivity) this.getActivity())
 				.getMesaModel();
 		TextView id = (TextView) mInfoHeader.findViewById(R.id.txtidmesaheader);
-		id.setText("Id: " + mesa.id.toString());
+		id.setText("Id: " + mesa.id);
 		TextView numero = (TextView) mInfoHeader
 				.findViewById(R.id.txtmesaheader);
 		numero.setText("Número: " + mesa.numero_mesa.toString());
