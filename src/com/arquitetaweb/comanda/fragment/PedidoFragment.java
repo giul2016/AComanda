@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.activity.MainActivity;
 import com.arquitetaweb.comanda.activity.PedidoActivity;
 import com.arquitetaweb.comanda.adapter.PedidoAdapter;
 import com.arquitetaweb.comanda.controller.PedidoController;
@@ -199,12 +201,12 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 	@Override
 	public void onClosedComplete(Boolean result) {
 		if (result) {
-			((PedidoActivity) this.getActivity()).onBackPressed();
-			Toast toast = Toast.makeText(getActivity(), "Conta fechada com sucesso!",
+			Intent intent = new Intent(getActivity(), MainActivity.class);			
+			startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+			Toast toast = Toast.makeText(getActivity(), "Item(s) enviado(s) com sucesso!",
 					Toast.LENGTH_SHORT);
 			toast.show();
 		}
-
 	}
 
 	@Override

@@ -42,11 +42,13 @@ public class PedidoController {
 			}
 		}
 
-		Toast toast = Toast.makeText(context, "Enviando " + lst.size()
-				+ " Objetos", Toast.LENGTH_SHORT);
-		toast.show();
-
-		new EnviarPedido(fragment).execute();
+		if (lst.size() > 0)
+			new EnviarPedido(fragment).execute();
+		else {
+			Toast toast = Toast.makeText(context,
+					"Não existe item a enviar.", Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 
 	private class EnviarPedido extends AsyncTask<Void, Void, Boolean> {
