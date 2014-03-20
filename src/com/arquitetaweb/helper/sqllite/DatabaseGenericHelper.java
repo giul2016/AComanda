@@ -145,14 +145,14 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public List<T> selectWhere(String where) {
-		Log.i("DatabaseGenericHelper", "Listando...." + TABLE);
+		//Log.i("DatabaseGenericHelper", "Listando...." + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
 		List<T> garcomLista = new ArrayList<T>();
 		String selectQuery = "SELECT  * FROM " + TABLE + " WHERE " + where;
 
-		Log.i("DatabaseGenericHelper", selectQuery);
+		//Log.i("DatabaseGenericHelper", selectQuery);
 		
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -170,7 +170,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public T selectById(Long id) {
-		Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
+		//Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
@@ -182,7 +182,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// looping through all rows and adding to list
 		if (c != null) {
 			c.moveToFirst();
-			Log.d("DatabaseGenericHelper", selectQuery);
+			//Log.d("DatabaseGenericHelper", selectQuery);
 			return selectFromObjectGeneric(c);
 		}
 		return null;

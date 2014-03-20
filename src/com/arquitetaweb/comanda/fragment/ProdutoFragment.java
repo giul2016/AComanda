@@ -114,15 +114,7 @@ public class ProdutoFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				abrirDetalhes(view, id);
-				// Intent intent = new Intent(view.getContext(),
-				// TestePutActivity.class);
-				//
-				// MesaModel mesaObj = adapter.getItem(idMesa);
-				// String mesaGson = new Gson().toJson(mesaObj);
-				// intent.putExtra("mesa", mesaGson);
-				// fragment.startActivityForResult(intent, 100);
-
+				abrirDetalhes(view, id);				
 			}
 
 			private void abrirDetalhes(View view, long idProduto) {				

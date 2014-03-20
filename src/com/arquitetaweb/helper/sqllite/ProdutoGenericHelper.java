@@ -64,7 +64,7 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		garcom.descricao = ((c.getString(c
 				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
 
-		Log.d("selectFromObjectGeneric", garcom.id + " - " + garcom.codigo);
+		//Log.d("selectFromObjectGeneric", garcom.id + " - " + garcom.codigo);
 		
 		return garcom;
 	}

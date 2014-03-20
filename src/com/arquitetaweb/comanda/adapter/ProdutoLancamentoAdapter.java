@@ -42,9 +42,6 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 			item.deviceid = (long) 1;
 			item.produtoid = produtoModel.id;
 			item.quantidade = "0";
-			
-			Log.i("AQUI", "Prod. " + produtoModel.id);
-			
 			data.add(item);
 		}
 		notifyDataSetChanged();
@@ -74,6 +71,8 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 		TextView descricao;
 		TextView codigo;
 		TextView quantidade;
+		ImageButton decrementa;
+		ImageButton incrementa;
 	}
 
 	@Override
@@ -89,53 +88,49 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 			holder.quantidade = (TextView) convertView
 					.findViewById(R.id.txt_quantidade_produto);
 
-			ImageButton decrementa = (ImageButton) convertView
+			holder.decrementa = (ImageButton) convertView
 					.findViewById(R.id.btnRemoveProduto);
-			decrementa.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					int qtde = Integer.parseInt(holder.quantidade.getText()
-							.toString());
-					if (qtde > 0) {
-						qtde--;
-						data.get(position).quantidade = Integer.toString(qtde);
-						notifyDataSetChanged();
-					}
-				}
-			});
-
-			ImageButton incrementa = (ImageButton) convertView
+			holder.incrementa = (ImageButton) convertView
 					.findViewById(R.id.btnAddProduto);
-			incrementa.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					int qtde = Integer.parseInt(holder.quantidade.getText()
-							.toString());
-					qtde++;
-					data.get(position).quantidade = Integer.toString(qtde);
-
-					Log.i("AQUI", Integer.toString(position));
-					Log.i("AQUI", "idPrdo " + getItem(position).produtoid);
-
-					notifyDataSetChanged();
-				}
-			});
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		// Get Produto from DB SQLLite
+		//
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
 		ProdutoModel produto = dbProduto
-				.selectById((long) data.get(position).produtoid);
+				.selectById(getItem(position).produtoid);
 		dbProduto.closeDB();
 
 		holder.descricao.setText(produto.descricao);
-		holder.codigo.setText(produto.codigo);
-		holder.quantidade.setText(data.get(position).quantidade);
+		holder.codigo.setText(produto.id.toString());
+		holder.quantidade.setText(getItem(position).quantidade);
 
+		
+
+		holder.decrementa.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int qtde = Integer.parseInt(getItem(position).quantidade);
+				if (qtde > 0) {
+					qtde--;
+					getItem(position).quantidade = Integer.toString(qtde);
+					// notifyDataSetChanged();
+				}
+			}
+		});
+
+		holder.incrementa.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int qtde = Integer.parseInt(getItem(position).quantidade);
+				qtde++;
+				getItem(position).quantidade = Integer.toString(qtde);
+				notifyDataSetChanged();
+			}
+		});
 		return convertView;
 	}
 }
