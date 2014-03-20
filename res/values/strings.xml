@@ -40,6 +40,7 @@
     <string name="quantidade">999</string>
     <string name="valor">R$ 0,00</string>
     <string name="header_pessoas">Pessoas: 10</string>
+    <string name="nextAction">></string>
 
     <!-- Mensagens -->
     <string name="pgtaSair">Tem certeza de que deseja sair?</string>

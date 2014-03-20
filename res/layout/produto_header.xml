@@ -7,47 +7,37 @@
     <TableLayout
         android:id="@+id/infoheader"
         android:layout_width="match_parent"
-        android:layout_height="75dp" >       
+        android:layout_height="75dp" >
 
         <TextView
             android:id="@+id/txtidmesaheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/txtmesaheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-         <TextView
+
+        <TextView
             android:id="@+id/txtdetailmesaheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Situação: ----"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-         
     </TableLayout>
 
     <TableLayout
         android:id="@+id/placeholder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/fake_recentes"
-                style="@style/Produto.Header"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </TableRow>
+        <Button
+            android:id="@+id/fake_recentes"
+            style="@style/Produto.Header"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </TableLayout>
 
 </LinearLayout>
