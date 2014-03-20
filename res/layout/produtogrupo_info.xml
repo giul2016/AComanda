@@ -14,7 +14,7 @@
         android:layout_alignBaseline="@+id/txtGrupoProdutoCodigo"
         android:layout_alignBottom="@+id/txtGrupoProdutoCodigo"
         android:layout_alignParentLeft="true"
-        android:text="@string/grupo_produto"
+        android:text="@string/nomeProdutoGrupo"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -34,7 +34,7 @@
         android:paddingRight="30dip"
         android:paddingTop="3dip"
         android:layout_marginRight="16dp"
-        android:text="@string/grupo_produto_codigo"
+        android:text="@string/codigoProduto"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

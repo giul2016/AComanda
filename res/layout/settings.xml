@@ -1,101 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:layout_height="wrap_content" >
 
-    <TableLayout
-        android:layout_width="match_parent"
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/txtDeviceId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/devideId"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <EditText
-                android:id="@+id/edtDeviceId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:hint="@string/hintDeviceId"
-                android:inputType="none" >                
-            </EditText>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/txtUrlServico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edtUrlServico"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
+        <TextView
+            android:id="@+id/txtDeviceId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:baselineAligned="true" >
+            android:text="@string/devideId"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </TableRow>
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteUrlServico"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:ems="10"
-                android:text="@string/txtUrlServico" >
-            </AutoCompleteTextView>
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/lblSeparator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/twoDots"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+        <EditText
+            android:id="@+id/edtDeviceId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:enabled="false"
+            android:hint="@string/hintDeviceId"
+            android:inputType="none" >
+        </EditText>
+    </TableRow>
 
-            <EditText
-                android:id="@+id/edtPortaServico"
-                android:layout_width="5dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:text="@string/txtPortaServico" />
-        </TableRow>
-        
-         <TableRow
-            android:id="@+id/tableRow5"
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtUrlServico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:baselineAligned="true" >
+            android:text="@string/edtUrlServico"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </TableRow>
 
-             <Button
-                 android:id="@+id/btnSalvarConfig"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                 android:text="@string/btnSalvar" />
-            
-         </TableRow>
-    </TableLayout>
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true" >
 
-</ScrollView>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteUrlServico"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:ems="10"
+            android:text="@string/txtUrlServico" >
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/lblSeparator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/twoDots"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/edtPortaServico"
+            android:layout_width="5dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/txtPortaServico" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true" >
+
+        <Button
+            android:id="@+id/btnSalvarConfig"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnSalvar" />
+    </TableRow>
+
+</TableLayout>

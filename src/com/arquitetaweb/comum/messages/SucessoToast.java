@@ -8,7 +8,7 @@ import com.arquitetaweb.comanda.R;
 public class SucessoToast extends MessagesBase {		
 	
 	public void show(Context context) {
-		Toast.makeText(context, R.string.msgSalvoSucesso,
+		Toast.makeText(context, R.string.salvoSucesso,
 				Toast.LENGTH_LONG).show();
 		super.show(context);
 	}

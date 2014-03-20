@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">aComanda</string>    
+
+    <string name="app_name">aComanda</string>
     <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>    
+    <string name="drawer_close">Close navigation drawer</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    
-    <!--  Tabs  -->
+
+    <!-- Tabs -->
     <string name="tab_produto">Produtos</string>
     <string name="tab_consumo">Consumo</string>
-    
+
     <!-- Action titles -->
     <string name="action_mesas">Mapa das Mesas</string>
     <string name="action_settings">Configuração</string>
-    <string name="action_synchronize">Sincronização</string>        
+    <string name="action_synchronize">Sincronização</string>
     <string name="action_about">Sobre</string>
-    
+
     <!-- Menu -->
     <string name="menu_search">Procurar</string>
-    <string name="hint_search">Digite o Número da Mesa</string>    
+    <string name="hint_search">Digite o Número da Mesa</string>
     <string name="menu_refresh">Atualizar</string>
-    
+
     <!-- Forms -->
-	<string name="codigo_externo">codExt</string>
-    <string name="situacao">Sit.</string>
     <string name="numero_mesa">0</string>
     <string name="devideId">Device ID</string>
     <string name="hintDeviceId">Device ID</string>
@@ -30,35 +29,37 @@
     <string name="txtUrlServico">mocksapi.herokuapp.com</string>
     <string name="txtPortaServico">80</string>
     <string name="btnSalvar">Salvar</string>
-    <string name="msgSalvoSucesso">Salvo com sucesso.</string>
-    <string name="msgSucesso">Sucesso.</string>
-    <string name="msgErro">Erro.</string>
     <string name="twoDots">:</string>
     <string name="labelSincronizar">Sincronizar</string>
     <string name="labelSincGarcom">Garçom</string>
     <string name="labelSincProduto">Produto</string>
     <string name="labelSincProdutoGrupo">Produto e Grupo</string>
-    <string name="sincronizado_sucesso">sincronizado com sucesso</string>
-    <string name="grupo_produto">Grupo Produto Teste</string>
-    <string name="grupo_produto_codigo">99999</string>
-    
-    <string name="consumo_nome_produto">Produto Teste</string>
-    <string name="consumo_quantidade">999</string>
-    <string name="consumo_valor_unitario">R$ 0,00</string>
-    <string name="consumo_valor_total">R$ 0,00</string>    
-    
-    <!--  Mensagens  -->
+    <string name="nomeProdutoGrupo">Grupo Produto Teste</string>
+    <string name="nomeProduto">Produto Teste</string>
+    <string name="codigoProduto">99999</string>
+    <string name="quantidade">999</string>
+    <string name="valor">R$ 0,00</string>
+    <string name="header_pessoas">Pessoas: 10</string>
+
+    <!-- Mensagens -->
     <string name="pgtaSair">Tem certeza de que deseja sair?</string>
     <string name="fechandoConta">fechando conta&#8230;</string>
     <string name="carregandoConsumo">carregando consumo&#8230;</string>
     <string name="atualizandoMesas">atualizando mesas&#8230;</string>
     <string name="enviandoItem">enviando item(s)&#8230;</string>
     <string name="enviandoDados">enviando dados&#8230;</string>
-    
     <string name="sincronizandoDados">sincronizando dados&#8230;</string>
     <string name="sincronizandoGarcom">sincronizando garçom&#8230;</string>
     <string name="sincronizandoGrupoProduto">sincronizando grupo de produto&#8230;</string>
     <string name="sincronizandoProduto">sincronizando produto&#8230;</string>
     <string name="finalizando">finalizando&#8230;</string>
-    
+    <string name="msgSucesso">Sucesso.</string>
+    <string name="msgErro">Erro.</string>
+    <string name="sincronizadoSucesso">sincronizado com sucesso</string>
+    <string name="salvoSucesso">Salvo com sucesso.</string>
+
+    <!-- Content Description Images -->
+    <string name="removerProduto">Remover produto</string>
+    <string name="adicionarProduto">Adicionar produto</string>
+
 </resources>
