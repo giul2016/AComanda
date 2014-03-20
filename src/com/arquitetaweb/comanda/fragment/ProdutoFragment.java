@@ -1,7 +1,5 @@
 package com.arquitetaweb.comanda.fragment;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,15 +22,11 @@ import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
-import com.arquitetaweb.comanda.adapter.ProdutoAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.adapter.ProdutoLancamentoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
-import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
-import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
 public class ProdutoFragment extends ListFragment {
 

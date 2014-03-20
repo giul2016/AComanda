@@ -145,7 +145,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public List<T> selectWhere(String where) {
-		//Log.i("DatabaseGenericHelper", "Listando...." + TABLE);
+		Log.i("DatabaseGenericHelper", "Listando.... selectWhere " + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
@@ -170,7 +170,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public T selectById(Long id) {
-		//Log.d("DatabaseGenericHelper", "Listando...." + TABLE);
+		Log.d("DatabaseGenericHelper", "Listando.... selectById " + TABLE);
 		db = this.getReadableDatabase();
 
 		// select
