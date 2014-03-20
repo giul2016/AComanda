@@ -17,20 +17,20 @@ import com.arquitetaweb.comanda.model.ConsumoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
-public class ProdutoLancamentoAdapter extends BaseAdapter {
+public class PedidoAdapter extends BaseAdapter {
 	protected Activity activity;
 	private List<ConsumoModel> data;
 	private List<ProdutoModel> produtoModelList;
 	private static LayoutInflater inflater = null;
 
-	public ProdutoLancamentoAdapter(Activity activity, long idProduto) {
+	public PedidoAdapter(Activity activity, long idProdutoGrupo) {
 		this.activity = activity;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
 		produtoModelList = dbProduto.selectWhere("produtoGrupoId = "
-				+ idProduto);
+				+ idProdutoGrupo);
 		dbProduto.closeDB();
 
 		data = new ArrayList<ConsumoModel>();
@@ -46,6 +46,10 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
+	public List<ConsumoModel> getItens() {
+		return data;
+	}
+	
 	@Override
 	public int getCount() {
 		return data.size();
@@ -61,26 +65,10 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 		return data.get(position).mesaid;
 	}
 
-	public void notifyDataSetChangedThread() {
-		activity.runOnUiThread(new Runnable() {
-			public void run() {
-				notifyDataSetChanged();
-			}
-		});
-	}
-
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
-	}
-
-	static class ViewHolder {
-		TextView descricao;
-		TextView codigo;
-		TextView quantidade;
-		ImageButton decrementa;
-		ImageButton incrementa;
-	}
+	}	
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -112,7 +100,7 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 				holder.quantidade.setText(getItem(position).quantidade);
 			}
 		}
-		
+
 		holder.decrementa.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -136,5 +124,13 @@ public class ProdutoLancamentoAdapter extends BaseAdapter {
 			}
 		});
 		return convertView;
+	}
+	
+	static class ViewHolder {
+		TextView descricao;
+		TextView codigo;
+		TextView quantidade;
+		ImageButton decrementa;
+		ImageButton incrementa;
 	}
 }

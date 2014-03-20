@@ -1,6 +1,7 @@
 package com.arquitetaweb.comanda.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -22,11 +23,12 @@ import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.activity.PedidoActivity;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
-import com.arquitetaweb.comanda.adapter.ProdutoLancamentoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
+import com.google.gson.Gson;
 
 public class ProdutoFragment extends ListFragment {
 
@@ -108,14 +110,24 @@ public class ProdutoFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				abrirDetalhes(view, id);				
+				abrirDetalhes(view, id);
 			}
 
-			private void abrirDetalhes(View view, long idProduto) {				
-				ProdutoLancamentoAdapter adapterProduto = new ProdutoLancamentoAdapter(
-						getActivity(), idProduto);
-				
-				mListView.setAdapter(adapterProduto);
+			private void abrirDetalhes(View view, long idProdutoGrupo) {
+
+				Intent intent = new Intent(view.getContext(),
+						PedidoActivity.class);
+				MesaModel mesaObj = ((DetailMesaActivity) getView()
+						.getContext()).getMesaModel();
+				String mesaGson = new Gson().toJson(mesaObj);
+				intent.putExtra("mesa", mesaGson);
+				intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
+				startActivityForResult(intent, 100);
+
+				// PedidoAdapter adapterProduto = new PedidoAdapter(
+				// getActivity(), idProduto);
+				//
+				// mListView.setAdapter(adapterProduto);
 			}
 		});
 

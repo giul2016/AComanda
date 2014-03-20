@@ -45,6 +45,10 @@
                 android:resource="@xml/searchable" />
         </activity>            
         
+        <!-- Pedido da Mesa -->
+        <activity android:name="com.arquitetaweb.comanda.activity.PedidoActivity"
+            android:configChanges="orientation|screenSize" />
+        
         <!-- Detalhes da Mesa Fragment -->
         <activity android:name="com.arquitetaweb.comanda.activity.DetailMesaActivity"
             android:configChanges="orientation|screenSize" />
