@@ -45,6 +45,20 @@
     <string name="consumo_nome_produto">Produto Teste</string>
     <string name="consumo_quantidade">999</string>
     <string name="consumo_valor_unitario">R$ 0,00</string>
-    <string name="consumo_valor_total">R$ 0,00</string>
+    <string name="consumo_valor_total">R$ 0,00</string>    
+    
+    <!--  Mensagens  -->
+    <string name="pgtaSair">Tem certeza de que deseja sair?</string>
+    <string name="fechandoConta">fechando conta&#8230;</string>
+    <string name="carregandoConsumo">carregando consumo&#8230;</string>
+    <string name="atualizandoMesas">atualizando mesas&#8230;</string>
+    <string name="enviandoItem">enviando item(s)&#8230;</string>
+    <string name="enviandoDados">enviando dados&#8230;</string>
+    
+    <string name="sincronizandoDados">sincronizando dados&#8230;</string>
+    <string name="sincronizandoGarcom">sincronizando garçom&#8230;</string>
+    <string name="sincronizandoGrupoProduto">sincronizando grupo de produto&#8230;</string>
+    <string name="sincronizandoProduto">sincronizando produto&#8230;</string>
+    <string name="finalizando">finalizando&#8230;</string>
     
 </resources>

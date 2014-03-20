@@ -309,7 +309,7 @@ public class MainActivity extends Activity {
 	public void onBackPressed() {
 		if(isTaskRoot()) {
 		    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		    builder.setMessage("Tem certeza de que deseja sair?")
+		    builder.setMessage(R.string.pgtaSair)
 		       .setCancelable(false)
 		       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {

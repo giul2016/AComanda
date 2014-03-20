@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 
+import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
@@ -51,7 +52,7 @@ public class ConsumoController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("carregando consumo...");
+			progressDialog.setMessage(context.getString(R.string.carregandoConsumo));
 			progressDialog.show();
 		}
 
@@ -88,7 +89,7 @@ public class ConsumoController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("fechando conta...");
+			progressDialog.setMessage(context.getString(R.string.fechandoConta));
 			progressDialog.show();
 		}
 

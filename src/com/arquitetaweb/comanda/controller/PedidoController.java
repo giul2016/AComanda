@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.adapter.PedidoAdapter;
 import com.arquitetaweb.comanda.dados.PostGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
@@ -62,7 +63,7 @@ public class PedidoController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("enviando conta...");
+			progressDialog.setMessage(context.getString(R.string.enviandoItem));
 			progressDialog.show();
 		}
 

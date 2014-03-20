@@ -54,7 +54,7 @@ public class MainController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("atualizando mesas...");
+			progressDialog.setMessage(context.getString(R.string.atualizandoMesas));
 			progressDialog.show();
 		}
 

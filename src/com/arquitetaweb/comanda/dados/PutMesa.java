@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.util.Utils;
 import com.arquitetaweb.comum.messages.Alerta;
 
@@ -46,7 +47,7 @@ public class PutMesa {
 			super.onPreExecute();
 
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage("enviando dados...");
+			progressDialog.setMessage(activity.getString(R.string.enviandoDados));
 			progressDialog.show();
 		}
 

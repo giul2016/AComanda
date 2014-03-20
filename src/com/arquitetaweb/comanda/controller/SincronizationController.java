@@ -64,11 +64,11 @@ public class SincronizationController {
 		long mStartTime;
 
 		private void createMessages() {
-			messages[0] = "sincronizando dados....";
-			messages[1] = "sincronizando garçom....";
-			messages[2] = "sincronizando grupo de produto....";
-			messages[3] = "sincronizando produto....";
-			messages[4] = "finalizando...";
+			messages[0] = context.getString(R.string.sincronizandoDados);
+			messages[1] =context.getString(R.string.sincronizandoGarcom);
+			messages[2] = context.getString(R.string.sincronizandoGrupoProduto);
+			messages[3] = context.getString(R.string.sincronizandoProduto);
+			messages[4] = context.getString(R.string.finalizando);
 		}
 
 		private void updateMessage(Integer pos) {
