@@ -1,5 +1,6 @@
 package com.arquitetaweb.comanda.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,29 +18,39 @@ import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
 public class ConsumoAdapter extends BaseAdapter {
 	protected Activity activity;
-	private List<ConsumoModel> data;
+	private List<ConsumoModel> consumoLista;
+	private List<ProdutoModel> produtoModelList;
 	private static LayoutInflater inflater = null;
 
 	public ConsumoAdapter(Activity activity, List<ConsumoModel> lista) {
 		this.activity = activity;
-		data = lista;
+		consumoLista = lista;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		produtoModelList = new ArrayList<ProdutoModel>();
+		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
+		for (ConsumoModel consumoModel : consumoLista) {
+			ProdutoModel produto = dbProduto
+					.selectById((long) consumoModel.produtoid);
+			produtoModelList.add(produto);
+		}
+		dbProduto.closeDB();
 	}
 
 	@Override
 	public int getCount() {
-		return data.size();
+		return consumoLista.size();
 	}
 
 	@Override
 	public ConsumoModel getItem(int position) {
-		return data.get(position);
+		return consumoLista.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return data.get(position).mesaid;
+		return consumoLista.get(position).mesaid;
 	}
 
 	@Override
@@ -49,38 +60,56 @@ public class ConsumoAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View vi = convertView;
+		ViewHolder holder;
 		if (convertView == null) {
-			vi = inflater.inflate(R.layout.consumo_info, null);
+			convertView = inflater.inflate(R.layout.consumo_info, null);
 
-			// get item from position
-			ConsumoModel item = new ConsumoModel();
-			item = data.get(position);
-
-			// number table
-			TextView nomeProduto = (TextView) vi
+			holder = new ViewHolder();
+			holder.descricao = (TextView) convertView
 					.findViewById(R.id.txtnomeproduto);
-			// Get Produto from DB SQLLite
-			ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-			ProdutoModel produto = dbProduto.selectById((long) item.produtoid);
-			dbProduto.closeDB();
-
-			nomeProduto.setText(produto.descricao);
-
-			TextView quantidade = (TextView) vi
+			holder.quantidade = (TextView) convertView
 					.findViewById(R.id.txtquantidade);
-			quantidade.setText(item.quantidade);
-
-			TextView valorUnitario = (TextView) vi
+			holder.valorUnitario = (TextView) convertView
 					.findViewById(R.id.txtvalorunitario);
-			valorUnitario.setText("R$ 1,20");
-
-			TextView valorTotal = (TextView) vi
+			holder.valorTotal = (TextView) convertView
 					.findViewById(R.id.txtvalortotal);
-			Double total = (1.20 * Integer.parseInt(item.quantidade));
-			valorTotal.setText(String.format("R$ %.2f", total));
+
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 
-		return vi;
+		// get item from position
+		ConsumoModel item = new ConsumoModel();
+		item = consumoLista.get(position);
+
+		// // number table
+		// TextView nomeProduto = (TextView) convertView
+		// .findViewById(R.id.txtnomeproduto);
+		// Get Produto from DB SQLLite
+		// ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
+		// ProdutoModel produto = dbProduto.selectById((long) item.produtoid);
+		// dbProduto.closeDB();
+
+		for (ProdutoModel produtoModel : produtoModelList) {
+			if (produtoModel.id == item.produtoid) {
+				holder.quantidade.setText(item.quantidade);
+				holder.valorUnitario.setText("R$ 1,20");
+				Double total = (1.20 * Integer.parseInt(item.quantidade));
+				holder.valorTotal.setText(String.format("R$ %.2f", total));
+			}
+		}
+
+		// nomeProduto.setText(produto.descricao);
+
+		return convertView;
+	}
+
+	static class ViewHolder {
+		TextView descricao;
+		TextView codigo;
+		TextView quantidade;
+		TextView valorUnitario;
+		TextView valorTotal;
 	}
 }
