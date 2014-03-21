@@ -38,7 +38,6 @@ import com.arquitetaweb.comanda.fragment.SincronizationFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.util.KeyboardAction;
 import com.arquitetaweb.comum.messages.AlertaToast;
-import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
 
@@ -168,11 +167,9 @@ public class MainActivity extends Activity {
 							.getAdapter();
 					if (mesaAdapter.getCount() > 0) {
 						MesaModel mesaObj = mesaAdapter.getItem(0);
-						String mesaGson = new Gson().toJson(mesaObj);
-
 						Intent intent = new Intent(fragment.getView()
 								.getContext(), DetailMesaActivity.class);
-						intent.putExtra("mesa", mesaGson);
+						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);
 					} else {
 						new AlertaToast().show(fragment.getActivity(),

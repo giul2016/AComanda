@@ -22,7 +22,6 @@ import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class MainController {
@@ -106,8 +105,7 @@ public class MainController {
 								TestePutActivity.class);
 
 						MesaModel mesaObj = adapter.getItem(idMesa);						
-						String mesaGson = new Gson().toJson(mesaObj);
-						intent.putExtra("mesa", mesaGson);
+						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);
 					}					
 				});
@@ -124,8 +122,7 @@ public class MainController {
 						Intent intent = new Intent(view.getContext(),
 								DetailMesaActivity.class);
 						MesaModel mesaObj = adapter.getItem(idMesa);						
-						String mesaGson = new Gson().toJson(mesaObj);
-						intent.putExtra("mesa", mesaGson);
+						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);						
 					}
 				});

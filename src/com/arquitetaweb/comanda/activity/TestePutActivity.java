@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.PutMesa;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.google.gson.Gson;
 
 public class TestePutActivity extends FragmentActivity {
  
@@ -37,9 +36,7 @@ public class TestePutActivity extends FragmentActivity {
 		// Enabling Back navigation on Action Bar icon
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		Gson gson = new Gson();
-		MesaModel mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
-				MesaModel.class); // converte pra ArrayList de mesas
+		MesaModel mesa = (MesaModel) getIntent().getSerializableExtra("mesa");
 		
 		final String idMesa = Long.toString(mesa.id);
 

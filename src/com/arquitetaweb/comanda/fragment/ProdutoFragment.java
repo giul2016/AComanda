@@ -28,7 +28,6 @@ import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comum.component.ListViewCustom;
-import com.google.gson.Gson;
 
 public class ProdutoFragment extends ListFragment {
 
@@ -118,8 +117,7 @@ public class ProdutoFragment extends ListFragment {
 						PedidoActivity.class);
 				MesaModel mesaObj = ((DetailMesaActivity) getView()
 						.getContext()).getMesaModel();
-				String mesaGson = new Gson().toJson(mesaObj);
-				intent.putExtra("mesa", mesaGson);
+				intent.putExtra("mesa", mesaObj);
 				intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
 				startActivityForResult(intent, 100);
 			}

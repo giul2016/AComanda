@@ -25,9 +25,7 @@ public class PedidoActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		Gson gson = new Gson();
-		mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
-				MesaModel.class); // converte pra ArrayList de mesas		
+		mesa = (MesaModel) getIntent().getSerializableExtra("mesa");		
 		idProdutoGrupo = getIntent().getLongExtra("IdProdutoGrupo", 0);
 		 
 		setTitle("Pedido Para Mesa: " + mesa.numero_mesa);

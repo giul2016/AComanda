@@ -30,9 +30,7 @@ public class DetailMesaActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		Gson gson = new Gson();
-		mesa = gson.fromJson(getIntent().getStringExtra("mesa"),
-				MesaModel.class); // converte pra ArrayList de mesas
+		mesa = (MesaModel) getIntent().getSerializableExtra("mesa");
 
 		setTitle("Mesa: " + mesa.numero_mesa);
 
