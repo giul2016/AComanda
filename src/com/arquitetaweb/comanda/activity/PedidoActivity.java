@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.fragment.PedidoFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.google.gson.Gson;
 
 public class PedidoActivity extends Activity {
 
