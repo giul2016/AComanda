@@ -114,7 +114,6 @@ public class ProdutoFragment extends ListFragment {
 			}
 
 			private void abrirDetalhes(View view, long idProdutoGrupo) {
-
 				Intent intent = new Intent(view.getContext(),
 						PedidoActivity.class);
 				MesaModel mesaObj = ((DetailMesaActivity) getView()
@@ -123,11 +122,6 @@ public class ProdutoFragment extends ListFragment {
 				intent.putExtra("mesa", mesaGson);
 				intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
 				startActivityForResult(intent, 100);
-
-				// PedidoAdapter adapterProduto = new PedidoAdapter(
-				// getActivity(), idProduto);
-				//
-				// mListView.setAdapter(adapterProduto);
 			}
 		});
 

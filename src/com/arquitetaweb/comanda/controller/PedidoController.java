@@ -14,6 +14,8 @@ import com.arquitetaweb.comanda.adapter.PedidoAdapter;
 import com.arquitetaweb.comanda.dados.PostGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
+import com.arquitetaweb.comanda.model.MesaModel;
+import com.arquitetaweb.comanda.model.model_enum.SituacaoMesa;
 
 public class PedidoController {
 
@@ -22,32 +24,40 @@ public class PedidoController {
 	private Fragment fragment;
 	private String URL_API = "Mesa";
 	private List<ConsumoModel> lst;
-	private long mesaId;
+	private MesaModel mesa;
 
 	public PedidoController(Fragment fragment, ProgressDialog progressDialog,
-			long mesaId) {
+			MesaModel mesa) {
 		this.progressDialog = progressDialog;
 		this.context = fragment.getActivity();
 		this.fragment = fragment;
-		this.mesaId = mesaId;
+		this.mesa = mesa;
 	}
 
 	public void fecharConta(PedidoAdapter adapter) {
-		lst = new ArrayList<ConsumoModel>();
-		for (ConsumoModel item : adapter.getItens()) {
-			int qtde = Integer.parseInt(item.quantidade);
-			if (qtde > 0) {
-				item.deviceid = (long) 1;
-				item.mesaid = mesaId;
-				lst.add(item);
-			}
-		}
+		if ((mesa.situacao != SituacaoMesa.EmConta)
+				&& (mesa.situacao != SituacaoMesa.Limpar)) {
 
-		if (lst.size() > 0)
-			new EnviarPedido(fragment).execute();
-		else {
-			Toast toast = Toast.makeText(context,
-					"Não existe item a enviar.", Toast.LENGTH_SHORT);
+			lst = new ArrayList<ConsumoModel>();
+			for (ConsumoModel item : adapter.getItens()) {
+				int qtde = Integer.parseInt(item.quantidade);
+				if (qtde > 0) {
+					item.deviceid = (long) 1;
+					item.mesaid = mesa.id;
+					lst.add(item);
+				}
+			}
+
+			if (lst.size() > 0)
+				new EnviarPedido(fragment).execute();
+			else {
+				Toast toast = Toast.makeText(context,
+						"Não existe item a enviar.", Toast.LENGTH_LONG);
+				toast.show();
+			}
+		} else {
+			Toast toast = Toast.makeText(context, "A situação da mesa não permite lançamentos. (Situação: " + mesa.situacao + ")",
+					Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}

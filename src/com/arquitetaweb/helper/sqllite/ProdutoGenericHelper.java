@@ -55,16 +55,16 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 
 	@Override
 	protected ProdutoModel selectFromObjectGeneric(Cursor c) {
-		ProdutoModel garcom = new ProdutoModel();
-		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
-		garcom.produto_grupo_id = (c.getLong((c
+		ProdutoModel produto = new ProdutoModel();
+		produto.id = (c.getLong((c.getColumnIndex(KEY_ID))));
+		produto.produto_grupo_id = (c.getLong((c
 				.getColumnIndex(KEY_PRODUTO_PRODUTOGRUPOID))));
-		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
-		garcom.descricao = ((c.getString(c
+		produto.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
+		produto.descricao = ((c.getString(c
 				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
 
 		//Log.d("selectFromObjectGeneric", garcom.id + " - " + garcom.codigo);
 		
-		return garcom;
+		return produto;
 	}
 }

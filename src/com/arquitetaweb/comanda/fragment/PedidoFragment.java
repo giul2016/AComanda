@@ -94,7 +94,7 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 		
 		mesa = ((PedidoActivity) this.getActivity()).getMesaModel();
 		progressDialog = new ProgressDialog(this.getActivity());		
-		controller = new PedidoController(fragment, progressDialog, mesa.id);
+		controller = new PedidoController(fragment, progressDialog, mesa);
 		
 		idProdutoGrupo = ((PedidoActivity) this.getActivity())
 				.getIdProdutoGrupo();
@@ -204,7 +204,7 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 			Intent intent = new Intent(getActivity(), MainActivity.class);			
 			startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 			Toast toast = Toast.makeText(getActivity(), "Item(s) enviado(s) com sucesso!",
-					Toast.LENGTH_SHORT);
+					Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}

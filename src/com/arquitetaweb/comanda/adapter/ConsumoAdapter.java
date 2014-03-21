@@ -83,25 +83,16 @@ public class ConsumoAdapter extends BaseAdapter {
 		ConsumoModel item = new ConsumoModel();
 		item = consumoLista.get(position);
 
-		// // number table
-		// TextView nomeProduto = (TextView) convertView
-		// .findViewById(R.id.txtnomeproduto);
-		// Get Produto from DB SQLLite
-		// ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-		// ProdutoModel produto = dbProduto.selectById((long) item.produtoid);
-		// dbProduto.closeDB();
-
 		for (ProdutoModel produtoModel : produtoModelList) {
 			if (produtoModel.id == item.produtoid) {
+				holder.descricao.setText(produtoModel.descricao);
 				holder.quantidade.setText(item.quantidade);
-				holder.valorUnitario.setText("R$ 1,20");
-				Double total = (1.20 * Integer.parseInt(item.quantidade));
+				holder.valorUnitario.setText("R$ 1,99");
+
+				Double total = (1.99 * Integer.parseInt(item.quantidade));
 				holder.valorTotal.setText(String.format("R$ %.2f", total));
 			}
 		}
-
-		// nomeProduto.setText(produto.descricao);
-
 		return convertView;
 	}
 
