@@ -65,12 +65,11 @@ public class ProdutoFragment extends ListFragment {
 
 		mPlaceHolder = mHeader.findViewById(R.id.placeholder);
 
-		Button btn1 = (Button) view.findViewById(R.id.produtos_recentes);
-		btn1.setOnClickListener(new View.OnClickListener() {
-
+		Button btnProdutoRecente = (Button) view.findViewById(R.id.produtos_recentes);
+		btnProdutoRecente.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				abrirPedido(view, 0);
+				abrirPedido(view, 0, true);
 			}			
 		});
 
@@ -106,7 +105,7 @@ public class ProdutoFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				abrirPedido(view, id);
+				abrirPedido(view, id, false);
 			}
 		});
 
@@ -326,13 +325,14 @@ public class ProdutoFragment extends ListFragment {
 		});
 	}
 	
-	private void abrirPedido(View view, long idProdutoGrupo) {
+	private void abrirPedido(View view, long idProdutoGrupo, boolean produtoRecente) {
 		Intent intent = new Intent(view.getContext(),
 				PedidoActivity.class);
 		MesaModel mesaObj = ((DetailMesaActivity) getView()
 				.getContext()).getMesaModel();
 		intent.putExtra("mesa", mesaObj);
 		intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
+		intent.putExtra("produtoRecente", produtoRecente);
 		startActivityForResult(intent, 100);
 	}
 }

@@ -15,6 +15,7 @@ public class PedidoActivity extends Activity {
 	private Fragment fragment = null;
 	private MesaModel mesa;
 	private long idProdutoGrupo;
+	private boolean produtoRecente;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,9 +25,10 @@ public class PedidoActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		mesa = (MesaModel) getIntent().getSerializableExtra("mesa");		
+		mesa = (MesaModel) getIntent().getSerializableExtra("mesa");
 		idProdutoGrupo = getIntent().getLongExtra("IdProdutoGrupo", 0);
-		 
+		produtoRecente = getIntent().getBooleanExtra("produtoRecente", false);
+
 		setTitle("Pedido Para Mesa: " + mesa.numero_mesa);
 		selectItem();
 	}
@@ -48,8 +50,12 @@ public class PedidoActivity extends Activity {
 	public MesaModel getMesaModel() {
 		return this.mesa;
 	}
-	
+
 	public long getIdProdutoGrupo() {
 		return this.idProdutoGrupo;
+	}
+
+	public boolean getProdutoRecente() {
+		return this.produtoRecente;
 	}
 }

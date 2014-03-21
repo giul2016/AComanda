@@ -17,6 +17,7 @@ package com.arquitetaweb.comanda.fragment;
 
 import java.util.List;
 
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -47,13 +48,15 @@ import com.arquitetaweb.comum.component.ListViewCustom;
 
 public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 
-	private ProgressDialog progressDialog;
-	private PedidoController controller;
 	private MesaModel mesa;
 	private long idProdutoGrupo;
+	private boolean produtoRecente;
+
+	private ProgressDialog progressDialog;
+	private PedidoController controller;
 	private Fragment fragment;
-	private PedidoAdapter adapter; 
-			
+	private PedidoAdapter adapter;
+
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
 
@@ -76,31 +79,31 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
 		fragment = this;
 
-		Button btnFechaConta = (Button) view.findViewById(
-				R.id.lancar_pedido);
+		Button btnFechaConta = (Button) view.findViewById(R.id.lancar_pedido);
 		btnFechaConta.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				controller.fecharConta(adapter); // onTaskComplete callback
-			}		
+			}
 		});
-		
+
 		return view;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		mesa = ((PedidoActivity) this.getActivity()).getMesaModel();
-		progressDialog = new ProgressDialog(this.getActivity());		
-		controller = new PedidoController(fragment, progressDialog, mesa);
-		
 		idProdutoGrupo = ((PedidoActivity) this.getActivity())
 				.getIdProdutoGrupo();
+		produtoRecente = ((PedidoActivity) this.getActivity())
+				.getProdutoRecente();
+		
+		progressDialog = new ProgressDialog(this.getActivity());
+		controller = new PedidoController(fragment, progressDialog, mesa);
 
-		adapter = new PedidoAdapter(this.getActivity(),
-				idProdutoGrupo);
+		adapter = new PedidoAdapter(this.getActivity(), idProdutoGrupo);
 
 		setListAdapter(adapter);
 
@@ -197,14 +200,14 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 		}
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onClosedComplete(Boolean result) {
 		if (result) {
-			Intent intent = new Intent(getActivity(), MainActivity.class);			
+			Intent intent = new Intent(getActivity(), MainActivity.class);
 			startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-			Toast toast = Toast.makeText(getActivity(), "Item(s) enviado(s) com sucesso!",
-					Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(getActivity(),
+					"Item(s) enviado(s) com sucesso!", Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}
@@ -212,6 +215,6 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 	@Override
 	public void onTaskComplete(List<ConsumoModel> result) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
