@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
@@ -70,11 +69,9 @@ public class ProdutoFragment extends ListFragment {
 		btn1.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View arg0) {
-				Toast toast = Toast.makeText(getActivity(), "teste 1 btn",
-						Toast.LENGTH_SHORT);
-				toast.show();
-			}
+			public void onClick(View view) {
+				abrirPedido(view, 0);
+			}			
 		});
 
 		View mInfoHeader = mHeader.findViewById(R.id.infoheader);
@@ -109,17 +106,7 @@ public class ProdutoFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				abrirDetalhes(view, id);
-			}
-
-			private void abrirDetalhes(View view, long idProdutoGrupo) {
-				Intent intent = new Intent(view.getContext(),
-						PedidoActivity.class);
-				MesaModel mesaObj = ((DetailMesaActivity) getView()
-						.getContext()).getMesaModel();
-				intent.putExtra("mesa", mesaObj);
-				intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
-				startActivityForResult(intent, 100);
+				abrirPedido(view, id);
 			}
 		});
 
@@ -337,5 +324,15 @@ public class ProdutoFragment extends ListFragment {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 			}
 		});
+	}
+	
+	private void abrirPedido(View view, long idProdutoGrupo) {
+		Intent intent = new Intent(view.getContext(),
+				PedidoActivity.class);
+		MesaModel mesaObj = ((DetailMesaActivity) getView()
+				.getContext()).getMesaModel();
+		intent.putExtra("mesa", mesaObj);
+		intent.putExtra("IdProdutoGrupo", idProdutoGrupo);
+		startActivityForResult(intent, 100);
 	}
 }
