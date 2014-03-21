@@ -4,10 +4,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
@@ -52,16 +55,26 @@ public class ProdutoGrupoAdapter extends BaseAdapter {
 		if (convertView == null) {
 			vi = inflater.inflate(R.layout.produtogrupo_info, null);
 		}
+		// get item from position
+		ProdutoGrupoModel item = new ProdutoGrupoModel();
+		item = data.get(position);
+
+		// change the background color for the situation condition
+		RelativeLayout layout = (RelativeLayout) vi
+				.findViewById(R.id.produtogrupo_layout);
+		GradientDrawable bgShape = (GradientDrawable) layout.getBackground();
+
+		if (item.codigo == null) {
+			bgShape.setColor(Color.parseColor("#C5C1AA")); // gray
+		} else {
+			bgShape.setColor(Color.WHITE);
+		}
 
 		// number table
 		TextView descricao = (TextView) vi
 				.findViewById(R.id.txtGrupoProdutoDescricao);
 		TextView codigo = (TextView) vi
 				.findViewById(R.id.txtGrupoProdutoCodigo);
-
-		// get item from position
-		ProdutoGrupoModel item = new ProdutoGrupoModel();
-		item = data.get(position);
 
 		// setting all values in gridview
 		descricao.setText(item.descricao);

@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/produtogrupo_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:gravity="start" 
+    android:background="@drawable/bg_pedido_info"
     android:orientation="horizontal"
     android:padding="5dip" >
 
@@ -23,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:paddingTop="11dp"
         android:contentDescription="@string/nextAction"
         android:src="@drawable/ic_action_next_item" />
 
