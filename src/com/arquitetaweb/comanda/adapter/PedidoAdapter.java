@@ -23,31 +23,27 @@ public class PedidoAdapter extends BaseAdapter {
 	private List<ProdutoModel> produtoModelList;
 	private static LayoutInflater inflater = null;
 
-	public PedidoAdapter(Activity activity, long idProdutoGrupo) {
+	public PedidoAdapter(Activity activity, long idProdutoGrupo,
+			List<ConsumoModel> consumoModelList) {
 		this.activity = activity;
+		data = consumoModelList;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+		
+		produtoModelList = new ArrayList<ProdutoModel>();
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-		produtoModelList = dbProduto.selectWhere("produtoGrupoId = "
-				+ idProdutoGrupo);
-		dbProduto.closeDB();
-
-		data = new ArrayList<ConsumoModel>();
-		for (ProdutoModel produtoModel : produtoModelList) {
-
-			ConsumoModel item = new ConsumoModel();
-			item.produtoid = produtoModel.id;
-			item.quantidade = "0";
-			data.add(item);
+		for (ConsumoModel consumoModel : consumoModelList) {
+			ProdutoModel produto = dbProduto
+					.selectById((long) consumoModel.produtoId);
+			produtoModelList.add(produto);
 		}
-		notifyDataSetChanged();
+		dbProduto.closeDB();			
 	}
 
 	public List<ConsumoModel> getItens() {
 		return data;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return data.size();
@@ -60,13 +56,13 @@ public class PedidoAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return data.get(position).mesaid;
+		return data.get(position).mesaId;
 	}
 
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
-	}	
+	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -92,7 +88,7 @@ public class PedidoAdapter extends BaseAdapter {
 		}
 
 		for (ProdutoModel produtoModel : produtoModelList) {
-			if (produtoModel.id == getItem(position).produtoid) {
+			if (produtoModel.id == getItem(position).produtoId) {
 				holder.descricao.setText(produtoModel.descricao);
 				holder.codigo.setText(produtoModel.codigo);
 				holder.quantidade.setText(getItem(position).quantidade);
@@ -123,7 +119,7 @@ public class PedidoAdapter extends BaseAdapter {
 		});
 		return convertView;
 	}
-	
+
 	static class ViewHolder {
 		TextView descricao;
 		TextView codigo;

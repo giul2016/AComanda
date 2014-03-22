@@ -32,7 +32,7 @@ public class ConsumoAdapter extends BaseAdapter {
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
 		for (ConsumoModel consumoModel : consumoLista) {
 			ProdutoModel produto = dbProduto
-					.selectById((long) consumoModel.produtoid);
+					.selectById((long) consumoModel.produtoId);
 			produtoModelList.add(produto);
 		}
 		dbProduto.closeDB();
@@ -50,7 +50,7 @@ public class ConsumoAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return consumoLista.get(position).mesaid;
+		return consumoLista.get(position).mesaId;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class ConsumoAdapter extends BaseAdapter {
 		item = consumoLista.get(position);
 
 		for (ProdutoModel produtoModel : produtoModelList) {
-			if (produtoModel.id == item.produtoid) {
+			if (produtoModel.id == item.produtoId) {
 				holder.descricao.setText(produtoModel.descricao);
 				holder.quantidade.setText(item.quantidade);
 				holder.valorUnitario.setText("R$ 1,99");

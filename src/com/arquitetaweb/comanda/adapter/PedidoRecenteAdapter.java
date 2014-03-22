@@ -33,7 +33,7 @@ public class PedidoRecenteAdapter extends BaseAdapter {
 		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
 		for (ConsumoModel consumoModel : consumoLista) {
 			ProdutoModel produto = dbProduto
-					.selectById((long) consumoModel.produtoid);
+					.selectById((long) consumoModel.produtoId);
 			produtoModelList.add(produto);
 		}
 		dbProduto.closeDB();
@@ -51,7 +51,7 @@ public class PedidoRecenteAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return consumoLista.get(position).mesaid;
+		return consumoLista.get(position).mesaId;
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class PedidoRecenteAdapter extends BaseAdapter {
 		}
 
 		for (ProdutoModel produtoModel : produtoModelList) {
-			if (produtoModel.id == getItem(position).produtoid) {
+			if (produtoModel.id == getItem(position).produtoId) {
 				holder.descricao.setText(produtoModel.descricao);
 				holder.codigo.setText(produtoModel.codigo);
 				holder.quantidade.setText(getItem(position).quantidade);

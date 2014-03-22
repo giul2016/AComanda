@@ -45,6 +45,7 @@
     <!-- Mensagens -->
     <string name="pgtaSair">Tem certeza de que deseja sair?</string>
     <string name="fechandoConta">fechando conta&#8230;</string>
+    <string name="carregandoRecentes">carregando itens recentes&#8230;</string>
     <string name="carregandoConsumo">carregando consumo&#8230;</string>
     <string name="atualizandoMesas">atualizando mesas&#8230;</string>
     <string name="enviandoItem">enviando item(s)&#8230;</string>
