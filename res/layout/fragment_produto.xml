@@ -15,14 +15,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
+      
         <Button
             android:id="@+id/produtos_recentes"
+            style="@style/Item.Comanda"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Item.Comanda"
+            android:layout_weight="9.02"
             android:text="Produtos recentes..." />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            style="@style/Item.Comanda"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="0.98"
+            android:src="@drawable/ic_action_next_item" />
+
     </LinearLayout>
 
 </RelativeLayout>
