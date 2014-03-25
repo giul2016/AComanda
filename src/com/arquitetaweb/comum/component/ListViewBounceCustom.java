@@ -3,6 +3,7 @@ package com.arquitetaweb.comum.component;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -26,7 +27,6 @@ public class ListViewBounceCustom extends ListView {
 
 	public ListViewBounceCustom(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
 		mContext = context;
 		initBounceListView();
 	}
@@ -56,6 +56,17 @@ public class ListViewBounceCustom extends ListView {
 			int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
 		// This is where the magic happens, we have replaced the incoming
 		// maxOverScrollY with our own custom variable mMaxYOverscrollDistance;
+		
+//		Log.d("TESTE", "deltaX: "+ deltaX);
+//		Log.d("TESTE", "deltaY: "+ deltaY);
+//		Log.d("TESTE", "scrollX: "+ scrollX);
+//		Log.d("TESTE", "scrollY: "+ scrollY);
+//		Log.d("TESTE", "scrollRangeX: "+ scrollRangeX);
+//		Log.d("TESTE", "scrollRangeY: "+ scrollRangeY);
+//		
+//		Log.d("TESTE", "maxOverScrollX: "+ maxOverScrollX);
+//		Log.d("TESTE", "maxOverScrollY: "+ maxOverScrollY);
+		
 		return super.overScrollBy(deltaX, deltaY, scrollX, scrollY,
 				scrollRangeX, scrollRangeY, maxOverScrollX,
 				mMaxYOverscrollDistance, isTouchEvent);

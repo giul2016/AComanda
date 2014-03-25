@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -36,7 +37,6 @@ import com.arquitetaweb.comanda.fragment.SettingsFragment;
 import com.arquitetaweb.comanda.fragment.SincronizationFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.util.KeyboardAction;
-import com.arquitetaweb.comum.component.GridViewBounceCustom;
 import com.arquitetaweb.comum.messages.AlertaToast;
 
 public class MainActivity extends Activity {
@@ -149,8 +149,8 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextChange(String arg0) {
-					GridViewBounceCustom mesas = (GridViewBounceCustom) fragment.getView()
-							.findViewById(R.id.list);
+					GridView mesas = (GridView) fragment
+							.getView().findViewById(android.R.id.list);
 					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
 					if (v != null) {
 						v.getFilter().filter(arg0);
@@ -161,8 +161,9 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
-					GridViewBounceCustom mesaGrid = (GridViewBounceCustom) fragment.getView()
-							.findViewById(R.id.list);
+					GridView mesaGrid = (GridView) fragment
+							.getView().findViewById(android.R.id.list);
+
 					MesaAdapter mesaAdapter = (MesaAdapter) mesaGrid
 							.getAdapter();
 					if (mesaAdapter.getCount() > 0) {
@@ -304,24 +305,28 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		if(isTaskRoot()) {
-		    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		    builder.setMessage(R.string.pgtaSair)
-		       .setCancelable(false)
-		       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		                MainActivity.super.onBackPressed();
-		           }
-		       })
-		       .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		                dialog.cancel();
-		           }
-		       });
-		    AlertDialog alert = builder.create();
-		    alert.show();
+		if (isTaskRoot()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.pgtaSair)
+					.setCancelable(false)
+					.setPositiveButton("Sim",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									MainActivity.super.onBackPressed();
+								}
+							})
+					.setNegativeButton("Não",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							});
+			AlertDialog alert = builder.create();
+			alert.show();
 		} else {
-		    super.onBackPressed();
+			super.onBackPressed();
 		}
 	}
 }

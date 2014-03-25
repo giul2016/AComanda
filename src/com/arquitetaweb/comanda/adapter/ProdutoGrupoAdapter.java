@@ -51,16 +51,15 @@ public class ProdutoGrupoAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View vi = convertView;
 		if (convertView == null) {
-			vi = inflater.inflate(R.layout.produtogrupo_info, null);
+			convertView = inflater.inflate(R.layout.produtogrupo_info, null);
 		}
 		// get item from position
 		ProdutoGrupoModel item = new ProdutoGrupoModel();
 		item = data.get(position);
 
 		// change the background color for the situation condition
-		RelativeLayout layout = (RelativeLayout) vi
+		RelativeLayout layout = (RelativeLayout) convertView
 				.findViewById(R.id.produtogrupo_layout);
 		GradientDrawable bgShape = (GradientDrawable) layout.getBackground();
 
@@ -71,15 +70,15 @@ public class ProdutoGrupoAdapter extends BaseAdapter {
 		}
 
 		// number table
-		TextView descricao = (TextView) vi
+		TextView descricao = (TextView) convertView
 				.findViewById(R.id.txtGrupoProdutoDescricao);
-		TextView codigo = (TextView) vi
+		TextView codigo = (TextView) convertView
 				.findViewById(R.id.txtGrupoProdutoCodigo);
 
 		// setting all values in gridview
 		descricao.setText(item.descricao);
 		codigo.setText(item.codigo);
 
-		return vi;
+		return convertView;
 	}
 }

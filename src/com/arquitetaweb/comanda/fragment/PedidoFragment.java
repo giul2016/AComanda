@@ -127,7 +127,8 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 
 		setListAdapter(adapter);
 
-		mListView = (ListViewBounceCustom) getListView();
+		//mListView = (ListViewBounceCustom) getListView();
+		mListView = (ListViewBounceCustom) getView().findViewById(android.R.id.list);
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {

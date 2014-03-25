@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.GridView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
@@ -21,7 +22,6 @@ import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.arquitetaweb.comum.component.GridViewBounceCustom;
 import com.google.gson.reflect.TypeToken;
 
 public class MainController {
@@ -53,7 +53,8 @@ public class MainController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage(context.getString(R.string.atualizandoMesas));
+			progressDialog.setMessage(context
+					.getString(R.string.atualizandoMesas));
 			progressDialog.show();
 		}
 
@@ -71,45 +72,46 @@ public class MainController {
 	}
 
 	private void SincronizarMesa() {
-		
-		GetGenericApi<MesaModel> mesaApi = new GetGenericApi<MesaModel>(
-				context);
-		
+
+		GetGenericApi<MesaModel> mesaApi = new GetGenericApi<MesaModel>(context);
+
 		List<MesaModel> mesaList = mesaApi.LoadListApiFromUrl(URL_API,
 				new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
-		GridViewBounceCustom mesas = (GridViewBounceCustom) view.findViewById(R.id.list);
+		GridView mesas = (GridView) view
+				.findViewById(android.R.id.list);
+		//mesas.overScrollHeader
 		MesaAdapter adapter = new MesaAdapter((Activity) context, mesaList);
 
 		updateListView(mesas, fragment, adapter);
 	}
 
-	private void updateListView(final GridViewBounceCustom mesas, final Fragment fragment,
-			final MesaAdapter adapter) {
+	private void updateListView(final GridView mesas,
+			final Fragment fragment, final MesaAdapter adapter) {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
 				mesas.setAdapter(adapter);
 
 				mesas.setOnItemLongClickListener(new OnItemLongClickListener() {
-					
+
 					@Override
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, int arg2, long arg3) {
 						abrirDetalhes(view, arg2);
 						return true;
 					}
-					
+
 					private void abrirDetalhes(View view, Integer idMesa) {
 						Intent intent = new Intent(view.getContext(),
 								TestePutActivity.class);
 
-						MesaModel mesaObj = adapter.getItem(idMesa);						
+						MesaModel mesaObj = adapter.getItem(idMesa);
 						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);
-					}					
+					}
 				});
-				
+
 				// Click event for single list row
 				mesas.setOnItemClickListener(new OnItemClickListener() {
 					@Override
@@ -121,9 +123,9 @@ public class MainController {
 					private void abrirDetalhes(View view, Integer idMesa) {
 						Intent intent = new Intent(view.getContext(),
 								DetailMesaActivity.class);
-						MesaModel mesaObj = adapter.getItem(idMesa);						
+						MesaModel mesaObj = adapter.getItem(idMesa);
 						intent.putExtra("mesa", mesaObj);
-						fragment.startActivityForResult(intent, 100);						
+						fragment.startActivityForResult(intent, 100);
 					}
 				});
 			}
