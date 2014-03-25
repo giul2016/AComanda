@@ -7,6 +7,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -122,7 +125,6 @@ public class ProdutoAdapter extends BaseAdapter {
 		// // setting all values
 		// holder.descricao.setText(item.descricao);
 		// holder.codigo.setText(item.codigo);
-
 
 		return convertView;
 	}

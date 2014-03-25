@@ -4,10 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >   
 
-    <GridView
-        android:id="@+id/mapa_mesa"
+    <com.arquitetaweb.comum.component.GridViewBounceCustom
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollHeader="@drawable/header_mesas"        
         android:layout_marginBottom="@dimen/dimension_margin_top_bottom_grid_itens"
         android:layout_marginLeft="@dimen/dimension_margin_grid_itens"
         android:layout_marginRight="@dimen/dimension_margin_grid_itens"

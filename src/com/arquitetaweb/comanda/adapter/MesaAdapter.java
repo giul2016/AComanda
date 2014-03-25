@@ -54,16 +54,15 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View vi = convertView;
 		if (convertView == null) {
-			vi = inflater.inflate(R.layout.mesa_info, null);
+			convertView = inflater.inflate(R.layout.mesa_info, null);
 		}
 		
 		// number table
-		TextView numero_mesa = (TextView) vi.findViewById(R.id.numero_mesa); 
+		TextView numero_mesa = (TextView) convertView.findViewById(R.id.numero_mesa); 
 		
 		// change the background color for the situation condition
-		RelativeLayout layout = (RelativeLayout) vi.findViewById(R.id.mesa);
+		RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.mesa);
 		GradientDrawable bgShape = (GradientDrawable) layout.getBackground(); 
 
 		// get item from position
@@ -108,7 +107,7 @@ public class MesaAdapter extends BaseAdapter implements Filterable {
 				break;
 		}
 
-		return vi;
+		return convertView;
 	}
 
 	@Override

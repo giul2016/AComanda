@@ -107,7 +107,7 @@ public class ProdutoFragment extends ListFragment {
 					int position, long id) {
 				abrirPedido(view, id, false);
 			}
-		});
+		});			
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -324,6 +324,7 @@ public class ProdutoFragment extends ListFragment {
 			}
 		});
 	}
+		
 	
 	private void abrirPedido(View view, long idProdutoGrupo, boolean produtoRecente) {
 		Intent intent = new Intent(view.getContext(),

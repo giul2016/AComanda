@@ -42,7 +42,7 @@ import com.arquitetaweb.comanda.controller.PedidoController;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.arquitetaweb.comum.component.ListViewCustom;
+import com.arquitetaweb.comum.component.ListViewBounceCustom;
 
 public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 
@@ -54,7 +54,7 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 	private PedidoController controller;
 	private PedidoAdapter adapter;
 
-	private ListViewCustom mListView;
+	private ListViewBounceCustom mListView;
 	private LinearLayout mQuickReturnView;
 
 	private static final int STATE_ONSCREEN = 0;
@@ -127,7 +127,7 @@ public class PedidoFragment extends ListFragment implements AsyncTaskListener {
 
 		setListAdapter(adapter);
 
-		mListView = (ListViewCustom) getListView();
+		mListView = (ListViewBounceCustom) getListView();
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
