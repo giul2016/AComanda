@@ -8,9 +8,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
+import com.arquitetaweb.comanda.controller.MainController;
 import com.arquitetaweb.comanda.fragment.ConsumoFragment;
 import com.arquitetaweb.comanda.fragment.ProdutoFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
@@ -104,8 +108,57 @@ public class DetailMesaActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
-		onBackPressed();
-		return true;
+		switch (menuItem.getItemId()) {
+		case R.id.action_search:
+			Toast.makeText(getApplicationContext(), "comando ok: sms: ",
+					Toast.LENGTH_SHORT).show();
+			return true;
+		default:
+			onBackPressed();
+			return super.onOptionsItemSelected(menuItem);
+		}
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// menu.findItem(R.id.action_search).setVisible(true);
+		// clearSearch();
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		Toast.makeText(getApplicationContext(), "comando ok: sms: ",
+				Toast.LENGTH_SHORT).show();
+		return false;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.pedido_menu, menu);
+
+		// if (Build.VERSION.SDK_INT >= 11) {
+		// // SearchView
+		// SearchManager searchManager = (SearchManager)
+		// getSystemService(Context.SEARCH_SERVICE);
+		//
+		// searchView = (SearchView) menu.findItem(R.id.action_search)
+		// .getActionView();
+		// // searchView.setQueryHint("Digite o Número da Mesa");
+		// searchView.setSearchableInfo(searchManager
+		// .getSearchableInfo(getComponentName()));
+		//
+		// searchView.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Toast.makeText(getApplicationContext(),
+		// "comando ok: sms: ", Toast.LENGTH_SHORT).show();
+		// }
+		// });
+		// }
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	public MesaModel getMesaModel() {
