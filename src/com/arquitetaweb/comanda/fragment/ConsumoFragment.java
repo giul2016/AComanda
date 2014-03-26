@@ -19,6 +19,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,7 @@ import com.arquitetaweb.comanda.controller.ConsumoController;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
 import com.arquitetaweb.comanda.model.ConsumoModel;
 import com.arquitetaweb.comanda.model.MesaModel;
+import com.arquitetaweb.comanda.model.model_enum.SituacaoMesa;
 import com.arquitetaweb.comum.component.ListViewCustom;
 
 public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
@@ -94,18 +96,23 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 
 		mesa = ((DetailMesaActivity) this.getActivity()).getMesaModel();
 		progressDialog = new ProgressDialog(this.getActivity());
-		controller = new ConsumoController(fragment, progressDialog,
-				mesa.id);
+		controller = new ConsumoController(fragment, progressDialog, mesa.id);
 		controller.sincronizar(); // onTaskComplete callback
 
 		Button btnFechaConta = (Button) fragment.getView().findViewById(
 				R.id.fechar_conta);
-		btnFechaConta.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				controller.fecharConta(); // onTaskComplete callback
-			}
-		});
+
+		if (mesa.situacao == SituacaoMesa.EmConta) {
+			btnFechaConta.setText("Mesa Já Fechada");
+			btnFechaConta.setBackgroundColor(Color.RED);
+		} else {
+			btnFechaConta.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					controller.fecharConta(); // onTaskComplete callback
+				}
+			});
+		}
 
 	}
 
@@ -338,8 +345,8 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 	public void onClosedComplete(Boolean result) {
 		if (result) {
 			((DetailMesaActivity) this.getActivity()).onBackPressed();
-			Toast toast = Toast.makeText(getActivity(), "Conta fechada com sucesso!",
-					Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getActivity(),
+					"Conta fechada com sucesso!", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 
