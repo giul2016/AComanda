@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.controller.MainController;
 import com.arquitetaweb.comanda.fragment.ConsumoFragment;
 import com.arquitetaweb.comanda.fragment.ProdutoFragment;
 import com.arquitetaweb.comanda.model.MesaModel;

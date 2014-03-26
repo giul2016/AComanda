@@ -152,8 +152,8 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		List<T> garcomLista = new ArrayList<T>();
 		String selectQuery = "SELECT  * FROM " + TABLE + " WHERE " + where;
 
-		//Log.i("DatabaseGenericHelper", selectQuery);
-		
+		// Log.i("DatabaseGenericHelper", selectQuery);
+
 		Cursor c = db.rawQuery(selectQuery, null);
 
 		// looping through all rows and adding to list
@@ -161,7 +161,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 			do {
 				// adding to todo list
 				T obj = selectFromObjectGeneric(c);
-				//Log.d("DatabaseGenericHelper", obj);
+				// Log.d("DatabaseGenericHelper", obj);
 				garcomLista.add(obj);
 			} while (c.moveToNext());
 		}
@@ -182,7 +182,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// looping through all rows and adding to list
 		if (c != null) {
 			c.moveToFirst();
-			//Log.d("DatabaseGenericHelper", selectQuery);
+			// Log.d("DatabaseGenericHelper", selectQuery);
 			return selectFromObjectGeneric(c);
 		}
 		return null;

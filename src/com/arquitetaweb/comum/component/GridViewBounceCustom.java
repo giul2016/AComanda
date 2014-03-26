@@ -7,7 +7,7 @@ import android.widget.GridView;
 
 public class GridViewBounceCustom extends GridView {
 
-	private static final int MAX_Y_OVERSCROLL_DISTANCE = 100;
+	private static final int MAX_Y_OVERSCROLL_DISTANCE = 0;
 
 	private Context mContext;
 	private int mMaxYOverscrollDistance;

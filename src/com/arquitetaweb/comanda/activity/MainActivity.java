@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -37,6 +36,7 @@ import com.arquitetaweb.comanda.fragment.SettingsFragment;
 import com.arquitetaweb.comanda.fragment.SincronizationFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.util.KeyboardAction;
+import com.arquitetaweb.comum.component.GridViewBounceCustom;
 import com.arquitetaweb.comum.messages.AlertaToast;
 
 public class MainActivity extends Activity {
@@ -149,7 +149,7 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextChange(String arg0) {
-					GridView mesas = (GridView) fragment
+					GridViewBounceCustom mesas = (GridViewBounceCustom) fragment
 							.getView().findViewById(android.R.id.list);
 					MesaAdapter v = (MesaAdapter) mesas.getAdapter();
 					if (v != null) {
@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
 
 				@Override
 				public boolean onQueryTextSubmit(String arg0) {
-					GridView mesaGrid = (GridView) fragment
+					GridViewBounceCustom mesaGrid = (GridViewBounceCustom) fragment
 							.getView().findViewById(android.R.id.list);
 
 					MesaAdapter mesaAdapter = (MesaAdapter) mesaGrid

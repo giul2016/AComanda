@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.GridView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.activity.DetailMesaActivity;
@@ -22,6 +21,11 @@ import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
+import com.arquitetaweb.comanda.model.ProdutoModel;
+import com.arquitetaweb.comum.component.GridViewBounceCustom;
+import com.arquitetaweb.comum.messages.AlertaToast;
+import com.arquitetaweb.helper.sqllite.DatabaseGenericHelper;
+import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 import com.google.gson.reflect.TypeToken;
 
 public class MainController {
@@ -79,15 +83,15 @@ public class MainController {
 				new TypeToken<ArrayList<MesaModel>>() {
 				}.getType());
 
-		GridView mesas = (GridView) view
+		GridViewBounceCustom mesas = (GridViewBounceCustom) view
 				.findViewById(android.R.id.list);
-		//mesas.overScrollHeader
+		// mesas.overScrollHeader
 		MesaAdapter adapter = new MesaAdapter((Activity) context, mesaList);
 
 		updateListView(mesas, fragment, adapter);
 	}
 
-	private void updateListView(final GridView mesas,
+	private void updateListView(final GridViewBounceCustom mesas,
 			final Fragment fragment, final MesaAdapter adapter) {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
@@ -108,7 +112,11 @@ public class MainController {
 
 						MesaModel mesaObj = adapter.getItem(idMesa);
 						intent.putExtra("mesa", mesaObj);
-						fragment.startActivityForResult(intent, 100);
+						// fragment.startActivityForResult(intent, 100);
+
+						new AlertaToast().show(context, "Situação da Mesa: "
+								+ mesaObj.numero_mesa + " :: "
+								+ mesaObj.situacao);
 					}
 				});
 
