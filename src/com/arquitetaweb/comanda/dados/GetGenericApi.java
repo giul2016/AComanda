@@ -55,10 +55,10 @@ public class GetGenericApi<T> {
 			String urlApi = Utils.getUrlServico(context) + "/Api/" + URL_API;
 			JSONParser jParser = new JSONParser();
 			String json = jParser.getJSONFromApi(urlApi);
-			Log.i("AQUI",json +" - "+ urlApi);
-			if (json.contains("sucess"))
-				return true;
-			return false;
+			Log.i("getUrl", json +" - "+ urlApi);
+			if (json.toUpperCase().contains("ERROR"))
+				return false;
+			return true;
 		} else {
 			errorConnectServer();
 		}
