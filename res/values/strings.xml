@@ -59,6 +59,7 @@
     <string name="msgSucesso">Sucesso.</string>
     <string name="msgErro">Erro.</string>
     <string name="sincronizadoSucesso">sincronizado com sucesso</string>
+    <string name="efetuandoLogin">logando...</string>
     <string name="salvoSucesso">Salvo com sucesso.</string>
 
     <!-- Content Description Images -->

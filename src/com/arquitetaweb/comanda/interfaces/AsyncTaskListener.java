@@ -7,5 +7,5 @@ import com.arquitetaweb.comanda.model.ConsumoModel;
 public interface AsyncTaskListener{
     public void onTaskComplete(List<ConsumoModel> result);
     
-    public void onClosedComplete(Boolean result);
+    public void onClosedComplete(Boolean result);    
 }
