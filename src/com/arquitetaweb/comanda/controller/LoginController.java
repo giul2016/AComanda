@@ -1,16 +1,13 @@
 package com.arquitetaweb.comanda.controller;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Pair;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.PostGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncLoginListener;
-import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.model.UsuarioModel;
 
 public class LoginController {

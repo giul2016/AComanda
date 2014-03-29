@@ -1,7 +1,8 @@
 package com.arquitetaweb.comanda.dados;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpResponse;
@@ -27,6 +28,7 @@ public class PostGenericApi<T> {
 
 	private Context context;
 	private String URL_API = "PostMethod"; // Post Mesa
+	private String responseStrJson;
 
 	public PostGenericApi(Context context) {
 		this.context = context;
@@ -63,13 +65,23 @@ public class PostGenericApi<T> {
 					Log.i("Sucess!", "Sucesso");
 					/* Checking response */
 					if (response != null) {
-						InputStream in = response.getEntity().getContent();						
-						return new Pair<Boolean, String>(true, "aqui 200");
+						responseStrJson = getResponse(response);
+						Log.i("Sucess!", responseStrJson);
+						return new Pair<Boolean, String>(true, responseStrJson);
 					}
-				} else if (statusCode == 500) {
+				} else if (statusCode == 500) { // Algum erro ocorreu
+					Log.i("Sucess!", "Retorno 500");
 					if (response != null) {
-						InputStream in = response.getEntity().getContent();						
-						return new Pair<Boolean, String>(false, "aqui 500");
+						responseStrJson = getResponse(response);
+						Log.i("Sucess!", responseStrJson);
+						return new Pair<Boolean, String>(false, responseStrJson);
+					}
+				} else if (statusCode == 401) { // Sem autorizacao
+					Log.i("Sucess!", "Retorno 401");
+					if (response != null) {
+						responseStrJson = getResponse(response);
+						Log.i("Sucess!", responseStrJson);
+						return new Pair<Boolean, String>(false, responseStrJson);
 					}
 				}
 			} catch (UnsupportedEncodingException e) {
@@ -85,7 +97,21 @@ public class PostGenericApi<T> {
 		} else {
 			errorConnectServer();
 		}
-		return new Pair<Boolean, String>(false, "sem retorno");
+		return new Pair<Boolean, String>(false, "Sem conexão!");
+	}
+
+	private String getResponse(HttpResponse response) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(response
+				.getEntity().getContent()));
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(in.readLine() + "\n");
+		String line = "0";
+		while ((line = in.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		String responseA = sb.toString();
+		return responseA;
 	}
 
 	private boolean postData(T obj) {
