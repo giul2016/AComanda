@@ -1,5 +1,9 @@
 package com.arquitetaweb.comanda.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -9,6 +13,7 @@ import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.PostGenericApi;
 import com.arquitetaweb.comanda.interfaces.AsyncLoginListener;
 import com.arquitetaweb.comanda.model.UsuarioModel;
+import com.arquitetaweb.helper.sqllite.UsuarioGenericHelper;
 
 public class LoginController {
 
@@ -22,12 +27,42 @@ public class LoginController {
 		this.activity = activity;
 	}
 
+	public List<String> getUsuario(String novoUsuario) {
+		UsuarioGenericHelper dbProduto = new UsuarioGenericHelper(activity);
+		List<UsuarioModel> usuarioList = dbProduto.selectAll();
+
+		List<String> emails = new ArrayList<String>();
+		if (novoUsuario != null)
+			emails.add(novoUsuario);
+		for (UsuarioModel usuarioModel : usuarioList) {
+			emails.add(usuarioModel.email);
+		}
+
+		HashSet<String> hashSet = new HashSet<String>(emails); // remove duplicates
+		emails = new ArrayList<String>(hashSet);
+
+		if (novoUsuario != null) {
+			usuarioList = new ArrayList<UsuarioModel>();
+			for (String email : emails) {
+				UsuarioModel model = new UsuarioModel();
+				model.email = email;
+				usuarioList.add(model);
+			}
+
+			dbProduto.sincronizar(usuarioList);
+			dbProduto.closeDB();
+		}
+
+		return emails;
+	}
+
 	public void loginRegister(UsuarioModel objectLogin) {
 		this.objectLogin = objectLogin;
 		new LoginRegister(activity).execute();
 	}
 
-	private class LoginRegister extends AsyncTask<Void, Void, Pair<Boolean, String>> {
+	private class LoginRegister extends
+			AsyncTask<Void, Void, Pair<Boolean, String>> {
 		private AsyncLoginListener callback;
 
 		public LoginRegister(Activity activity) {
@@ -38,7 +73,8 @@ public class LoginController {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			progressDialog.setCancelable(false);
-			progressDialog.setMessage(activity.getString(R.string.efetuandoLogin));
+			progressDialog.setMessage(activity
+					.getString(R.string.efetuandoLogin));
 			progressDialog.show();
 		}
 

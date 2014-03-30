@@ -45,7 +45,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		viewRoot = inflater.inflate(R.layout.settings, container, false);
+		viewRoot = inflater.inflate(R.layout.fragment_settings, container, false);
 
 		EditText deviceId = (EditText) viewRoot.findViewById(R.id.edtDeviceId);
 		String devId = Secure.getString(viewRoot.getContext()

@@ -132,7 +132,7 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 		setListAdapter(adapter);
 
 		mListView = (ListViewCustom) getListView();
-		mListView.addHeaderView(mHeader);
+		//mListView.addHeaderView(mHeader);
 
 		mListView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {

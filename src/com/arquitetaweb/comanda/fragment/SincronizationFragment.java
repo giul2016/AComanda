@@ -40,7 +40,7 @@ public class SincronizationFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		viewRoot = inflater.inflate(R.layout.sincronization, container, false);
+		viewRoot = inflater.inflate(R.layout.fragment_sincronization, container, false);
 
 		Button btnSalvar = (Button) viewRoot.findViewById(R.id.btnSynchronize);
 		btnSalvar.setOnClickListener(this);

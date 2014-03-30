@@ -22,8 +22,8 @@ public class ProdutoGrupoGenericHelper extends
 
 		CREATE_TABLE = "CREATE TABLE " + " IF NOT EXISTS " + TABLE + "("
 				+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRODUTOGRUPO_CODIGO
-				+ " TEXT," + KEY_PRODUTOGRUPO_DESCRICAO + " TEXT," + KEY_CREATED_AT
-				+ " DATETIME" + ")";
+				+ " TEXT," + KEY_PRODUTOGRUPO_DESCRICAO + " TEXT,"
+				+ KEY_CREATED_AT + " DATETIME" + ")";
 
 		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;
 	}
@@ -54,11 +54,13 @@ public class ProdutoGrupoGenericHelper extends
 	protected ProdutoGrupoModel selectFromObjectGeneric(Cursor c) {
 		ProdutoGrupoModel garcom = new ProdutoGrupoModel();
 		garcom.id = (c.getLong((c.getColumnIndex(KEY_ID))));
-		garcom.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTOGRUPO_CODIGO))));
+		garcom.codigo = ((c
+				.getString(c.getColumnIndex(KEY_PRODUTOGRUPO_CODIGO))));
 		garcom.descricao = ((c.getString(c
 				.getColumnIndex(KEY_PRODUTOGRUPO_DESCRICAO))));
 
-		Log.d("ProdutoGrupoModel", "Id: " + garcom.id + " - Codigo: " + garcom.codigo);
+		Log.d("ProdutoGrupoModel", "Id: " + garcom.id + " - Codigo: "
+				+ garcom.codigo);
 		return garcom;
 	}
 }

@@ -1,5 +1,6 @@
 package com.arquitetaweb.comanda.activity;
 
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -9,8 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
@@ -18,6 +22,8 @@ import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.controller.LoginController;
 import com.arquitetaweb.comanda.interfaces.AsyncLoginListener;
 import com.arquitetaweb.comanda.model.UsuarioModel;
+import com.arquitetaweb.comanda.util.Utils;
+import com.arquitetaweb.comanda.util.Validation;
 
 public class LoginActivity extends Activity implements View.OnClickListener,
 		AsyncLoginListener {
@@ -36,18 +42,45 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 		controller = new LoginController(progressDialog, this);
 
 		Button btn = (Button) findViewById(R.id.entrar);
-		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);
 		btn.setOnClickListener(this);
+
+		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);
+		edtEmail.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+				Validation.isEmailAddress(edtEmail, true);
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+		});
+
+		autoComplete(null);
+	}
+
+	private void autoComplete(String novoUsuario) {
+		// Get the string array
+		List<String> emails = controller.getUsuario(novoUsuario);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, emails);
+		edtEmail.setAdapter(adapter);
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		usuario = new UsuarioModel();
-		usuario.email = edtEmail.getText().toString();
-		String devId = Secure.getString(this.getContentResolver(),
-				Secure.ANDROID_ID);
-		usuario.deviceID = devId;
-		controller.loginRegister(usuario);
+		String email = edtEmail.getText().toString();
+		if (Utils.isValidEmail(email)) {
+			usuario = new UsuarioModel();
+			usuario.email = email;
+			String devId = Secure.getString(this.getContentResolver(),
+					Secure.ANDROID_ID);
+			usuario.deviceID = devId;
+			controller.loginRegister(usuario);
+		}
 	}
 
 	@Override
@@ -58,6 +91,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		} else {
+			autoComplete(edtEmail.getText().toString());
 			notAuthorized(result.second);
 		}
 	}

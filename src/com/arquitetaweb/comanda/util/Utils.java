@@ -4,10 +4,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 import com.arquitetaweb.comanda.model.ConfiguracoesModel;
 
@@ -37,6 +39,16 @@ public class Utils {
 		}
 	}
 
+	public final static boolean isValidEmail(CharSequence target) {
+		String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	    if (TextUtils.isEmpty(target)) {
+	        return false;
+	    } else {
+	        //return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+	    	return Pattern.matches(EMAIL_REGEX, target);
+	    }
+	}
+	
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
 		try {

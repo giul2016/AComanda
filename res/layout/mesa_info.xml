@@ -3,9 +3,8 @@
     android:id="@+id/mesa"
     android:layout_width="50dip"
     android:layout_height="50dip"
-    android:layout_centerHorizontal="true"
     android:background="@drawable/bg_mesa_round"
-    android:gravity="start"
+    android:gravity="center"
     android:orientation="horizontal"
     android:padding="5dip" >
 
@@ -13,8 +12,7 @@
         android:id="@+id/numero_mesa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:gravity="center"
         android:text="@string/numero_mesa"
         android:textColor="#FF0000"
         android:textSize="26sp"
