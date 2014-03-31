@@ -3,6 +3,14 @@
     android:background="@drawable/bg_login"
     android:layout_height="fill_parent" >
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/logo" />
+
     <AutoCompleteTextView
         android:id="@+id/edtEmailLogin"
         android:layout_width="260dp"
@@ -29,23 +37,12 @@
         android:text="@string/btnEntrar" />
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:gravity="center"
-        android:text="AComanda\nArquitetaWeb"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/entrar"
+        android:layout_marginBottom="18dp"
         android:gravity="center"
         android:text="Problemas para utilizar o sistema?\ntomazini@arquitetaweb.com"
         android:textAppearance="?android:attr/textAppearanceSmall" />
