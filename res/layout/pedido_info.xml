@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <TextView
+        android:id="@+id/txtprodutodescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/labelSincProduto"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/txtprodutocodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnRemoveProduto"
+        android:layout_alignParentRight="true"
+        android:text="@string/codigoProduto"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/btnAddProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnRemoveProduto"
+        android:layout_toRightOf="@+id/txt_quantidade_produto"
+        android:contentDescription="@string/adicionarProduto"
+        android:src="@drawable/ic_action_new" />
+
+    <TextView
+        android:id="@+id/txt_quantidade_produto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnAddProduto"
+        android:layout_centerHorizontal="true"
+        android:text="@string/quantidade"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp" />
+
+    <ImageButton
+        android:id="@+id/btnRemoveProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtprodutodescricao"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@+id/txt_quantidade_produto"
+        android:contentDescription="@string/removerProduto"
+        android:src="@drawable/ic_action_cancel" />
+
+</RelativeLayout>

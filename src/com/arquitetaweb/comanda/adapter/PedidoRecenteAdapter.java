@@ -63,7 +63,7 @@ public class PedidoRecenteAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.produto_info, null);
+			convertView = inflater.inflate(R.layout.pedido_info, null);
 			holder = new ViewHolder();
 			holder.codigo = (TextView) convertView
 					.findViewById(R.id.txtprodutocodigo);

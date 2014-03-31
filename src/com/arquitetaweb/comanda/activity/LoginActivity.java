@@ -45,10 +45,11 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 		progressDialog = new ProgressDialog(this);
 		controller = new LoginController(progressDialog, this);
 
+		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);
+		
 		Button btn = (Button) findViewById(R.id.entrar);
 		btn.setOnClickListener(this);
-
-		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);		
+			
 		createListeners();
 		autoComplete(null);
 	}
