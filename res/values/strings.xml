@@ -62,6 +62,7 @@
     <string name="efetuandoLogin">autenticando&#8230;</string>
     <string name="salvoSucesso">Salvo com sucesso.</string>
     <string name="msgEmailValido">Digite um email válido.</string>
+    <string name="ultimosLancamentos">últimos lançamentos&#8230;</string>
 
     <!-- Content Description Images -->
     <string name="removerProduto">Remover produto</string>

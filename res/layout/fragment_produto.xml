@@ -22,7 +22,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="9.02"
-            android:text="Produtos recentes..." />
+            android:gravity="left"
+            android:text="@string/ultimosLancamentos" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -30,7 +31,8 @@
             android:layout_width="0dp"
             android:layout_height="46dp"
             android:layout_weight="0.98"
-            android:src="@drawable/ic_action_next_item" />
+            android:contentDescription="@string/nextAction"
+            android:src="@drawable/ic_action_next_item_white" />
 
     </LinearLayout>
 
