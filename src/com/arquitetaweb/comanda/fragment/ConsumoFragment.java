@@ -55,7 +55,7 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 
 	private ListViewCustom mListView;
 	private LinearLayout mQuickReturnView;
-	private View mHeader;
+	//private View mHeader;
 
 	private static final int STATE_ONSCREEN = 0;
 	private static final int STATE_OFFSCREEN = 1;
@@ -74,7 +74,7 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_consumo, null);
 		mQuickReturnView = (LinearLayout) view.findViewById(R.id.footer1);
-		mHeader = inflater.inflate(R.layout.consumo_header, null);
+		//mHeader = inflater.inflate(R.layout.consumo_header, null);
 		fragment = this;
 		return view;
 	}

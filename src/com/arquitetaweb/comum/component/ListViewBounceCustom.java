@@ -3,7 +3,6 @@ package com.arquitetaweb.comum.component;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -14,7 +13,7 @@ public class ListViewBounceCustom extends ListView {
 	private boolean scrollIsComputed = false;
 	private int mHeight;
 
-	private static final int MAX_Y_OVERSCROLL_DISTANCE = 200;
+	private static final int MAX_Y_OVERSCROLL_DISTANCE = 0;
 
 	private Context mContext;
 	private int mMaxYOverscrollDistance;

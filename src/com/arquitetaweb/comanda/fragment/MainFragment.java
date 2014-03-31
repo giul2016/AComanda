@@ -42,7 +42,7 @@ public class MainFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		progressDialog = new ProgressDialog(this.getActivity());
 		controller = new MainController(this, progressDialog);
-		controller.sincronizarMesa();		
+		controller.sincronizarMesa();					
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import com.arquitetaweb.comanda.model.MesaModel;
 import com.arquitetaweb.comanda.util.KeyboardAction;
 import com.arquitetaweb.comum.component.GridViewBounceCustom;
 import com.arquitetaweb.comum.messages.AlertaToast;
+import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
 
 public class MainActivity extends Activity {
 
@@ -234,6 +235,13 @@ public class MainActivity extends Activity {
 	}
 
 	private void selectItem(Uri uri) {
+		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
+				this);
+		Integer qtde = dbProdutoGrupo.getCount();
+		if ((qtde == 0) && (!SettingsFragment.GENERAL_SETTINGS_URI.equals(uri))) { // forcar a tela para sincronizar
+			uri = SincronizationFragment.SINCRONIZATION_URI; 
+		}
+		
 		if (SettingsFragment.GENERAL_SETTINGS_URI.equals(uri)) {
 			currentFragmentTag = SettingsFragment.TAG;
 			fragment = new SettingsFragment();

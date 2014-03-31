@@ -82,7 +82,6 @@ public class SampleSqlLiteDatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
 		// creating required tables
 		db.execSQL(CREATE_TABLE_TODO);
 		db.execSQL(CREATE_TABLE_TAG);

@@ -4,14 +4,12 @@
         <item>@string/action_synchronize</item>
         <item>@string/action_settings</item>
         <item>@string/action_about</item>
-        <item>@string/action_login</item>
     </string-array>
     <string-array name="actions_link">
         <item>category://mesas</item>
         <item>settings://synchronize</item>
         <item>settings://general</item>        
         <item>category://about</item>
-        <item>category://login</item>
     </string-array>   
     
     <string-array name="config_urls_array">

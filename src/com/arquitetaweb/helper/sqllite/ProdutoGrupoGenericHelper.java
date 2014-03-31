@@ -25,7 +25,7 @@ public class ProdutoGrupoGenericHelper extends
 				+ " TEXT," + KEY_PRODUTOGRUPO_DESCRICAO + " TEXT,"
 				+ KEY_CREATED_AT + " DATETIME" + ")";
 
-		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;
+		DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE;		
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ProdutoGrupoGenericHelper extends
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		super.onUpgrade(db, oldVersion, newVersion);
 		db.execSQL(DROP_TABLE);
-	}
+	}	
 
 	@Override
 	protected ContentValues insertFromValuesGeneric(ProdutoGrupoModel model) {

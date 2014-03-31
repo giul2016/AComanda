@@ -6,8 +6,11 @@
         android:id="@+id/edtEmailLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="mtomazini@publisoft.com.br" >
+        android:singleLine="true"
+        android:imeOptions="actionGo|flagNoExtractUi"
+        android:inputType="textEmailAddress"
+        android:hint="@string/msgEmailValido"
+        android:ems="10" >
 
         <requestFocus />
     </AutoCompleteTextView>
@@ -16,6 +19,6 @@
         android:id="@+id/entrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Entrar" />
+        android:text="@string/btnEntrar" />
 
 </TableLayout>

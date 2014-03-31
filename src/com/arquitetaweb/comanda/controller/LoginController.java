@@ -28,8 +28,8 @@ public class LoginController {
 	}
 
 	public List<String> getUsuario(String novoUsuario) {
-		UsuarioGenericHelper dbProduto = new UsuarioGenericHelper(activity);
-		List<UsuarioModel> usuarioList = dbProduto.selectAll();
+		UsuarioGenericHelper dbDevice = new UsuarioGenericHelper(activity);
+		List<UsuarioModel> usuarioList = dbDevice.selectAll();
 
 		List<String> emails = new ArrayList<String>();
 		if (novoUsuario != null)
@@ -49,8 +49,8 @@ public class LoginController {
 				usuarioList.add(model);
 			}
 
-			dbProduto.sincronizar(usuarioList);
-			dbProduto.closeDB();
+			dbDevice.sincronizar(usuarioList);
+			dbDevice.closeDB();
 		}
 
 		return emails;

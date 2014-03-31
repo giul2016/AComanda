@@ -13,10 +13,14 @@ import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.controller.LoginController;
@@ -44,22 +48,33 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 		Button btn = (Button) findViewById(R.id.entrar);
 		btn.setOnClickListener(this);
 
-		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);
+		edtEmail = (AutoCompleteTextView) findViewById(R.id.edtEmailLogin);		
+		createListeners();
+		autoComplete(null);
+	}
+
+	private void createListeners() {
 		edtEmail.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
 				Validation.isEmailAddress(edtEmail, true);
 			}
-
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+			public void onTextChanged(CharSequence s, int start, int before, int count) { }
+		});
+		edtEmail.setOnEditorActionListener(new EditText.OnEditorActionListener() {			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_GO ||
+		                actionId == EditorInfo.IME_ACTION_DONE ||
+		                event.getAction() == KeyEvent.ACTION_DOWN &&
+		                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+					logar();
+		            return true;
+		        }
+		        return false;
 			}
 		});
-
-		autoComplete(null);
 	}
 
 	private void autoComplete(String novoUsuario) {
@@ -72,6 +87,10 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 
 	@Override
 	public void onClick(View arg0) {
+		logar();
+	}
+
+	private void logar() {
 		String email = edtEmail.getText().toString();
 		if (Utils.isValidEmail(email)) {
 			usuario = new UsuarioModel();

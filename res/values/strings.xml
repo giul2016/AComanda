@@ -15,7 +15,6 @@
     <string name="action_settings">Configuração</string>
     <string name="action_synchronize">Sincronização</string>
     <string name="action_about">Sobre</string>
-    <string name="action_login">Login</string>
 
     <!-- Menu -->
     <string name="menu_search">Procurar</string>
@@ -30,6 +29,7 @@
     <string name="txtUrlServico">mocksapi.herokuapp.com</string>
     <string name="txtPortaServico">80</string>
     <string name="btnSalvar">Salvar</string>
+    <string name="btnEntrar">Entrar</string>
     <string name="twoDots">:</string>
     <string name="labelSincronizar">Sincronizar</string>
     <string name="labelSincGarcom">Garçom</string>
@@ -61,6 +61,7 @@
     <string name="sincronizadoSucesso">sincronizado com sucesso</string>
     <string name="efetuandoLogin">autenticando&#8230;</string>
     <string name="salvoSucesso">Salvo com sucesso.</string>
+    <string name="msgEmailValido">Digite um email válido.</string>
 
     <!-- Content Description Images -->
     <string name="removerProduto">Remover produto</string>

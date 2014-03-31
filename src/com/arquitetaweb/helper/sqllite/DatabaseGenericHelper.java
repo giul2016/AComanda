@@ -58,6 +58,12 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// create new tables
 		onCreate(db);
 	}
+	
+	@Override
+	public void onOpen(SQLiteDatabase db) {
+		super.onOpen(db);
+		onCreate(db);
+	}
 
 	// closing database
 	public void closeDB() {
@@ -188,6 +194,18 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		return null;
 	}
 
+	public int getCount() {
+		String countQuery = "SELECT  * FROM " + TABLE;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+
+		int count = cursor.getCount();
+		cursor.close();
+
+		// return count
+		return count;
+	}
+		
 	protected void errorConnectServer() {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {

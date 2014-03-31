@@ -21,11 +21,8 @@ import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.MesaModel;
-import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comum.component.GridViewBounceCustom;
 import com.arquitetaweb.comum.messages.AlertaToast;
-import com.arquitetaweb.helper.sqllite.DatabaseGenericHelper;
-import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 import com.google.gson.reflect.TypeToken;
 
 public class MainController {
