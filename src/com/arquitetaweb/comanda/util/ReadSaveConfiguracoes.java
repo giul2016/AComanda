@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import com.arquitetaweb.comanda.model.ConfiguracoesModel;
+import com.arquitetaweb.comanda.model.SettingsModel;
 import com.google.gson.Gson;
 
 public class ReadSaveConfiguracoes {
@@ -17,7 +17,7 @@ public class ReadSaveConfiguracoes {
 		this.context = context;
     }
 	
-	public ConfiguracoesModel getData() {
+	public SettingsModel getData() {
 		SharedPreferences pm = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		String jsonString = pm.getString(fileName, "{}");		
@@ -25,12 +25,12 @@ public class ReadSaveConfiguracoes {
 		StringBuilder builder = new StringBuilder();        	
 		builder.append(jsonString);
 		Gson gson = new Gson();
-		ConfiguracoesModel response = gson.fromJson(builder.toString(), ConfiguracoesModel.class);
+		SettingsModel response = gson.fromJson(builder.toString(), SettingsModel.class);
 		
 		return response;		
 	}
 
-	public void saveData(ConfiguracoesModel objModel) {
+	public void saveData(SettingsModel objModel) {
 		SharedPreferences pm = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		Editor edt = pm.edit();

@@ -11,7 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
-import com.arquitetaweb.comanda.model.ConfiguracoesModel;
+import com.arquitetaweb.comanda.model.SettingsModel;
 
 public class Utils {
 
@@ -80,7 +80,7 @@ public class Utils {
 	private static String MontarUrl(Context context) {
 
 		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);		
-		ConfiguracoesModel configModel = configuracoes.getData();
+		SettingsModel configModel = configuracoes.getData();
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://");

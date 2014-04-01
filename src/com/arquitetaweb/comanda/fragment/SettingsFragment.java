@@ -1,5 +1,8 @@
 package com.arquitetaweb.comanda.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,10 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.model.ConfiguracoesModel;
+import com.arquitetaweb.comanda.model.SettingsModel;
 import com.arquitetaweb.comanda.util.ReadSaveConfiguracoes;
 import com.arquitetaweb.comum.messages.AlertaToast;
 import com.arquitetaweb.comum.messages.SucessoToast;
+import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
+import com.arquitetaweb.helper.sqllite.SettingsGenericHelper;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 	public static final String TAG = SettingsFragment.class.getSimpleName();
@@ -25,12 +30,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 	public static final Uri GENERAL_SETTINGS_URI = new Uri.Builder()
 			.scheme(SETTINGS_SCHEME).authority(SETTINGS_AUTHORITY).build();
 
-	private View viewRoot;	
+	private View viewRoot;
 	private AutoCompleteTextView urlServico;
-	private EditText portaServico;	
+	private EditText portaServico;
 
 	private ReadSaveConfiguracoes configuracoes;
-	private ConfiguracoesModel configModel;
+	private SettingsModel configModel;
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -45,20 +50,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		viewRoot = inflater.inflate(R.layout.fragment_settings, container, false);
+		viewRoot = inflater.inflate(R.layout.fragment_settings, container,
+				false);
 
 		EditText deviceId = (EditText) viewRoot.findViewById(R.id.edtDeviceId);
 		String devId = Secure.getString(viewRoot.getContext()
 				.getContentResolver(), Secure.ANDROID_ID);
 		deviceId.setText(devId);
 
-		urlServico = (AutoCompleteTextView) viewRoot.findViewById(R.id.autoCompleteUrlServico);
+		urlServico = (AutoCompleteTextView) viewRoot
+				.findViewById(R.id.autoCompleteUrlServico);
 		portaServico = (EditText) viewRoot.findViewById(R.id.edtPortaServico);
-		configuracoes = new ReadSaveConfiguracoes(this.getActivity());
 
 		initSettings();
 		initAutoComplete();
-		
+
 		Button btnSalvar = (Button) viewRoot.findViewById(R.id.btnSalvarConfig);
 		btnSalvar.setOnClickListener(this);
 
@@ -76,8 +82,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 		urlServico.setAdapter(adapter);
 	}
 
-	private void initSettings() {
-		configModel = configuracoes.getData();
+	private void initSettings() {		
+		SettingsGenericHelper dbSettings = new SettingsGenericHelper(
+				this.getActivity());
+		configModel = dbSettings.selectOne();	
+		
 		urlServico.setText(configModel.getUrlServico());
 		portaServico.setText(configModel.getPortaServico().toString());
 	}
@@ -85,17 +94,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		try {
-			configModel = new ConfiguracoesModel();
+			SettingsGenericHelper dbSettings = new SettingsGenericHelper(
+					this.getActivity());
+			
+			configModel = new SettingsModel();
 
 			configModel.setUrlServico(urlServico.getText().toString());
 			configModel.setPortaServico(Integer.parseInt(portaServico.getText()
 					.toString()));
 
-			configuracoes.saveData(configModel);
+			//configuracoes.saveData(configModel);
+			List<SettingsModel> saveObj = new ArrayList<SettingsModel>();  
+			saveObj.add(configModel);
+			
+			dbSettings.sincronizar(saveObj);
+			
 			new SucessoToast().show(this.getActivity());
 		} catch (Exception e) {
 			new AlertaToast().show(this.getActivity(),
-					"Erro as Salvar:\n" + e.getMessage());
+					"Erro ao Salvar:\n" + e.getMessage());
 		}
 	}
 }

@@ -26,7 +26,7 @@
     <string name="devideId">Device ID</string>
     <string name="hintDeviceId">Device ID</string>
     <string name="edtUrlServico">Url Serviço : Porta Serviço</string>
-    <string name="txtUrlServico">mocksapi.herokuapp.com</string>
+    <string name="txtUrlServico">acomanda.herokuapp.com</string>
     <string name="txtPortaServico">80</string>
     <string name="btnSalvar">Salvar</string>
     <string name="btnEntrar">entrar</string>

@@ -2,7 +2,7 @@ package com.arquitetaweb.comanda.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ConfiguracoesModel {
+public class SettingsModel {
 	
 	@SerializedName("UrlServico")
 	public String urlServico;
@@ -11,7 +11,7 @@ public class ConfiguracoesModel {
     public Integer portaServico;
 
     public String getUrlServico() {
-        return urlServico == null ? "mocksapi.herokuapp.com" : urlServico;
+        return urlServico == null ? "acomanda.herokuapp.com" : urlServico;
     }
 
     public void setUrlServico(String urlServidor) {

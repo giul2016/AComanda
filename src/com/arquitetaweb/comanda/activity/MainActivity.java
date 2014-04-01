@@ -238,8 +238,9 @@ public class MainActivity extends Activity {
 		ProdutoGrupoGenericHelper dbProdutoGrupo = new ProdutoGrupoGenericHelper(
 				this);
 		Integer qtde = dbProdutoGrupo.getCount();
-		if ((qtde == 0) && (!SettingsFragment.GENERAL_SETTINGS_URI.equals(uri))) { // forcar a tela para sincronizar
+		if ((qtde == 0) && (MainFragment.MESAS_URI.equals(uri))) { // forcar a tela para sincronizar
 			uri = SincronizationFragment.SINCRONIZATION_URI; 
+			new AlertaToast().show(this, "Por favor, sincronize os dados antes de continuar.");
 		}
 		
 		if (SettingsFragment.GENERAL_SETTINGS_URI.equals(uri)) {

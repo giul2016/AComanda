@@ -193,6 +193,24 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		}
 		return null;
 	}
+	
+	public T selectOne() {
+		Log.d("DatabaseGenericHelper", "Listando.... selectById " + TABLE);
+		db = this.getReadableDatabase();
+
+		// select
+		String selectQuery = "SELECT  * FROM " + TABLE;
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (c != null) {
+			c.moveToFirst();
+			// Log.d("DatabaseGenericHelper", selectQuery);
+			return selectFromObjectGeneric(c);
+		}
+		return null;
+	}
 
 	public int getCount() {
 		String countQuery = "SELECT  * FROM " + TABLE;

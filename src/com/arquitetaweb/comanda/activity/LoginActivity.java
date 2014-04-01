@@ -60,8 +60,9 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 		TextView version = (TextView) findViewById(R.id.version);
 		try {			
 			String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-			int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
-			version.setText(versionCode + "." + versionName);
+			//int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+			//version.setText(versionCode + "." + versionName);
+			version.setText(versionName);
 		} catch (NameNotFoundException e) {
 			version.setText(0 + ".erro");
 		}
@@ -124,9 +125,9 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		} else {
-			autoComplete(edtEmail.getText().toString());
 			notAuthorized(result.second);
 		}
+		autoComplete(edtEmail.getText().toString());
 	}
 
 	private void notAuthorized(String retorno) {
