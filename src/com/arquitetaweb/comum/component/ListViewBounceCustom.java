@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 public class ListViewBounceCustom extends ListView {
 
@@ -83,9 +84,14 @@ public class ListViewBounceCustom extends ListView {
 		}
 		for (int i = 0; i < mItemCount; ++i) {
 			View view = getAdapter().getView(i, null, this);
+
+			view.setLayoutParams(new LayoutParams(
+					RelativeLayout.LayoutParams.WRAP_CONTENT,
+					RelativeLayout.LayoutParams.WRAP_CONTENT));
 			view.measure(
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
 			mItemOffsetY[i] = mHeight;
 			mHeight += view.getMeasuredHeight();
 		}
