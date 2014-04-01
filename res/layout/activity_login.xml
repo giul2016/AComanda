@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:contentDescription="@string/imageContentDescription"
         android:src="@drawable/logo" />
 
     <AutoCompleteTextView
@@ -44,7 +45,15 @@
         android:layout_alignRight="@+id/entrar"
         android:layout_marginBottom="18dp"
         android:gravity="center"
-        android:text="Problemas para utilizar o sistema?\ntomazini@arquitetaweb.com"
+        android:text="@string/msgLogin"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text=""
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -63,7 +63,9 @@
     <string name="salvoSucesso">Salvo com sucesso.</string>
     <string name="msgEmailValido">Digite um email válido.</string>
     <string name="ultimosLancamentos">últimos lançamentos&#8230;</string>
-
+    <string name="msgLogin">Problemas para utilizar o sistema?\ntomazini@arquitetaweb.com</string>
+	<string name="imageContentDescription"></string>
+    
     <!-- Content Description Images -->
     <string name="removerProduto">Remover produto</string>
     <string name="adicionarProduto">Adicionar produto</string>

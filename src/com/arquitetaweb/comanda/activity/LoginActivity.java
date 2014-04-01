@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.text.Editable;
@@ -50,8 +51,20 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 		Button btn = (Button) findViewById(R.id.entrar);
 		btn.setOnClickListener(this);
 			
+		getVersion();		
 		createListeners();
 		autoComplete(null);
+	}
+
+	private void getVersion() {
+		TextView version = (TextView) findViewById(R.id.version);
+		try {			
+			String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+			version.setText(versionCode + "." + versionName);
+		} catch (NameNotFoundException e) {
+			version.setText(0 + ".erro");
+		}
 	}
 
 	private void createListeners() {
