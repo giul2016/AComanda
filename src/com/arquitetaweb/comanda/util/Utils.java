@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 
 import com.arquitetaweb.comanda.model.SettingsModel;
+import com.arquitetaweb.helper.sqllite.SettingsGenericHelper;
 
 public class Utils {
 
@@ -78,10 +79,13 @@ public class Utils {
 //	}
 
 	private static String MontarUrl(Context context) {
-
-		ReadSaveConfiguracoes configuracoes = new ReadSaveConfiguracoes(context);		
-		SettingsModel configModel = configuracoes.getData();
-
+		SettingsGenericHelper dbSettings = new SettingsGenericHelper(
+				context);		
+		SettingsModel configModel = new SettingsModel();
+		if (dbSettings.getCount() > 0)
+			configModel = dbSettings.selectOne();	
+		dbSettings.closeDB();
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://");
 		sb.append(configModel.getUrlServico());

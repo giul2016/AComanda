@@ -51,6 +51,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// creating required tables
+		db.execSQL(CREATE_TABLE);
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// create new tables
 		onCreate(db);
 	}
-	
+
 	@Override
 	public void onOpen(SQLiteDatabase db) {
 		super.onOpen(db);
@@ -89,6 +90,10 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 
 	public void sincronizar(List<T> produtos) {
 		sincronizarDados(produtos);
+	}
+
+	public void sincronizar(T model) {
+		sincronizarDados(model);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -127,6 +132,14 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		for (T model : listModel) {
 			db.insert(TABLE, null, insertFromValuesGeneric(model));
 		}
+	}
+
+	protected void sincronizarDados(T model) {
+		Log.d("DatabaseGenericHelper", "Sincronizando...." + TABLE);
+		db = this.getWritableDatabase();
+		db.execSQL(DROP_TABLE);
+		db.execSQL(CREATE_TABLE);
+		db.insert(TABLE, null, insertFromValuesGeneric(model));
 	}
 
 	public List<T> selectAll() {
@@ -193,7 +206,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		}
 		return null;
 	}
-	
+
 	public T selectOne() {
 		Log.d("DatabaseGenericHelper", "Listando.... selectById " + TABLE);
 		db = this.getReadableDatabase();
@@ -223,7 +236,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		// return count
 		return count;
 	}
-		
+
 	protected void errorConnectServer() {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {

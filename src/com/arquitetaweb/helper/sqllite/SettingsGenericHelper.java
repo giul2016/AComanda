@@ -29,7 +29,7 @@ public class SettingsGenericHelper extends DatabaseGenericHelper<SettingsModel> 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		super.onCreate(db);
-		db.execSQL(CREATE_TABLE);
+		//db.execSQL(CREATE_TABLE);
 	}
 
 	@Override

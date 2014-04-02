@@ -17,7 +17,7 @@ public class ReadSaveConfiguracoes {
 		this.context = context;
     }
 	
-	public SettingsModel getData() {
+	public SettingsModel getData_() {
 		SharedPreferences pm = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		String jsonString = pm.getString(fileName, "{}");		
@@ -30,7 +30,7 @@ public class ReadSaveConfiguracoes {
 		return response;		
 	}
 
-	public void saveData(SettingsModel objModel) {
+	public void saveData_(SettingsModel objModel) {
 		SharedPreferences pm = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		Editor edt = pm.edit();

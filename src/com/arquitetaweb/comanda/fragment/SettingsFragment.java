@@ -1,8 +1,5 @@
 package com.arquitetaweb.comanda.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,10 +14,8 @@ import android.widget.EditText;
 
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.model.SettingsModel;
-import com.arquitetaweb.comanda.util.ReadSaveConfiguracoes;
 import com.arquitetaweb.comum.messages.AlertaToast;
 import com.arquitetaweb.comum.messages.SucessoToast;
-import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
 import com.arquitetaweb.helper.sqllite.SettingsGenericHelper;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
@@ -33,8 +28,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 	private View viewRoot;
 	private AutoCompleteTextView urlServico;
 	private EditText portaServico;
-
-	private ReadSaveConfiguracoes configuracoes;
+	
 	private SettingsModel configModel;
 
 	@Override
@@ -84,8 +78,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
 	private void initSettings() {		
 		SettingsGenericHelper dbSettings = new SettingsGenericHelper(
-				this.getActivity());
-		configModel = dbSettings.selectOne();	
+				this.getActivity());		
+		configModel = new SettingsModel();
+		if (dbSettings.getCount() > 0)
+			configModel = dbSettings.selectOne();		
+		dbSettings.closeDB();
 		
 		urlServico.setText(configModel.getUrlServico());
 		portaServico.setText(configModel.getPortaServico().toString());
@@ -97,18 +94,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 			SettingsGenericHelper dbSettings = new SettingsGenericHelper(
 					this.getActivity());
 			
-			configModel = new SettingsModel();
-
 			configModel.setUrlServico(urlServico.getText().toString());
 			configModel.setPortaServico(Integer.parseInt(portaServico.getText()
 					.toString()));
-
-			//configuracoes.saveData(configModel);
-			List<SettingsModel> saveObj = new ArrayList<SettingsModel>();  
-			saveObj.add(configModel);
 			
-			dbSettings.sincronizar(saveObj);
-			
+			dbSettings.sincronizar(configModel);
+			dbSettings.closeDB();
 			new SucessoToast().show(this.getActivity());
 		} catch (Exception e) {
 			new AlertaToast().show(this.getActivity(),
