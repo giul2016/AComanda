@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
 					if (mesaAdapter.getCount() > 0) {
 						MesaModel mesaObj = mesaAdapter.getItem(0);
 						Intent intent = new Intent(fragment.getView()
-								.getContext(), DetailMesaActivity.class);
+								.getContext(), DetalhesMesaActivity.class);
 						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);
 					} else {

@@ -2,6 +2,7 @@ package com.arquitetaweb.comanda.activity;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,12 +19,12 @@ import com.arquitetaweb.comanda.fragment.ConsumoFragment;
 import com.arquitetaweb.comanda.fragment.ProdutoFragment;
 import com.arquitetaweb.comanda.model.MesaModel;
 
-public class DetailMesaActivity extends FragmentActivity implements
+public class DetalhesMesaActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
 	private ViewPager mPager;
 	private MesaModel mesa;
-
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
@@ -108,9 +109,18 @@ public class DetailMesaActivity extends FragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		switch (menuItem.getItemId()) {
-		case R.id.action_search:
-			Toast.makeText(getApplicationContext(), "comando ok: sms: ",
-					Toast.LENGTH_SHORT).show();
+		case R.id.action_search:			
+			Intent intent = new Intent(this,
+					PedidoActivity.class);
+			intent.putExtra("mesa", mesa);
+			intent.putExtra("IdProdutoGrupo", 0);
+			intent.putExtra("produtoRecente", false);
+            // catch event that there's no activity to handle intent
+            if (intent.resolveActivity(getPackageManager()) != null) {
+            	startActivityForResult(intent, 100);    			
+            } else {
+                Toast.makeText(this, R.string.app_not_available, Toast.LENGTH_LONG).show();
+            }
 			return true;
 		default:
 			onBackPressed();
@@ -120,16 +130,7 @@ public class DetailMesaActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// menu.findItem(R.id.action_search).setVisible(true);
-		// clearSearch();
 		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onSearchRequested() {
-		Toast.makeText(getApplicationContext(), "comando ok: sms: ",
-				Toast.LENGTH_SHORT).show();
-		return false;
 	}
 
 	@Override
@@ -137,26 +138,6 @@ public class DetailMesaActivity extends FragmentActivity implements
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.pedido_menu, menu);
 
-		// if (Build.VERSION.SDK_INT >= 11) {
-		// // SearchView
-		// SearchManager searchManager = (SearchManager)
-		// getSystemService(Context.SEARCH_SERVICE);
-		//
-		// searchView = (SearchView) menu.findItem(R.id.action_search)
-		// .getActionView();
-		// // searchView.setQueryHint("Digite o Número da Mesa");
-		// searchView.setSearchableInfo(searchManager
-		// .getSearchableInfo(getComponentName()));
-		//
-		// searchView.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Toast.makeText(getApplicationContext(),
-		// "comando ok: sms: ", Toast.LENGTH_SHORT).show();
-		// }
-		// });
-		// }
 		return super.onCreateOptionsMenu(menu);
 	}
 

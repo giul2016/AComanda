@@ -16,7 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.activity.DetalhesMesaActivity;
 import com.arquitetaweb.comanda.activity.TestePutActivity;
 import com.arquitetaweb.comanda.adapter.MesaAdapter;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
@@ -127,7 +127,7 @@ public class MainController {
 
 					private void abrirDetalhes(View view, Integer idMesa) {
 						Intent intent = new Intent(view.getContext(),
-								DetailMesaActivity.class);
+								DetalhesMesaActivity.class);
 						MesaModel mesaObj = adapter.getItem(idMesa);
 						intent.putExtra("mesa", mesaObj);
 						fragment.startActivityForResult(intent, 100);

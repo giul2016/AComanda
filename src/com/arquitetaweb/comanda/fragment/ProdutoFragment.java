@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.activity.DetalhesMesaActivity;
 import com.arquitetaweb.comanda.activity.PedidoActivity;
 import com.arquitetaweb.comanda.adapter.ProdutoGrupoAdapter;
 import com.arquitetaweb.comanda.controller.ProdutoController;
@@ -74,7 +74,7 @@ public class ProdutoFragment extends ListFragment {
 		});
 
 		View mInfoHeader = mHeader.findViewById(R.id.infoheader);
-		MesaModel mesa = ((DetailMesaActivity) this.getActivity())
+		MesaModel mesa = ((DetalhesMesaActivity) this.getActivity())
 				.getMesaModel();
 		TextView id = (TextView) mInfoHeader.findViewById(R.id.txtidmesaheader);
 		id.setText("Id: " + mesa.id);
@@ -329,7 +329,7 @@ public class ProdutoFragment extends ListFragment {
 	private void abrirPedido(View view, long idProdutoGrupo, boolean produtoRecente) {
 		Intent intent = new Intent(view.getContext(),
 				PedidoActivity.class);
-		MesaModel mesaObj = ((DetailMesaActivity) getView()
+		MesaModel mesaObj = ((DetalhesMesaActivity) getView()
 				.getContext()).getMesaModel();
 		intent.putExtra("mesa", mesaObj);
 		intent.putExtra("IdProdutoGrupo", idProdutoGrupo);

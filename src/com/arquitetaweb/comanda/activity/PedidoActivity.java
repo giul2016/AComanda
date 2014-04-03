@@ -28,7 +28,7 @@ public class PedidoActivity extends Activity {
 		mesa = (MesaModel) getIntent().getSerializableExtra("mesa");
 		idProdutoGrupo = getIntent().getLongExtra("IdProdutoGrupo", 0);
 		produtoRecente = getIntent().getBooleanExtra("produtoRecente", false);
-
+		
 		setTitle("Pedido Para Mesa: " + mesa.numero_mesa);
 		selectItem();
 	}
@@ -38,7 +38,7 @@ public class PedidoActivity extends Activity {
 		onBackPressed();
 		return true;
 	}
-
+	
 	private void selectItem() {
 		fragment = new PedidoFragment();
 

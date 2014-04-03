@@ -37,7 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.activity.DetailMesaActivity;
+import com.arquitetaweb.comanda.activity.DetalhesMesaActivity;
 import com.arquitetaweb.comanda.adapter.ConsumoAdapter;
 import com.arquitetaweb.comanda.controller.ConsumoController;
 import com.arquitetaweb.comanda.interfaces.AsyncTaskListener;
@@ -94,7 +94,7 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mesa = ((DetailMesaActivity) this.getActivity()).getMesaModel();
+		mesa = ((DetalhesMesaActivity) this.getActivity()).getMesaModel();
 		progressDialog = new ProgressDialog(this.getActivity());
 		controller = new ConsumoController(fragment, progressDialog, mesa.id);
 		controller.sincronizar(); // onTaskComplete callback
@@ -344,7 +344,7 @@ public class ConsumoFragment extends ListFragment implements AsyncTaskListener {
 	@Override
 	public void onClosedComplete(Boolean result) {
 		if (result) {
-			((DetailMesaActivity) this.getActivity()).onBackPressed();
+			((DetalhesMesaActivity) this.getActivity()).onBackPressed();
 			Toast toast = Toast.makeText(getActivity(),
 					"Conta fechada com sucesso!", Toast.LENGTH_SHORT);
 			toast.show();
