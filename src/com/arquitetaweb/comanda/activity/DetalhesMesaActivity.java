@@ -136,7 +136,7 @@ public class DetalhesMesaActivity extends FragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.pedido_menu, menu);
+		inflater.inflate(R.menu.produto_menu, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}

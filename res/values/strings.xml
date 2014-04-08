@@ -19,6 +19,7 @@
     <!-- Menu -->
     <string name="menu_search">Procurar</string>
     <string name="hint_search">Digite o Número da Mesa</string>
+    <string name="hint_search_pedido">Código ou Descrição</string>
     <string name="menu_refresh">Atualizar</string>
 
     <!-- Forms -->
