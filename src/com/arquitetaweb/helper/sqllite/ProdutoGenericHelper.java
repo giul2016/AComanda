@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.arquitetaweb.comanda.model.ProdutoComplementoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
+
+import java.util.List;
 
 public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 
@@ -53,7 +56,7 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		return values;
 	}
 
-	@Override
+    @Override
 	protected ProdutoModel selectFromObjectGeneric(Cursor c) {
 		ProdutoModel produto = new ProdutoModel();
 		produto.id = (c.getLong((c.getColumnIndex(KEY_ID))));
@@ -62,7 +65,6 @@ public class ProdutoGenericHelper extends DatabaseGenericHelper<ProdutoModel> {
 		produto.codigo = ((c.getString(c.getColumnIndex(KEY_PRODUTO_CODIGO))));
 		produto.descricao = ((c.getString(c
 				.getColumnIndex(KEY_PRODUTO_DESCRICAO))));
-
 		//Log.d("selectFromObjectGeneric", garcom.id + " - " + garcom.codigo);
 		
 		return produto;

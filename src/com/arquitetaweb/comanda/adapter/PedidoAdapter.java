@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import android.widget.TextView;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.controller.ProdutoComplementoController;
 import com.arquitetaweb.comanda.model.ConsumoModel;
+import com.arquitetaweb.comanda.model.ProdutoComplementoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comanda.popup.PedidoComplementoDialog;
+import com.arquitetaweb.helper.sqllite.ProdutoComplementoGenericHelper;
 import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
 public class PedidoAdapter extends BaseAdapter {
@@ -33,18 +36,29 @@ public class PedidoAdapter extends BaseAdapter {
 		data = consumoModelList;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		produtoModelList = new ArrayList<ProdutoModel>();
-		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-		for (ConsumoModel consumoModel : consumoModelList) {
-			ProdutoModel produto = dbProduto
-					.selectById((long) consumoModel.produtoId);
-			produtoModelList.add(produto);
-		}
-		dbProduto.closeDB();			
+
+        init(activity, consumoModelList);
 	}
 
-	public List<ConsumoModel> getItens() {
+    private void init(Activity activity, List<ConsumoModel> consumoModelList) {
+        produtoModelList = new ArrayList<ProdutoModel>();
+        for (ConsumoModel consumoModel : consumoModelList) {
+            ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
+            ProdutoModel produto = dbProduto
+                    .selectById((long) consumoModel.produtoId);
+            dbProduto.closeDB();
+
+            ProdutoComplementoGenericHelper dbProdutoComplemento = new ProdutoComplementoGenericHelper(activity);
+            List<ProdutoComplementoModel> listaProduto = dbProdutoComplemento.selectWhere("produtoId = " + consumoModel.produtoId);
+            dbProdutoComplemento.closeDB();
+
+            produto.tem_complemento  =!listaProduto.isEmpty();
+
+            produtoModelList.add(produto);
+        }
+    }
+
+    public List<ConsumoModel> getItens() {
 		return data;
 	}
 
@@ -96,7 +110,14 @@ public class PedidoAdapter extends BaseAdapter {
 				holder.descricao.setText(produtoModel.descricao);
 				holder.codigo.setText(produtoModel.codigo);
 				holder.quantidade.setText(getItem(position).quantidade);
-			}
+
+
+                if (produtoModel.tem_complemento) {
+                    holder.codigo.setTextColor(Color.BLUE);
+                } else {
+                    holder.codigo.setTextColor(Color.BLACK);
+                }
+            }
 		}
 
 		holder.decrementa.setOnClickListener(new View.OnClickListener() {

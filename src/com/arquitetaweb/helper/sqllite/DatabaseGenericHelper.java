@@ -226,7 +226,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	}
 
 	public int getCount() {
-		String countQuery = "SELECT  * FROM " + TABLE;
+		String countQuery = "SELECT * FROM " + TABLE;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 
@@ -241,15 +241,15 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 		((Activity) context).runOnUiThread(new Runnable() {
 			public void run() {
 				new Alerta()
-						.show(context, "", "Não Foi Localizado o Servidor!"
-								+ "\nCausas:" + "\nConexão OK?"
+						.show(context, "", "NÃ£o Foi Localizado o Servidor!"
+								+ "\nCausas:" + "\nConexÃ£o OK?"
 								+ "\nServidor correto?");
 			}
 		});
 	}
 
 	/**
-	 * Método para enviar os valores da coluna a ser inserido no banco
+	 * Mï¿½todo para enviar os valores da coluna a ser inserido no banco
 	 * 
 	 * @param model
 	 * @return ContentValues - Nome/Valores das colunas
@@ -257,7 +257,7 @@ public abstract class DatabaseGenericHelper<T> extends SQLiteOpenHelper {
 	protected abstract ContentValues insertFromValuesGeneric(T model);
 
 	/**
-	 * Método para gerar os Objeto Tipados
+	 * Mï¿½todo para gerar os Objeto Tipados
 	 * 
 	 * @param c
 	 * @return Objeto Tipado

@@ -19,6 +19,8 @@ public class ProdutoModel {
 	@SerializedName("ProdutoGrupoId")
     public long produto_grupo_id;
 
+    public boolean tem_complemento;
+
 	public Type getType() {
 		return new TypeToken<ArrayList<ProdutoModel>>(){}.getType();
 	}
