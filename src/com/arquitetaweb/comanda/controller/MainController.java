@@ -111,7 +111,7 @@ public class MainController {
 						intent.putExtra("mesa", mesaObj);
 						// fragment.startActivityForResult(intent, 100);
 
-						new AlertaToast().show(context, "Situação da Mesa: "
+						new AlertaToast().show(context, "SituaÃ§Ã£o da Mesa: "
 								+ mesaObj.numero_mesa + " :: "
 								+ mesaObj.situacao);
 					}

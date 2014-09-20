@@ -16,9 +16,11 @@ import android.widget.TextView;
 import com.arquitetaweb.comanda.R;
 import com.arquitetaweb.comanda.dados.GetGenericApi;
 import com.arquitetaweb.comanda.model.GarcomModel;
+import com.arquitetaweb.comanda.model.ProdutoComplementoModel;
 import com.arquitetaweb.comanda.model.ProdutoGrupoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.helper.sqllite.GarcomGenericHelper;
+import com.arquitetaweb.helper.sqllite.ProdutoComplementoGenericHelper;
 import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 import com.arquitetaweb.helper.sqllite.ProdutoGrupoGenericHelper;
 import com.google.gson.reflect.TypeToken;
@@ -60,7 +62,7 @@ public class SincronizationController {
 	}
 
 	private class SincronizarDados extends AsyncTask<Void, Integer, Void> {
-		String[] messages = new String[5];
+		String[] messages = new String[6];
 		long mStartTime;
 
 		private void createMessages() {
@@ -68,7 +70,8 @@ public class SincronizationController {
 			messages[1] =context.getString(R.string.sincronizandoGarcom);
 			messages[2] = context.getString(R.string.sincronizandoGrupoProduto);
 			messages[3] = context.getString(R.string.sincronizandoProduto);
-			messages[4] = context.getString(R.string.finalizando);
+            messages[4] = context.getString(R.string.sincronizando_complemento);
+			messages[5] = context.getString(R.string.finalizando);
 		}
 
 		private void updateMessage(Integer pos) {
@@ -101,9 +104,12 @@ public class SincronizationController {
 
 					updateMessage(3);
 					SincronizarProduto();
+
+                    updateMessage(4);
+                    SincronizarProdutoComplemento();
 				}
 
-				updateMessage(4);
+				updateMessage(5);
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -216,4 +222,28 @@ public class SincronizationController {
 		dbProduto.closeDB();
 		Log.d("SincronizarProduto", "Finalizando SincronizarProduto....");
 	}
+
+    private void SincronizarProdutoComplemento() {
+        String URL_API = "ProdutoComplemento";
+        GetGenericApi<ProdutoComplementoModel> produtoComplementoApi = new GetGenericApi<ProdutoComplementoModel>(
+                context);
+
+        List<ProdutoComplementoModel> produtoList = produtoComplementoApi.LoadListApiFromUrl(URL_API,
+                new TypeToken<ArrayList<ProdutoComplementoModel>>() {
+                }.getType());
+
+        Log.d("SincronizarProdutoComplemento", "Iniciando SincronizarProdutoComplemento....");
+
+        ProdutoComplementoGenericHelper dbProduto = new ProdutoComplementoGenericHelper(context);
+        dbProduto.sincronizar(produtoList);
+
+        produtoList = dbProduto.selectAll();
+        for (ProdutoComplementoModel produto : produtoList) {
+            Log.d("getAllProduto", produto.id + " - "
+                    + produto.produto_id + " - " + produto.produto_complemento_id);
+        }
+
+        dbProduto.closeDB();
+        Log.d("SincronizarProdutoComplemento", "Finalizando SincronizarProdutoComplemento....");
+    }
 }

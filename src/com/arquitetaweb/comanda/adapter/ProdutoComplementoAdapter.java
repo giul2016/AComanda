@@ -1,8 +1,5 @@
 package com.arquitetaweb.comanda.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -13,35 +10,39 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.arquitetaweb.comanda.R;
-import com.arquitetaweb.comanda.controller.ProdutoComplementoController;
 import com.arquitetaweb.comanda.model.ConsumoModel;
+import com.arquitetaweb.comanda.model.ProdutoComplementoModel;
 import com.arquitetaweb.comanda.model.ProdutoModel;
 import com.arquitetaweb.comanda.popup.PedidoComplementoDialog;
+import com.arquitetaweb.helper.sqllite.ProdutoComplementoGenericHelper;
 import com.arquitetaweb.helper.sqllite.ProdutoGenericHelper;
 
-public class PedidoAdapter extends BaseAdapter {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProdutoComplementoAdapter extends BaseAdapter {
 	protected Activity activity;
 	private List<ConsumoModel> data;
 	private List<ProdutoModel> produtoModelList;
 	private static LayoutInflater inflater = null;
 
-	public PedidoAdapter(Activity activity, long idProdutoGrupo,
-			List<ConsumoModel> consumoModelList) {
+	public ProdutoComplementoAdapter(Activity activity, List<ConsumoModel> consumoModelList) {
 		this.activity = activity;
-		data = consumoModelList;
+
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		produtoModelList = new ArrayList<ProdutoModel>();
-		ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
-		for (ConsumoModel consumoModel : consumoModelList) {
-			ProdutoModel produto = dbProduto
-					.selectById((long) consumoModel.produtoId);
-			produtoModelList.add(produto);
-		}
-		dbProduto.closeDB();			
+
+        produtoModelList = new ArrayList<ProdutoModel>();
+        ProdutoGenericHelper dbProduto = new ProdutoGenericHelper(activity);
+        for (ConsumoModel consumoModel : consumoModelList) {
+            ProdutoModel produto = dbProduto
+                    .selectById((long) consumoModel.produtoId);
+            produtoModelList.add(produto);
+        }
+        dbProduto.closeDB();
+
+        data = consumoModelList;
 	}
 
 	public List<ConsumoModel> getItens() {
@@ -118,24 +119,10 @@ public class PedidoAdapter extends BaseAdapter {
 				qtde++;
 				getItem(position).quantidade = Integer.toString(qtde);
 				notifyDataSetChanged();
-				// notifyDataSetChangedThread();
-                openProdutoComplemento(getItem(position).produtoId);
 			}
 		});
 		return convertView;
 	}
-
-    private void openProdutoComplemento(long idProduto) {
-
-        ProdutoComplementoController controller = new ProdutoComplementoController(activity);
-        List<ConsumoModel> listConsumo = controller.sincronizar(idProduto);
-
-        if (!listConsumo.isEmpty()) {
-            FragmentManager fragmentManager = activity.getFragmentManager();
-            DialogFragment newFragment = new PedidoComplementoDialog(listConsumo);
-            newFragment.show(fragmentManager, null);
-        }
-    }
 
 	static class ViewHolder {
 		TextView descricao;

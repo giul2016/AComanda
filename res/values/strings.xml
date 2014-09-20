@@ -31,6 +31,7 @@
     <string name="txtPortaServico">80</string>
     <string name="btnSalvar">Salvar</string>
     <string name="btnEntrar">entrar</string>
+    <string name="btnCancelar">Cancelar</string>
     <string name="twoDots">:</string>
     <string name="labelSincronizar">Sincronizar</string>
     <string name="labelSincGarcom">Garçom</string>
@@ -56,6 +57,7 @@
     <string name="sincronizandoGarcom">sincronizando garçom&#8230;</string>
     <string name="sincronizandoGrupoProduto">sincronizando grupo de produto&#8230;</string>
     <string name="sincronizandoProduto">sincronizando produto&#8230;</string>
+    <string name="sincronizando_complemento">sincronizando complemento&#8230;</string>
     <string name="finalizando">finalizando&#8230;</string>
     <string name="msgSucesso">Sucesso.</string>
     <string name="msgErro">Erro.</string>

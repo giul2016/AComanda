@@ -58,12 +58,12 @@ public class PedidoController {
 				new EnviarPedido(fragment).execute();
 			else {
 				Toast toast = Toast.makeText(context,
-						"Não existe item a enviar.", Toast.LENGTH_LONG);
+						"NÃ£o existe item a enviar.", Toast.LENGTH_LONG);
 				toast.show();
 			}
 		} else {
 			Toast toast = Toast.makeText(context,
-					"A situação da mesa não permite lançamentos. (Situação: "
+					"A situaÃ§Ã£o da mesa nÃ£o permite lanÃ§amentos. (SituaÃ§Ã£o: "
 							+ mesa.situacao + ")", Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -105,7 +105,7 @@ public class PedidoController {
 	}
 
 	public void sincronizar(long idProduto, boolean produtoRecente) {
-		URL_API = "Mesa/" + mesa.id + "/10"; // 10 itens no máximo
+		URL_API = "Mesa/" + mesa.id + "/10"; // 10 itens no mï¿½ximo
 		new SincronizarDados(fragment).execute(idProduto, produtoRecente);
 	}
 

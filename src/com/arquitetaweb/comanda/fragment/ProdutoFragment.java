@@ -80,10 +80,10 @@ public class ProdutoFragment extends ListFragment {
 		id.setText("Id: " + mesa.id);
 		TextView numero = (TextView) mInfoHeader
 				.findViewById(R.id.txtmesaheader);
-		numero.setText("Número: " + mesa.numero_mesa.toString());
+		numero.setText("NÃºmero: " + mesa.numero_mesa.toString());
 		TextView situacao = (TextView) mInfoHeader
 				.findViewById(R.id.txtdetailmesaheader);
-		situacao.setText("Situação: " + mesa.situacao.toString());
+		situacao.setText("SituaÃ§Ã£o: " + mesa.situacao.toString());
 
 		return view;
 	}

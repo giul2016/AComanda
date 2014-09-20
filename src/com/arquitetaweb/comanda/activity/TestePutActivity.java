@@ -44,10 +44,10 @@ public class TestePutActivity extends FragmentActivity {
 		txtIdMesa.setText("Id Mesa: " + idMesa);
 
 		TextView txtNumeroMesa = (TextView) findViewById(R.id.idNumeroMesa_teste);
-		txtNumeroMesa.setText("Número Mesa: " + mesa.numero_mesa);
+		txtNumeroMesa.setText("NÃºmero Mesa: " + mesa.numero_mesa);
 
 		TextView txtSituacaoMesa = (TextView) findViewById(R.id.idSituacao_teste);
-		txtSituacaoMesa.setText("Situação Mesa: " + mesa.situacao);
+		txtSituacaoMesa.setText("SituaÃ§Ã£o Mesa: " + mesa.situacao);
 
 		final Button btnLivre = (Button) findViewById(R.id.btnLivre_teste);
 		btnLivre.setOnClickListener(new View.OnClickListener() {

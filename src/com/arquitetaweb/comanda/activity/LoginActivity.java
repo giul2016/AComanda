@@ -133,12 +133,12 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 	private void notAuthorized(String retorno) {
 		if (retorno.toLowerCase(Locale.getDefault()).contains(
 				"user not authorized")) {
-			showDialog("Ops, usu·rio n„o autorizado\nenviamos um email de confirmaÁ„o para "
+			showDialog("Ops, usu√°rio n√£o autorizado\nenviamos um email de confirma√ß√£o para "
 					+ usuario.email
 					+ "\nconfirme o email e tente logar novamente, obrigado.");
 		} else if (retorno.toLowerCase(Locale.getDefault()).contains(
 				"user inserted")) {
-			showDialog("Usu·rio foi cadastrado com sucesso, confirme o email "
+			showDialog("Usu√°rio foi cadastrado com sucesso, confirme o email "
 					+ usuario.email + " e tente logar novamente, obrigado.");
 		}
 	}

@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
 
 			searchView = (SearchView) menu.findItem(R.id.action_search)
 					.getActionView();
-			// searchView.setQueryHint("Digite o Número da Mesa");
+			// searchView.setQueryHint("Digite o NÃºmero da Mesa");
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
 
@@ -173,7 +173,7 @@ public class MainActivity extends Activity {
 						fragment.startActivityForResult(intent, 100);
 					} else {
 						new AlertaToast().show(fragment.getActivity(),
-								"Nenhuma mesa localizada pelo critério: "
+								"Nenhuma mesa localizada pelo critÃ©rio: "
 										+ arg0 + "\nVerifique sua consulta.");
 					}
 					return true;
@@ -323,7 +323,7 @@ public class MainActivity extends Activity {
 									MainActivity.super.onBackPressed();
 								}
 							})
-					.setNegativeButton("Não",
+					.setNegativeButton("NÃ£o",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
